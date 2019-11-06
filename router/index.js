@@ -8,6 +8,7 @@ import studyDetail from '../src/components/studyDetail'
 import my from '../src/components/my'
 import itemDetail from '../src/components/itemDetail'
 import questionAll from '../src/components/questionAll'
+import myQuestion from '../src/components/myQuestion'
 
 Vue.use(Router)
 
@@ -57,6 +58,11 @@ export default new Router({
             path: '/questionAll',
             name: 'questionAll',
             component: questionAll
+        },
+        {
+            path: '/myQuestion',
+            name: 'myQuestion',
+            component: myQuestion
         },
     ]
 })
