@@ -6,6 +6,8 @@ import Love from '../src/components/love'
 import Person from '../src/components/person'
 import studyDetail from '../src/components/studyDetail'
 import my from '../src/components/my'
+import itemDetail from '../src/components/itemDetail'
+import questionAll from '../src/components/questionAll'
 
 Vue.use(Router)
 
@@ -45,6 +47,16 @@ export default new Router({
             path: '/my',
             name: 'my',
             component: my
+        },
+        {
+            path: '/itemDetail',
+            name: 'itemDetail',
+            component: itemDetail
+        },
+        {
+            path: '/questionAll',
+            name: 'questionAll',
+            component: questionAll
         },
     ]
 })

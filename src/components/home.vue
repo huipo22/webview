@@ -11,7 +11,7 @@
     <!-- category -->
     <van-row class="m_bottom">
       <van-grid :column-num="5">
-        <van-grid-item v-for="value in 10" :key="value" icon="photo-o" text="文字" />
+        <van-grid-item v-for="value in 10" :key="value" icon="photo-o" text="问答广场" @click="questionAll"/>
       </van-grid>
     </van-row>
     <!-- 通知 -->
@@ -19,7 +19,7 @@
     <!-- category_detail -->
     <van-row>
       <van-list>
-        <van-panel>
+        <van-panel @click="itemDetail">
           <div slot="header" class="pannel-head">
             <van-col span="6">职工之家</van-col>
             <van-col offset="14" span="4">更多</van-col>
@@ -49,7 +49,13 @@ export default {
     };
   },
   methods: {
-    getHome() {}
+    getHome() {},
+    itemDetail(){
+       this.$router.push({ path:'/itemDetail'  })
+    },
+    questionAll(){
+      this.$router.push({ path:'/questionAll'  })
+    }
   }
 };
 </script>

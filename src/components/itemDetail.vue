@@ -1,7 +1,7 @@
 <template>
-  <div id="detail">
+  <div id="itemDetail">
     <!-- navbar -->
-    <van-nav-bar title="学习详情" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <van-nav-bar title="itemDetail" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <!-- 图文 -->
     <div id="detailBox">
       <div id="title">中共中央印发《中国中产党支部工作条例》试行</div>
@@ -21,19 +21,14 @@
         六要促进文明交流互鉴。共同办好2021年中法文化旅游年，加强博物馆和文化遗产保护等领域合作。
       </div>
     </div>
-    <van-row class="bottomBox">
-      <!-- <van-col>已完成</van-col> -->
-      <van-col>
-        <van-count-down :time="time" />
-      </van-col>
-    </van-row>
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
-      time: 3 * 60 * 60 * 1000
+      
     };
   },
   methods: {
