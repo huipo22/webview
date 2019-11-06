@@ -48,7 +48,9 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    getHome() {}
+  }
 };
 </script>
 <style  scoped>
