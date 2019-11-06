@@ -13,7 +13,7 @@
     </van-cell-group>-->
 
     <van-cell-group>
-      <van-cell icon="points" value="我的积分" is-link />
+      <van-cell icon="points" value="我的学习" to ="/my" is-link />
       <van-cell icon="gold-coin-o" value="我的优惠券" is-link />
       <van-cell icon="gift-o" value="内容" is-link />
     </van-cell-group>

@@ -14,6 +14,8 @@
         <van-grid-item v-for="value in 10" :key="value" icon="photo-o" text="文字" />
       </van-grid>
     </van-row>
+    <!-- 通知 -->
+    <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">通知内容</van-notice-bar>
     <!-- category_detail -->
     <van-row>
       <van-list>
