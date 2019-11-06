@@ -4,13 +4,14 @@
     <van-nav-bar title="我的" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <van-tabs v-model="active">
       <van-tab title="全部">
-        <van-card thumb="https://img.yzcdn.cn/vant/t-thirt.jpg">
-          <div slot="title">ddddddddddddddddddddddddd</div>
+        <van-card thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" class="tabBox">
+          <div slot="title" class="head">中共中央印发《中国中产党支部工作条例》试行</div>
           <div slot="tags">
-            <van-progress :percentage="50" />
-            <van-col>完成章节1/1</van-col>
-            <van-col>2019-11-06</van-col>
-            
+            <van-progress :percentage="50" class="progressBox" />
+            <van-row class="head">
+              <van-col span="12" class="left">完成章节1/1</van-col>
+              <van-col span="12" class="right">2019-11-06</van-col>
+            </van-row>
           </div>
           <div slot="footer"></div>
         </van-card>
@@ -22,6 +23,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      active: 0
+    };
+  },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
@@ -29,3 +35,23 @@ export default {
   }
 };
 </script>
+<style scoped>
+.tabBox {
+  background: #fff;
+}
+.head {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+.progressBox {
+  margin: 0.7rem 0;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+</style>

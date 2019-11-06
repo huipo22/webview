@@ -59,6 +59,7 @@ export default {
 }
 .swiperImg {
   height: 10rem;
+   background: #fff;
 }
 .swiperImg img {
   height: 100%;

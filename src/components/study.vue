@@ -14,12 +14,10 @@
         <van-panel>
           <div slot="default">
             <van-image
-              width="10rem"
-              height="10rem"
               fit="contain"
               src="https://img.yzcdn.cn/vant/cat.jpeg"
             />
-            <div>1111</div>
+            <div class="default-title">中国共产党章程</div>
           </div>
           <div slot="footer">
             <van-col span="10">2019.11.5</van-col>
@@ -30,12 +28,10 @@
         <van-panel>
           <div slot="default">
             <van-image
-              width="10rem"
-              height="10rem"
               fit="contain"
               src="https://img.yzcdn.cn/vant/cat.jpeg"
             />
-            <div>1111</div>
+            <div class="default-title">中国共产党章程</div>
           </div>
           <div slot="footer">
             <van-col span="10">2019.11.5</van-col>
@@ -62,16 +58,20 @@ export default {
   }
 };
 </script>
-<style >
+<style scoped>
 .m_bottom {
   margin-bottom: 1rem;
 }
 
 .swiperImg {
   height: 10rem;
+  background: #fff;
 }
 
 .swiperImg img {
   height: 100%;
+}
+.default-title{
+  text-align: left
 }
 </style>

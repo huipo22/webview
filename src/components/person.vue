@@ -3,17 +3,50 @@
   <div id="person">
     <!-- navbar -->
     <van-nav-bar title="个人中心"></van-nav-bar>
-    <img
-      class="user-poster"
-      src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-    />
-
-    <!-- <van-cell-group class="user-group">
-      <van-cell icon="records" title="全部订单" is-link />
-    </van-cell-group>-->
-
+    <!-- 个人中心头部 -->
+    <van-row id="avatarBox">
+      <van-col span="8">
+        <div id="icon1">
+          <img
+            width="50px"
+            height="50px"
+            src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
+          />
+        </div>
+      </van-col>
+      <van-col span="16">
+        <div class="name">十号</div>
+        <div class="name_tag">全心全意为人民服务</div>
+      </van-col>
+    </van-row>
+    <!-- 基本信息 我的积分 -->
+    <van-cell>
+      <van-row>
+        <van-col span="12" class="firstBox">
+          <div id="icon1">
+            <img
+              width="50px"
+              height="50px"
+              src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
+            />
+          </div>
+          <div class="icon_con">基本信息</div>
+        </van-col>
+        <van-col span="12" class="firstBox">
+          <div id="icon1">
+            <img
+              width="50px"
+              height="50px"
+              src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
+            />
+          </div>
+          <div class="icon_con">我的积分</div>
+        </van-col>
+      </van-row>
+    </van-cell>
+    <!-- 个人中心列表 -->
     <van-cell-group>
-      <van-cell icon="points" value="我的学习" to ="/my" is-link />
+      <van-cell icon="points" value="我的学习" to="/my" is-link />
       <van-cell icon="gold-coin-o" value="我的优惠券" is-link />
       <van-cell icon="gift-o" value="内容" is-link />
     </van-cell-group>
@@ -21,16 +54,18 @@
 </template>
 
 <script>
-export default {
-  
-};
+export default {};
 </script>
 
 <style scoped>
-.user-poster {
-  width: 100%;
-  height: 53vw;
-  display: block;
+#avatarBox {
+  height: 10rem;
+  background: #ccc;
+  display: flex;
+  align-items: center;
+}
+.name,.name_tag{
+  text-align: left
 }
 .user-group {
   margin-bottom: 15px;
@@ -40,9 +75,16 @@ export default {
   font-size: 12px;
   text-align: center;
   background-color: #fff;
-  .van-icon {
-    display: block;
-    font-size: 24px;
-  }
+}
+.firstBox {
+  display: flex;
+  align-items: center;
+}
+#icon1 > img {
+  border-radius: 50%;
+}
+.icon_con {
+  flex: 1;
+  padding-left: 1.5rem;
 }
 </style>
