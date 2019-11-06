@@ -10,6 +10,7 @@
             <van-progress :percentage="50" />
             <van-col>完成章节1/1</van-col>
             <van-col>2019-11-06</van-col>
+            
           </div>
           <div slot="footer"></div>
         </van-card>
