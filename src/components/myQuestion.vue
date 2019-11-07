@@ -120,4 +120,7 @@ export default {
 .itemright {
   text-align: right;
 }
+.quill-editor{
+  height: 20rem;
+}
 </style>
