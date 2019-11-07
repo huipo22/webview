@@ -11,7 +11,7 @@
     <!-- 问题内容 -->
     <van-row>
       <van-list>
-        <van-panel class="questionList">
+        <van-panel class="questionList" @click="questionDetail">
           <div slot="header" class="pannel-header">
             <van-row>
               <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
@@ -22,29 +22,28 @@
               <van-col class="userInfo">
                 <div>
                   <img
+                    class="avatar"
                     width="50px"
                     height="50px"
                     src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
                   />
                 </div>
-                <div>十号</div>
-                <div>时间</div>
+                <div class="name">十号</div>
+                <div class="time">时间</div>
               </van-col>
-              <van-col>
-                <p>{{"一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。"|ellipsis}}</p>
+              <van-col class="questionCon">
+                <p>一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。</p>
               </van-col>
             </van-row>
           </div>
-          <!-- <div slot="footer" class="pannel-foot">
-              <van-row>
-                  <van-col>赞同</van-col>
-                  <van-col>更多</van-col>
-                  <van-col>评论</van-col>
-                  <van-col><van-icon name="ellipsis" size="2rem"/></van-col>
-              </van-row>
-          </div>-->
         </van-panel>
       </van-list>
+    </van-row>
+    <!-- +号 -->
+    <van-row>
+      <van-col span="24" class="plusBox">
+        <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" />
+      </van-col>
     </van-row>
   </div>
 </template>
@@ -58,7 +57,13 @@ export default {
       this.$router.go(-1);
     },
     onClickRight() {
-       this.$router.push({ path:'/myQuestion'  })
+      this.$router.push({ path: "/myQuestion" });
+    },
+    askQuestion() {
+      this.$router.push({ path: "/askQuestion" });
+    },
+    questionDetail() {
+      this.$router.push({ path: "/questionDetail" });
     }
   },
   filters: {
@@ -79,8 +84,9 @@ export default {
 .userInfo {
   display: flex;
 }
-.pannel-default {
-  -webkit-line-clamp: 2;
+.questionCon {
+  height: 5rem;
+  -webkit-line-clamp: 3;
   /* 将对象作为弹性伸缩盒子模型显示 */
   display: -webkit-box;
   /*子元素的排列方式 */
@@ -88,5 +94,14 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-all;
+}
+.plusBox {
+  position: fixed;
+  bottom: 50px;
+}
+.plus {
+  border-radius: 50%;
+  background: #6aa2da;
+  color: #fff;
 }
 </style>
