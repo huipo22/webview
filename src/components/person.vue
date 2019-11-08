@@ -22,33 +22,15 @@
     <!-- 基本信息 我的积分 -->
     <van-cell>
       <van-row>
-        <van-col span="12" class="firstBox">
-          <div id="icon1">
-            <img
-              width="50px"
-              height="50px"
-              src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-            />
-          </div>
-          <div class="icon_con">基本信息</div>
-        </van-col>
-        <van-col span="12" class="firstBox">
-          <div id="icon1">
-            <img
-              width="50px"
-              height="50px"
-              src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-            />
-          </div>
-          <div class="icon_con">我的积分</div>
-        </van-col>
+        <van-col span="12" class="firstBox">基本信息</van-col>
+        <van-col span="12" class="firstBox">我的积分(0)</van-col>
       </van-row>
     </van-cell>
     <!-- 个人中心列表 -->
     <van-cell-group>
       <van-cell icon="points" value="我的学习" to="/my" is-link />
-      <van-cell icon="gold-coin-o" value="我的优惠券" is-link />
-      <van-cell icon="gift-o" value="内容" is-link />
+      <van-cell icon="gold-coin-o" value="我的问答" to="/myQuestion" is-link />
+      <van-cell icon="gift-o" value="我的订单" is-link />
     </van-cell-group>
   </div>
 </template>
@@ -64,8 +46,9 @@ export default {};
   display: flex;
   align-items: center;
 }
-.name,.name_tag{
-  text-align: left
+.name,
+.name_tag {
+  text-align: left;
 }
 .user-group {
   margin-bottom: 15px;
@@ -79,12 +62,10 @@ export default {};
 .firstBox {
   display: flex;
   align-items: center;
+  height: 2rem;
+  justify-content: center
 }
 #icon1 > img {
   border-radius: 50%;
-}
-.icon_con {
-  flex: 1;
-  padding-left: 1.5rem;
 }
 </style>

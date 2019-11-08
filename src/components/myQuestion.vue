@@ -11,8 +11,6 @@
                 <van-row>
                   <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
                 </van-row>
-              </div>
-              <div slot="default" class="pannel-default">
                 <van-row>
                   <van-col span="12">
                     <div class="itemleft">3个回答</div>
@@ -21,6 +19,8 @@
                     <div class="itemright">默认时间</div>
                   </van-col>
                 </van-row>
+              </div>
+              <div slot="default" class="pannel-default">
                 <van-row>
                   <van-col class="userInfo">
                     <div>
@@ -88,6 +88,7 @@ export default {
 }
 .pannel-header {
   text-align: left;
+  margin-bottom: 1rem
 }
 .pannel-foot .left {
   text-align: left;
@@ -120,7 +121,7 @@ export default {
 .itemright {
   text-align: right;
 }
-.quill-editor{
+.quill-editor {
   height: 20rem;
 }
 </style>

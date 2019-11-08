@@ -11,7 +11,13 @@
     <!-- category -->
     <van-row class="m_bottom">
       <van-grid :column-num="5">
-        <van-grid-item v-for="value in 10" :key="value" icon="photo-o" text="问答广场" @click="questionAll"/>
+        <van-grid-item
+          v-for="value in 10"
+          :key="value"
+          icon="photo-o"
+          text="问答广场"
+          @click="questionAll"
+        />
       </van-grid>
     </van-row>
     <!-- 通知 -->
@@ -48,13 +54,24 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.axios
+      .get("/api/goods/shop/wheels", {
+        params: {
+          shop_id: 1
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+      });
+  },
   methods: {
     getHome() {},
-    itemDetail(){
-       this.$router.push({ path:'/itemDetail'  })
+    itemDetail() {
+      this.$router.push({ path: "/itemDetail" });
     },
-    questionAll(){
-      this.$router.push({ path:'/questionAll'  })
+    questionAll() {
+      this.$router.push({ path: "/questionAll" });
     }
   }
 };
@@ -65,7 +82,7 @@ export default {
 }
 .swiperImg {
   height: 10rem;
-   background: #fff;
+  background: #fff;
 }
 .swiperImg img {
   height: 100%;

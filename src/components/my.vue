@@ -3,7 +3,7 @@
     <!-- navbar -->
     <van-nav-bar title="我的" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <van-tabs v-model="active">
-      <van-tab title="全部">
+      <van-tab title="学习中">
         <van-card thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" class="tabBox">
           <div slot="title" class="head">中共中央印发《中国中产党支部工作条例》试行</div>
           <div slot="tags">
@@ -16,7 +16,6 @@
           <div slot="footer"></div>
         </van-card>
       </van-tab>
-      <van-tab title="学习中">内容 2</van-tab>
       <van-tab title="已完成">内容 3</van-tab>
     </van-tabs>
   </div>

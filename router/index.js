@@ -11,6 +11,8 @@ import questionAll from '../src/components/questionAll'
 import myQuestion from '../src/components/myQuestion'
 import askQuestion from '../src/components/askQuestion'
 import questionDetail from '../src/components/questionDetail'
+import shop from '../src/components/love/shop'
+import zhaoshang from '../src/components/love/zhaoshang'
 
 Vue.use(Router)
 
@@ -75,6 +77,16 @@ export default new Router({
             path: '/questionDetail',
             name: 'questionDetail',
             component: questionDetail
+        },
+        {
+            path: '/love/shop',
+            name: 'shop',
+            component: shop
+        },
+        {
+            path: '/love/zhaoshang',
+            name: 'zhaoshang',
+            component: zhaoshang
         },
     ]
 })
