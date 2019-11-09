@@ -13,6 +13,7 @@ import askQuestion from '../src/components/askQuestion'
 import questionDetail from '../src/components/questionDetail'
 import shop from '../src/components/love/shop'
 import zhaoshang from '../src/components/love/zhaoshang'
+import shopDetail from '../src/components/love/shopDetail'
 
 Vue.use(Router)
 
@@ -87,6 +88,11 @@ export default new Router({
             path: '/love/zhaoshang',
             name: 'zhaoshang',
             component: zhaoshang
+        },
+        {
+            path: '/love/shopDetail',
+            name: 'shopDetail',
+            component: shopDetail
         },
     ]
 })

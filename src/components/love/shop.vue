@@ -9,7 +9,7 @@
       <van-dropdown-item v-model="value3" :options="option3" />
     </van-dropdown-menu>
     <!-- list -->
-    <van-card thumb="https://img.yzcdn.cn/vant/t-thirt.jpg">
+    <van-card thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" @click="shopDetail">
       <div slot="tags" class="tags">
         <van-row>
           <van-col span="24" class="comon">名字</van-col>
@@ -54,6 +54,9 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    shopDetail(){
+       this.$router.push("/love/shopDetail");
     }
   }
 };
