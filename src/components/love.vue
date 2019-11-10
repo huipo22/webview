@@ -2,7 +2,7 @@
   <div id="love">
     <!-- navbar -->
     <van-nav-bar title="服务站"></van-nav-bar>
-    <div class="love">
+    <div class="love pageSetting">
       <div class="shop" @click="shop">附近商家</div>
       <div class="shop" @click="zhaoshang">招商加盟</div>
       <div class="shop">
@@ -59,9 +59,6 @@ export default {
 };
 </script>
 <style scoped>
-.love {
-  padding: 10px 16px;
-}
 .shop {
   height: 14rem;
   align-items: center;

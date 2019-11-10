@@ -45,4 +45,14 @@ export default {
   /* margin-top: 60px; */
   background: #f8f8f8;
 }
+/* 公用样式 */
+.pageSetting {
+  padding: 10px 16px;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
 </style>

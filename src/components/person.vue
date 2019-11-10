@@ -22,7 +22,7 @@
     <!-- 基本信息 我的积分 -->
     <van-cell>
       <van-row>
-        <van-col span="12" class="firstBox">基本信息</van-col>
+        <van-col span="12" class="firstBox" @click="baseInfo">基本信息</van-col>
         <van-col span="12" class="firstBox">我的积分(0)</van-col>
       </van-row>
     </van-cell>
@@ -36,7 +36,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    baseInfo(){
+        this.$router.push({ path:'/baseInfo'  })
+    }
+  }
+};
 </script>
 
 <style scoped>

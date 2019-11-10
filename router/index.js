@@ -4,21 +4,29 @@ import Home from '../src/components/home'
 import Study from '../src/components/study'
 import Love from '../src/components/love'
 import Person from '../src/components/person'
-import studyDetail from '../src/components/studyDetail'
-import my from '../src/components/my'
-import itemDetail from '../src/components/itemDetail'
-import questionAll from '../src/components/questionAll'
-import myQuestion from '../src/components/myQuestion'
-import askQuestion from '../src/components/askQuestion'
-import questionDetail from '../src/components/questionDetail'
+import studyDetail from '../src/components/study/studyDetail'
+import my from '../src/components/study/my'
+import itemDetail from '../src/components/item/itemDetail'
+import questionAll from '../src/components/my/questionAll'
+import myQuestion from '../src/components/my/myQuestion'
+import askQuestion from '../src/components/my/askQuestion'
+import questionDetail from '../src/components/my/questionDetail'
 import shop from '../src/components/love/shop'
 import zhaoshang from '../src/components/love/zhaoshang'
 import shopDetail from '../src/components/love/shopDetail'
+import itemList from '../src/components/item/itemList'
+import baseInfo from '../src/components/my/baseInfo'
+import login from '../src/components/login'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [
+        {
+            path: '/login',
+            name: 'login',
+            component: login
+        },
         {
             path: '/',
             name: 'home',
@@ -93,6 +101,16 @@ export default new Router({
             path: '/love/shopDetail',
             name: 'shopDetail',
             component: shopDetail
+        },
+        {
+            path: '/itemList',
+            name: 'itemList',
+            component: itemList
+        },
+        {
+            path: '/baseInfo',
+            name: 'baseInfo',
+            component: baseInfo
         },
     ]
 })

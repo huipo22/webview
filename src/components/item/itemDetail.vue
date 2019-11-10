@@ -4,9 +4,9 @@
     <van-nav-bar title="itemDetail" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <!-- 图文 -->
     <div id="detailBox">
-      <div id="title">中共中央印发《中国中产党支部工作条例》试行</div>
+      <div id="title" class="left">中共中央印发《中国中产党支部工作条例》试行</div>
       <div id="titleInfo">
-        <div class="time">2019-05-09</div>
+        <div class="left">2019-05-09</div>
         <div class="readtime">需要时间</div>
       </div>
       <div id="content">
@@ -48,7 +48,6 @@ export default {
 }
 #title {
   font-size: 1.5rem;
-  text-align: left;
 }
 #titleInfo {
   display: flex;
@@ -57,7 +56,6 @@ export default {
 }
 #titleInfo > .time {
   flex: 1;
-  text-align: left;
 }
 .bottomBox {
   height: 2rem;
