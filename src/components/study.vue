@@ -13,10 +13,7 @@
       <van-grid-item to="/studyDetail">
         <van-panel>
           <div slot="default">
-            <van-image
-              fit="contain"
-              src="https://img.yzcdn.cn/vant/cat.jpeg"
-            />
+            <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg" />
             <div class="default-title">中国共产党章程</div>
           </div>
           <div slot="footer">
@@ -27,10 +24,7 @@
       <van-grid-item>
         <van-panel>
           <div slot="default">
-            <van-image
-              fit="contain"
-              src="https://img.yzcdn.cn/vant/cat.jpeg"
-            />
+            <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg" />
             <div class="default-title">中国共产党章程</div>
           </div>
           <div slot="footer">
@@ -51,9 +45,9 @@ export default {
       ]
     };
   },
-  methods:{
-    onClickRight(){
-       this.$router.push({ path:'/my'  })
+  methods: {
+    onClickRight() {
+      this.$router.push({ path: "/my" });
     }
   }
 };
@@ -71,7 +65,7 @@ export default {
 .swiperImg img {
   height: 100%;
 }
-.default-title{
-  text-align: left
+.default-title {
+  text-align: left;
 }
 </style>

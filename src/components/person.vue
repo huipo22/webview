@@ -37,9 +37,9 @@
 
 <script>
 export default {
-  methods:{
-    baseInfo(){
-        this.$router.push({ path:'/baseInfo'  })
+  methods: {
+    baseInfo() {
+      this.$router.push({ path: "/baseInfo" });
     }
   }
 };
@@ -69,7 +69,7 @@ export default {
   display: flex;
   align-items: center;
   height: 2rem;
-  justify-content: center
+  justify-content: center;
 }
 #icon1 > img {
   border-radius: 50%;

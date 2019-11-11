@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <van-tabbar v-model="active">
+    <van-tabbar v-model="active" v-if="flag">
       <van-tabbar-item icon="home-o" name="home" @click="home()">首页</van-tabbar-item>
       <van-tabbar-item icon="search" name="study" @click="study()">学习</van-tabbar-item>
       <van-tabbar-item icon="friends-o" name="love" @click="love()">服务站</van-tabbar-item>
@@ -15,8 +15,15 @@ export default {
   name: "app",
   data() {
     return {
-      active: "home"
+      active: "home",
+      flag: true
     };
+  },
+  mounted() {
+    window.console.log(this);
+    if (this.$route.fullPath == "/login") {
+      this.flag = false;
+    }
   },
   methods: {
     home() {

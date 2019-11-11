@@ -17,8 +17,8 @@
           :icon="resourse+item.more['thumbnail']"
           :text="item.name"
         />
-        <van-grid-item text="问答广场" @click="questionAll"/>
-        <van-grid-item text="更多" @click="moreCategory"/>
+        <van-grid-item text="问答广场" @click="questionAll" />
+        <van-grid-item text="更多" @click="moreCategory" />
       </van-grid>
     </van-row>
     <!-- 通知 -->
@@ -57,6 +57,7 @@ import global from "../global";
 export default {
   data() {
     return {
+      active: "home",
       resourse: global.imgAddress,
       categoryList: [], //分类组合
       newList: [], //新闻list
@@ -98,7 +99,7 @@ export default {
     },
     // 分类更多
     moreList(id) {
-      this.$router.push({ path: "/itemList?categoryId="+id });
+      this.$router.push({ path: "/itemList?categoryId=" + id });
     }
   }
 };
