@@ -17,6 +17,7 @@ import shopDetail from '../src/components/love/shopDetail'
 import itemList from '../src/components/item/itemList'
 import baseInfo from '../src/components/my/baseInfo'
 import login from '../src/components/login'
+import moreCategory from '../src/components/item/moreCategory'
 
 Vue.use(Router)
 
@@ -111,6 +112,11 @@ export default new Router({
             path: '/baseInfo',
             name: 'baseInfo',
             component: baseInfo
+        },
+        {
+            path: '/moreCategory',
+            name: 'moreCategory',
+            component: moreCategory
         },
     ]
 })

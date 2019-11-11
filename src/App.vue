@@ -43,11 +43,19 @@ export default {
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
+  background: #fff;
 }
 /* 公用样式 */
 .pageSetting {
   padding: 10px 16px;
+}
+.swiperImg {
+  height: 10rem;
+  background: #fff;
+}
+.swiperImg img {
+  height: 100%;
 }
 .left {
   text-align: left;

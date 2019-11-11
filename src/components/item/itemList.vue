@@ -6,19 +6,21 @@
     <van-row>
       <van-list>
         <van-panel>
-          <!-- <div slot="header" class="pannel-head">
-            <van-col span="6">职工之家</van-col>
-            <van-col offset="14" span="4" @click="moreList">更多</van-col>
-          </div>-->
-          <div slot="default" class="pannel-default" @click="itemDetail">
+          <div
+            slot="default"
+            class="pannel-default"
+            @click="itemDetail(item.id)"
+            v-for="item in listData"
+            :key="item.id"
+          >
             <van-row>
-              <van-col offset="1" span="13" class="left">警惕！电动车祸患不可小觑1111111111111</van-col>
+              <van-col offset="1" span="13" class="left">{{item.post_title}}</van-col>
               <van-col span="10">
-                <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt height="50px" />
+                <img :src="resourse+item.thumbnail" alt height="50px" />
               </van-col>
             </van-row>
             <van-row>
-              <van-col offset="1" span="13" class="left">2019.11.5</van-col>
+              <van-col offset="1" span="13" class="left">{{item.published_time|dCreateTime}}</van-col>
             </van-row>
           </div>
         </van-panel>
@@ -27,14 +29,33 @@
   </div>
 </template>
 <script>
+import global from "../../global";
 export default {
+  mounted() {
+    let id = this.$route.query.categoryId; //home 携带过来的分类id
+    let that = this;
+    this.axios
+      .post("/portal/categories/get_newlist", { cate_id: id })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.listData = res.data.data.list;
+        }
+      });
+  },
+  data() {
+    return {
+      listData: [],
+      resourse: global.imgAddress
+    };
+  },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
     },
     // 详情
-    itemDetail() {
-      this.$router.push({ path: "/itemDetail" });
+    itemDetail(id) {
+      this.$router.push({ path: "/itemDetail?newId=" + id });
     }
   }
 };

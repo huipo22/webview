@@ -57,6 +57,7 @@ export default {
     },
     onEditorChange() {
       //内容改变事件
+      window.console.log(this.content)
     }
   },
   computed: {

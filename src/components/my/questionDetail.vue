@@ -15,6 +15,10 @@
         <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
       </van-row>
       <van-row>
+        <van-col>3个回答</van-col>
+      </van-row>
+      <van-divider />
+      <van-row>
         <van-col class="userInfo">
           <div>
             <img

@@ -17,7 +17,8 @@
           :icon="resourse+item.more['thumbnail']"
           :text="item.name"
         />
-        <van-grid-item text="问答广场" />
+        <van-grid-item text="问答广场" @click="questionAll"/>
+        <van-grid-item text="更多" @click="moreCategory"/>
       </van-grid>
     </van-row>
     <!-- 通知 -->
@@ -28,9 +29,14 @@
         <van-panel v-for="item in newList.list" :key="item.id">
           <div slot="header" class="pannel-head">
             <van-col span="6">{{item.name}}</van-col>
-            <van-col offset="14" span="4" @click="moreList">更多</van-col>
+            <van-col offset="14" span="4" @click="moreList(item.id)">更多</van-col>
           </div>
-          <div slot="default" class="pannel-default" @click="itemDetail(item.new.id)" v-if="item.new">
+          <div
+            slot="default"
+            class="pannel-default"
+            @click="itemDetail(item.new.id)"
+            v-if="item.new"
+          >
             <van-row>
               <van-col offset="1" span="13" class="left title">{{item.new.post_title}}</van-col>
               <van-col span="10">
@@ -75,56 +81,36 @@ export default {
       }
     });
   },
-  filters: {
-    dCreateTime(value) {
-      window.console.log(value);
-      var date = new Date(parseInt(value));
-      var Y = date.getFullYear() + "-";
-      var M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-      var D = date.getDate() + " ";
-      var h = date.getHours() + ":";
-      var m = date.getMinutes() + ":";
-      var s = date.getSeconds();
-      var df = Y + M + D + h + m + s;
-      window.console.log(df);
-      return df;
-    }
-  },
   methods: {
     getHome() {},
     // 详情
     itemDetail(id) {
-      window.console.log(id)
-      this.$router.push({ path: "/itemDetail?newId="+id });
+      window.console.log(id);
+      this.$router.push({ path: "/itemDetail?newId=" + id });
     },
     // 全部问答
     questionAll() {
       this.$router.push({ path: "/questionAll" });
     },
-    // more
-    moreList() {
-      this.$router.push({ path: "/itemList" });
+    // 更多分类
+    moreCategory() {
+      this.$router.push({ path: "/moreCategory" });
+    },
+    // 分类更多
+    moreList(id) {
+      this.$router.push({ path: "/itemList?categoryId="+id });
     }
   }
 };
 </script>
 <style  scoped>
-.title{
+.title {
   height: 3.5rem;
 }
 .m_bottom {
   margin-bottom: 1rem;
 }
-.swiperImg {
-  height: 10rem;
-  background: #fff;
-}
-.swiperImg img {
-  height: 100%;
-}
+
 .pannel-head {
   height: 2rem;
   display: flex;

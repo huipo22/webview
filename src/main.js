@@ -18,10 +18,15 @@ Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 Vue.prototype.qs = qs
 //默认后台接口前缀
-axios.defaults.baseURL = 'https://gh.jishanhengrui.com/api/'
-// axios.defaults.baseURL = '/api'
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'https://gh.jishanhengrui.com/api/'
+axios.defaults.baseURL = '/api'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded format';
 Vue.config.productionTip = false
+
+import filter from '../src/filter'
+ 
+// 全局导入过滤器
+Object.keys(filter).forEach(key => Vue.filter(key, filter[key]))
 
 new Vue({
   axios,
