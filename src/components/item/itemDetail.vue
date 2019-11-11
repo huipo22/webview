@@ -24,12 +24,20 @@
   </div>
 </template>
 <script>
-
 export default {
+  mounted() {
+    let id = this.$route.query.newId; //home 携带过来的新闻id
+    window.console.log(id);
+    this.axios
+      .post("/portal/categories/get_new", {
+        id: id
+      })
+      .then(res => {
+        window.console.log(res);
+      });
+  },
   data() {
-    return {
-      
-    };
+    return {};
   },
   methods: {
     onClickLeft() {

@@ -18,8 +18,9 @@ Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 Vue.prototype.qs = qs
 //默认后台接口前缀
-axios.defaults.baseURL = 'https://hr.jishanhengrui.com'
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.baseURL = 'https://gh.jishanhengrui.com/api/'
+// axios.defaults.baseURL = '/api'
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 Vue.config.productionTip = false
 
 new Vue({

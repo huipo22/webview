@@ -12,12 +12,12 @@
     <van-row class="m_bottom">
       <van-grid :column-num="5">
         <van-grid-item
-          v-for="value in 10"
-          :key="value"
-          icon="photo-o"
-          text="问答广场"
-          @click="questionAll"
+          v-for="item in categoryList.list"
+          :key="item.id"
+          :icon="resourse+item.more['thumbnail']"
+          :text="item.name"
         />
+        <van-grid-item text="问答广场" />
       </van-grid>
     </van-row>
     <!-- 通知 -->
@@ -25,20 +25,20 @@
     <!-- category_detail -->
     <van-row>
       <van-list>
-        <van-panel>
+        <van-panel v-for="item in newList.list" :key="item.id">
           <div slot="header" class="pannel-head">
-            <van-col span="6">职工之家</van-col>
+            <van-col span="6">{{item.name}}</van-col>
             <van-col offset="14" span="4" @click="moreList">更多</van-col>
           </div>
-          <div slot="default" class="pannel-default" @click="itemDetail">
+          <div slot="default" class="pannel-default" @click="itemDetail(item.new.id)" v-if="item.new">
             <van-row>
-              <van-col offset="1" span="13" class="left">警惕！电动车祸患不可小觑1111111111111</van-col>
+              <van-col offset="1" span="13" class="left title">{{item.new.post_title}}</van-col>
               <van-col span="10">
-                <img src="https://img.yzcdn.cn/vant/apple-1.jpg" alt height="50px" />
+                <image :src="resourse+item.more['thumbnail']" alt height="50px" />
               </van-col>
             </van-row>
             <van-row>
-              <van-col offset="1" span="13" class="left">2019.11.5</van-col>
+              <van-col offset="1" span="13" class="left">{{item.new.create_time |dCreateTime}}</van-col>
             </van-row>
           </div>
         </van-panel>
@@ -47,9 +47,13 @@
   </div>
 </template>
 <script>
+import global from "../global";
 export default {
   data() {
     return {
+      resourse: global.imgAddress,
+      categoryList: [], //分类组合
+      newList: [], //新闻list
       images: [
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
@@ -57,21 +61,44 @@ export default {
     };
   },
   mounted() {
-    this.axios
-      .get("/api/goods/shop/wheels", {
-        params: {
-          shop_id: 1
-        }
-      })
-      .then(res => {
-        window.console.log(res);
-      });
+    let that = this;
+    this.axios.get("/portal/categories").then(res => {
+      window.console.log(res);
+      if (res.data.code == 1) {
+        that.categoryList = res.data.data;
+      }
+    });
+    this.axios.get("/portal/categories/new_list").then(res => {
+      window.console.log(res);
+      if (res.data.code == 1) {
+        that.newList = res.data.data;
+      }
+    });
+  },
+  filters: {
+    dCreateTime(value) {
+      window.console.log(value);
+      var date = new Date(parseInt(value));
+      var Y = date.getFullYear() + "-";
+      var M =
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) + "-";
+      var D = date.getDate() + " ";
+      var h = date.getHours() + ":";
+      var m = date.getMinutes() + ":";
+      var s = date.getSeconds();
+      var df = Y + M + D + h + m + s;
+      window.console.log(df);
+      return df;
+    }
   },
   methods: {
     getHome() {},
     // 详情
-    itemDetail() {
-      this.$router.push({ path: "/itemDetail" });
+    itemDetail(id) {
+      window.console.log(id)
+      this.$router.push({ path: "/itemDetail?newId="+id });
     },
     // 全部问答
     questionAll() {
@@ -85,6 +112,9 @@ export default {
 };
 </script>
 <style  scoped>
+.title{
+  height: 3.5rem;
+}
 .m_bottom {
   margin-bottom: 1rem;
 }
