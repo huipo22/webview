@@ -11,6 +11,9 @@ Vue.use(BaiduMap, {
   ak: 'CeqxiSuNZHrD8hVUGlggfgLto5LOm49I'
 })
 
+import { Toast } from "vant";
+
+Vue.use(Toast);
 // axios
 import axios from 'axios'
 import qs from 'qs';
@@ -20,7 +23,7 @@ Vue.prototype.qs = qs
 //默认后台接口前缀
 // axios.defaults.baseURL = 'https://gh.jishanhengrui.com/api/'
 axios.defaults.baseURL = '/api'
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded format';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 Vue.config.productionTip = false
 

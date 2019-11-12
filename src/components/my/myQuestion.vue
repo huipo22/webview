@@ -6,17 +6,17 @@
       <van-tab title="我的回答(3)">
         <van-row>
           <van-list>
-            <van-panel class="questionList">
+            <van-panel class="questionList" v-for="item in answerList" :key="item.id">
               <div slot="header" class="pannel-header">
                 <van-row>
-                  <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
+                  <van-col>{{item.content}}</van-col>
                 </van-row>
                 <van-row>
                   <van-col span="12">
-                    <div class="itemleft">3个回答</div>
+                    <div class="itemleft">{{}}个回答</div>
                   </van-col>
                   <van-col span="12">
-                    <div class="itemright">默认时间</div>
+                    <div class="itemright">{{item.add_time}}</div>
                   </van-col>
                 </van-row>
               </div>
@@ -32,10 +32,10 @@
                       />
                     </div>
                     <div class="name">十号</div>
-                    <div class="time">时间</div>
+                    <div class="time">{{item.question.add_time}}</div>
                   </van-col>
                   <van-col class="questionCon">
-                    <p>一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。</p>
+                    {{item.question.content}}
                   </van-col>
                 </van-row>
               </div>
@@ -46,16 +46,16 @@
       <van-tab title="我的提问(3)">
         <van-row>
           <van-list>
-            <van-panel class="questionList">
+            <van-panel class="questionList" v-for="item in questionList" :key="item.id">
               <div slot="header" class="pannel-header" @click="askDetail">
                 <van-row>
-                  <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
+                  <van-col v-html="item.content"></van-col>
                 </van-row>
               </div>
               <div slot="footer" class="pannel-foot">
                 <van-row>
-                  <van-col span="12" class="left">2018-10-19</van-col>
-                  <van-col span="12" class="right">3个回答</van-col>
+                  <van-col span="12" class="left">{{item.add_time}}</van-col>
+                  <van-col span="12" class="right">{{item.count}}个回答</van-col>
                 </van-row>
               </div>
             </van-panel>
@@ -66,11 +66,55 @@
   </div>
 </template>
 <script>
+import global from "../../global";
 export default {
   data() {
     return {
-      active: 0
+      active: 0,
+      questionList: [],
+      answerList: []
     };
+  },
+  mounted() {
+    let that = this;
+    let params = this.qs.stringify({
+      type: 1
+    });
+    let params2 = this.qs.stringify({
+      type: 2
+    });
+    this.axios
+      .post("/home/forum/get_my", params, {
+        headers: {
+          "Device-Type": global.deviceType,
+          "Content-Type": "application/x-www-form-urlencoded",
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.answerList = res.data.data.answer;
+        } else {
+          Toast.fail(res.data.msg);
+        }
+      });
+    this.axios
+      .post("/home/forum/get_my", params2, {
+        headers: {
+          "Device-Type": global.deviceType,
+          "Content-Type": "application/x-www-form-urlencoded",
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.questionList = res.data.data.question;
+        } else {
+          Toast.fail(res.data.msg);
+        }
+      });
   },
   methods: {
     onClickLeft() {
@@ -88,7 +132,7 @@ export default {
 }
 .pannel-header {
   text-align: left;
-  margin-bottom: 1rem
+  margin-bottom: 1rem;
 }
 .pannel-foot .left {
   text-align: left;

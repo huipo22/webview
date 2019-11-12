@@ -40,8 +40,8 @@
             v-if="item.new"
           >
             <van-row>
-              <van-col offset="1" span="13" class="left title">{{item.new.post_title}}</van-col>
-              <van-col span="10">
+              <van-col offset="1" span="16" class="left title">{{item.new.post_title}}</van-col>
+              <van-col span="8">
                 <image :src="resourse+item.more['thumbnail']" alt height="50px" />
               </van-col>
             </van-row>
@@ -56,6 +56,10 @@
   </div>
 </template>
 <script>
+import Vue from 'vue';
+import { NoticeBar } from 'vant';
+
+Vue.use(NoticeBar);
 import global from "../global";
 import tabbar from "../components/common/tabbar";
 export default {
@@ -121,7 +125,7 @@ export default {
 </script>
 <style  scoped>
 .title {
-  height: 3.5rem;
+  height: 4.5rem;
 }
 .m_bottom {
   margin-bottom: 1rem;
@@ -133,6 +137,6 @@ export default {
   align-items: center;
 }
 .pannel-default {
-  height: 5rem;
+  height: 8rem;
 }
 </style>

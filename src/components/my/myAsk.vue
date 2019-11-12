@@ -1,8 +1,8 @@
 <template>
-  <div id="askQuestion">
+  <div id="myAsk">
     <!-- navbar -->
     <van-nav-bar
-      title="我的提问"
+      title="我的回答"
       left-arrow
       @click-left="onClickLeft"
       right-text="提交"
@@ -50,11 +50,13 @@ export default {
     },
     onClickRight() {
       let that = this;
+       let id = this.$route.query.questionId;
       let params = this.qs.stringify({
-        content: this.content
+        content: this.content,
+        question_id:id
       });
       this.axios
-        .post("/home/forum/add_question", params, {
+        .post("/home/forum/add_answer", params, {
           headers: {
             "Device-Type": global.deviceType,
             "Content-Type": "application/x-www-form-urlencoded",
@@ -64,7 +66,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            that.$router.push({ path: "/questionDetail" });
+            that.$router.push({ path: "/myQuestion" });
           } else {
             Toast.fail(res.data.msg);
           }

@@ -12,34 +12,23 @@
     <!-- title -->
     <div slot="header" class="pannel-header">
       <van-row>
-        <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
+        <van-col>{{question.content}}</van-col>
       </van-row>
       <van-row>
-        <van-col>3个回答</van-col>
+        <van-col>{{question.count}}个回答</van-col>
       </van-row>
       <van-divider />
+      <!-- +号 -->
       <van-row>
-        <van-col class="userInfo">
-          <div>
-            <img
-              class="avatar"
-              width="30px"
-              height="30px"
-              src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-            />
-          </div>
-          <div class="name">十号</div>
-          <div class="time">时间</div>
-        </van-col>
-        <van-col class="questionCon">
-          <p>一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。</p>
+        <van-col span="24" class="plusBox">
+          <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" />
         </van-col>
       </van-row>
     </div>
     <!-- 回答list -->
     <van-row>
       <van-list>
-        <van-panel class="questionList">
+        <van-panel class="questionList" v-for="item in question.answers" :key="item.id">
           <div slot="default" class="pannel-default">
             <van-row>
               <van-col class="userInfo">
@@ -48,36 +37,13 @@
                     class="avatar"
                     width="30px"
                     height="30px"
-                    src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
+                    :src="item.user_info.avatar==''?'https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png':item.user_info.avatar"
                   />
                 </div>
-                <div class="name">十号</div>
-                <div class="time">时间</div>
+                <div class="name">{{item.user_info.user_nickname}}</div>
+                <div class="time">{{item.add_time|dCreateTime}}</div>
               </van-col>
-              <van-col class="questionCon">
-                <p>一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。</p>
-              </van-col>
-            </van-row>
-          </div>
-        </van-panel>
-        <van-panel class="questionList">
-          <div slot="default" class="pannel-default">
-            <van-row>
-              <van-col class="userInfo">
-                <div>
-                  <img
-                    class="avatar"
-                    width="30px"
-                    height="30px"
-                    src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-                  />
-                </div>
-                <div class="name">十号</div>
-                <div class="time">时间</div>
-              </van-col>
-              <van-col class="questionCon">
-                <p>一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。</p>
-              </van-col>
+              <van-col class="questionCon">{{item.content}}</van-col>
             </van-row>
           </div>
         </van-panel>
@@ -86,9 +52,26 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
-    return {};
+    return {
+      question: {}
+    };
+  },
+  mounted() {
+    let id = this.$route.query.questionId; //home 携带过来的分类id
+    let that = this;
+    this.axios
+      .post("/home/forum/forum_detail", { question_id: id })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.question = res.data.data;
+        } else {
+          Toast.fail(res.data.msg);
+        }
+      });
   },
   methods: {
     onClickLeft() {
@@ -96,7 +79,18 @@ export default {
     },
     onClickRight() {
       this.$router.push({ path: "/myQuestion" });
+    },
+    askQuestion() {
+      let id = this.$route.query.questionId;
+      this.$router.push({ path: "/myAsk?questionId=" + id });
     }
   }
 };
 </script>
+<style scoped>
+.plusBox {
+  text-align: center;
+  position: fixed;
+  bottom: 50px;
+}
+</style>

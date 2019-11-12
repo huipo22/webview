@@ -18,6 +18,7 @@ import itemList from '../src/components/item/itemList'
 import baseInfo from '../src/components/my/baseInfo'
 import login from '../src/components/login'
 import moreCategory from '../src/components/item/moreCategory'
+import myAsk from '../src/components/my/myAsk'
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -121,6 +122,11 @@ export default new Router({
             path: '/moreCategory',
             name: 'moreCategory',
             component: moreCategory
+        },
+        {
+            path: '/myAsk',
+            name: 'myAsk',
+            component: myAsk
         },
     ]
 })

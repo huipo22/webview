@@ -74,6 +74,10 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
+import { Toast } from "vant";
+
+Vue.use(Toast);
 import addressList from "../../dist/area";
 import global from "../../global";
 export default {
@@ -120,25 +124,30 @@ export default {
     //提交
     onClickRight() {
       let that = this;
-      this.axios
-        .post("/user/profile/userInfo", {
-          headers: {
-            "Device-Type": global.deviceType,
-            token: global.token
-          },
-          params: {
+      window.console.log(JSON.parse(sessionStorage.getItem("userInfo")).token);
+      let params=this.qs.stringify({
             user_nickname: that.baseInfo.user_nickname,
             avatar: that.baseInfo.avatar,
             signature: that.baseInfo.signature,
             sex: that.baseInfo.sex,
             address: that.baseInfo.address,
             gonghui: that.baseInfo.gonghui
-          }
+          })
+      this.axios
+        .post("/user/profile/userInfo",params, {
+          headers: {
+            "Device-Type": global.deviceType,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+            // token: "3014ceb861431cf7f7870f7c5b9af79605a26c60a8a40db1e0132e6ed576178b"
+          },
         })
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
             this.$router.push({ path: "/person" });
+          } else {
+            Toast.fail(res.data.msg);
           }
         });
     },
@@ -151,7 +160,7 @@ export default {
         .post("/user/upload/one", {
           headers: {
             "Device-Type": global.deviceType,
-            token: global.token,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token,
             "Content-Type": "multipart/form-data"
           },
           params: {

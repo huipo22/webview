@@ -10,11 +10,11 @@
     ></van-nav-bar>
     <!-- 问题内容 -->
     <van-row>
-      <van-list>
-        <van-panel class="questionList" @click="questionDetail">
+      <van-list v-for="item in questionAll" :key="item.id">
+        <van-panel class="questionList" @click="questionDetail(item.id)">
           <div slot="header" class="pannel-header">
             <van-row>
-              <van-col>请问洛尔菲钢琴这个品牌好吗？有什么型号推荐？价格怎么样？</van-col>
+              <van-col>{{item.content}}</van-col>
             </van-row>
           </div>
           <div slot="default" class="pannel-default">
@@ -23,34 +23,55 @@
                 <div>
                   <img
                     class="avatar"
-                    width="50px"
-                    height="50px"
-                    src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
+                    width="30px"
+                    height="30px"
+                    :src="item.user_info.avatar==''?'https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png':item.user_info.avata"
                   />
                 </div>
-                <div class="name">十号</div>
-                <div class="time">时间</div>
+                <div class="name">{{item.user_info.user_nickname}}</div>
+                <div class="time">{{item.user_info.create_time |dCreateTime}}</div>
               </van-col>
-              <van-col class="questionCon">
+              <!-- <van-col class="questionCon">
                 <p>一次，酒吧里，她喝醉了，就下意识亲了我。得逞之后，还想再来，但是，我拒绝了。因为我知道这样搞下去，朋友都没得做。是真的那种很会照顾人的姐姐一样的人设的朋友，一起出去旅游一起吃饭一起聊八卦。</p>
-              </van-col>
+              </van-col> -->
             </van-row>
           </div>
         </van-panel>
       </van-list>
     </van-row>
-    <!-- +号 -->
-    <van-row>
-      <van-col span="24" class="plusBox">
-        <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" />
-      </van-col>
-    </van-row>
+      <!-- +号 -->
+      <van-row>
+        <van-col span="24" class="plusBox">
+          <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" />
+        </van-col>
+      </van-row>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      questionAll:[],
+    };
+  },
+  mounted() {
+    let that=this;
+    this.axios
+      .get("/home/forum/index", {
+        headers: {
+          "Device-Type": global.deviceType,
+          "Content-Type": "application/x-www-form-urlencoded",
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.questionAll=res.data.data
+        } else {
+          Toast.fail(res.data.msg);
+        }
+      });
   },
   methods: {
     onClickLeft() {
@@ -62,8 +83,8 @@ export default {
     askQuestion() {
       this.$router.push({ path: "/askQuestion" });
     },
-    questionDetail() {
-      this.$router.push({ path: "/questionDetail" });
+    questionDetail(id) {
+      this.$router.push({ path: "/questionDetail?questionId="+id });
     }
   },
   filters: {

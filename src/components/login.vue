@@ -46,6 +46,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
+            sessionStorage.setItem('userInfo',JSON.stringify(res.data.data))
             this.$router.replace({ path: "/person" });
           } else {
             Toast.fail(res.data.msg);

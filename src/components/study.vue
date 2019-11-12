@@ -10,40 +10,48 @@
     </van-swipe>
     <!-- list -->
     <van-grid :column-num="2">
-      <van-grid-item to="/studyDetail">
+      <van-grid-item @click="studyDetail(item.id)" item.id v-for="item in study" :key="item.id">
         <van-panel>
           <div slot="default">
-            <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <div class="default-title">中国共产党章程</div>
+            <van-image fit="contain" :src="resource+item.img" />
+            <div class="default-title">{{item.content}}</div>
           </div>
           <div slot="footer">
-            <van-col span="10">2019.11.5</van-col>
-          </div>
-        </van-panel>
-      </van-grid-item>
-      <van-grid-item>
-        <van-panel>
-          <div slot="default">
-            <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <div class="default-title">中国共产党章程</div>
-          </div>
-          <div slot="footer">
-            <van-col span="10">2019.11.5</van-col>
+            <van-col span="10">{{item.add_time}}</van-col>
           </div>
         </van-panel>
       </van-grid-item>
     </van-grid>
-    <tabbar name="study"/>
+    <tabbar name="study" />
   </div>
 </template>
 <script>
 import tabbar from "../components/common/tabbar";
+import global from '../global'
 export default {
-  components:{
+  components: {
     tabbar
+  },
+  mounted() {
+    let that = this;
+    this.axios
+      .get("home/study", {
+        headers: {
+          "Device-Type": global.deviceType,
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.study = res.data.data;
+        }
+      });
   },
   data() {
     return {
+      study: {},
+      resource:global.imgAddress,
       images: [
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
@@ -53,6 +61,9 @@ export default {
   methods: {
     onClickRight() {
       this.$router.push({ path: "/my" });
+    },
+    studyDetail(id){
+      this.$router.push({ path: "/studyDetail?studyId="+id });
     }
   }
 };

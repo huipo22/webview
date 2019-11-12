@@ -7,16 +7,12 @@
     <van-row id="avatarBox">
       <van-col span="8">
         <div id="icon1">
-          <img
-            width="50px"
-            height="50px"
-            src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-          />
+          <img width="50px" height="50px" :src="userInfo.user.avatar" :alt="userInfo.user.avatar" />
         </div>
       </van-col>
       <van-col span="16">
-        <div class="name">十号</div>
-        <div class="name_tag">全心全意为人民服务</div>
+        <div class="name">{{userInfo.user.user_nickname==""?"暂无昵称":userInfo.user.user_nickname}}</div>
+        <div class="name_tag">{{userInfo.user.signature==""?"暂无签名":userInfo.user.signature}}</div>
       </van-col>
     </van-row>
     <!-- 基本信息 我的积分 -->
@@ -32,7 +28,7 @@
       <van-cell icon="gold-coin-o" value="我的问答" to="/myQuestion" is-link />
       <van-cell icon="gift-o" value="我的订单" is-link />
     </van-cell-group>
-    <tabbar name="person"/>
+    <tabbar name="person" />
   </div>
 </template>
 
@@ -40,14 +36,23 @@
 import tabbar from "../components/common/tabbar";
 
 export default {
-  components:{
+  components: {
     tabbar
+  },
+  data() {
+    return {
+      userInfo: null
+    };
+  },
+  mounted() {
+    this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    window.console.log(this.userInfo);
   },
   methods: {
     baseInfo() {
       this.$router.push({ path: "/baseInfo" });
     }
-  },
+  }
 };
 </script>
 
