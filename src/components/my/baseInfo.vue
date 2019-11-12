@@ -146,12 +146,13 @@ export default {
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       window.console.log(file);
+
       this.axios
         .post("/user/upload/one", {
           headers: {
             "Device-Type": global.deviceType,
             token: global.token,
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "multipart/form-data"
           },
           params: {
             file: file.content
