@@ -11,15 +11,25 @@
     <!-- 设置区域 -->
     <van-cell-group class="pageSetting">
       <van-field
-        v-model="username"
+        v-model="baseInfo.user_nickname"
         required
         clearable
         label="昵称"
-        right-icon="question-o"
         placeholder="请输入昵称"
-        @click-right-icon="$toast('question')"
       />
-      <van-field v-model="signname" label="签名" placeholder="请输入个性签名" required />
+      <van-cell required>
+        <van-row>
+          <van-col style="text-align:center;width:90px">性别</van-col>
+          <van-col>
+            <van-radio-group v-model="baseInfo.sex" class="radioBox">
+              <van-radio name="0">男</van-radio>
+              <van-radio name="1">女</van-radio>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
+      <!-- </van-field> -->
+      <van-field v-model="baseInfo.signature" label="签名" placeholder="请输入个性签名" required />
       <van-field
         v-model="address"
         placeholder="请选择省市区"
@@ -27,18 +37,20 @@
         @click="showAddressChuang"
         required
       />
-      <van-field v-model="addressInfo" label="详细地址" placeholder="请输入详细地址" required />
-      <van-field
+      <van-field v-model="baseInfo.address" label="详细地址" placeholder="请输入详细地址" required />
+      <van-field v-model="baseInfo.gonghui" label="工会" placeholder="请输入工会" required />
+      <!-- <van-field
         readonly
         clickable
         label="工会"
         :value="value"
         placeholder="选择工会"
         @click="showPicker = true"
-      />
+      />-->
       <van-cell>
-        <van-uploader :after-read="afterRead" />
+        <van-uploader :after-read="afterRead" result-type="file" />
       </van-cell>
+      <input type="file" @change="aa" />
     </van-cell-group>
     <!-- 省市区选择弹窗 -->
     <van-popup v-model="showAddress" position="bottom" :style="{ height: '50%' }">
@@ -51,46 +63,100 @@
       />
     </van-popup>
     <!-- 工会选择 -->
-    <van-popup v-model="showPicker" position="bottom">
+    <!-- <van-popup v-model="showPicker" position="bottom">
       <van-picker
         show-toolbar
         :columns="columns"
         @cancel="showPicker = false"
         @confirm="onConfirm"
       />
-    </van-popup>
+    </van-popup>-->
   </div>
 </template>
 <script>
 import addressList from "../../dist/area";
+import global from "../../global";
 export default {
   data() {
     return {
-      username: "",
-      signname: "",
+      baseInfo: {},
+      // username: "", //昵称
+      // signname: "", //签名
+      // sex: "", //性别
       address: "",
-      addressInfo: "",
+      addressInfo: "", //  详细地址
       showAddress: false,
       // 当前选中的省市区code
       areaNum: "",
       // 省市区列表
-      areaList: addressList,
+      areaList: addressList
       // 工会
-      value: "",
-      showPicker: false,
-      columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
+      // value: "",
+      // showPicker: false,
+      // columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
     };
+  },
+  mounted() {
+    // get 基本信息
+    let that = this;
+    this.axios
+      .get("/user/profile/userInfo", {
+        headers: {
+          "Device-Type": global.deviceType,
+          token: global.token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.baseInfo = res.data.data;
+        }
+      });
   },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
     },
+    //提交
     onClickRight() {
-      this.$router.push({ path: "/person" });
+      let that = this;
+      this.axios
+        .post("/user/profile/userInfo", {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: global.token
+          },
+          params: {
+            user_nickname: that.baseInfo.user_nickname,
+            avatar: that.baseInfo.avatar,
+            signature: that.baseInfo.signature,
+            sex: that.baseInfo.sex,
+            address: that.baseInfo.address,
+            gonghui: that.baseInfo.gonghui
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+            this.$router.push({ path: "/person" });
+          }
+        });
     },
     // 上传文件
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
+      window.console.log(file);
+      this.axios.post("/user/upload/one",{
+       headers: {
+            "Device-Type": global.deviceType,
+            token: global.token
+          },
+          params: {
+            file:file
+          }
+      })
+    },
+    aa(file) {
       window.console.log(file);
     },
     // 点击展示地址弹窗
@@ -117,3 +183,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+.radioBox {
+  display: flex;
+  justify-content: flex-end;
+}
+.radioBox > .van-radio {
+  padding: 0 0.5rem;
+}
+</style>

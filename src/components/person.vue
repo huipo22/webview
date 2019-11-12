@@ -32,16 +32,22 @@
       <van-cell icon="gold-coin-o" value="我的问答" to="/myQuestion" is-link />
       <van-cell icon="gift-o" value="我的订单" is-link />
     </van-cell-group>
+    <tabbar name="person"/>
   </div>
 </template>
 
 <script>
+import tabbar from "../components/common/tabbar";
+
 export default {
+  components:{
+    tabbar
+  },
   methods: {
     baseInfo() {
       this.$router.push({ path: "/baseInfo" });
     }
-  }
+  },
 };
 </script>
 

@@ -10,14 +10,19 @@
 </template>
 <script>
 export default {
+  props: ["name"],
   data() {
     return {
-      active: "home"
+      active: null
     };
+  },
+  mounted(){
+    window.console.log(this)
+    this.active=this.$props.name
   },
   methods: {
     home() {
-      this.$router.push("/");
+      this.$router.push("/home");
     },
     study() {
       this.$router.push("/study");

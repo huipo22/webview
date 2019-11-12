@@ -23,10 +23,15 @@
         </baidu-map>
       </div>
     </div>
+    <tabbar name="love" />
   </div>
 </template>
 <script>
+import tabbar from "../components/common/tabbar";
 export default {
+  components: {
+    tabbar
+  },
   data() {
     return {
       map: {
@@ -38,12 +43,11 @@ export default {
       },
       markers: [
         {
-          geo: { lng:  116.449112, lat: 39.920912 }
+          geo: { lng: 116.449112, lat: 39.920912 }
         },
         {
-          geo: { lng: 116.433877,lat: 39.909622 }
-        },
-       
+          geo: { lng: 116.433877, lat: 39.909622 }
+        }
       ]
     };
   },

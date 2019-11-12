@@ -22,7 +22,9 @@
       </van-grid>
     </van-row>
     <!-- 通知 -->
-    <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">通知内容</van-notice-bar>
+    <van-row>
+      <van-notice-bar :text="notify" left-icon="volume-o"/>
+    </van-row>
     <!-- category_detail -->
     <van-row>
       <van-list>
@@ -50,17 +52,23 @@
         </van-panel>
       </van-list>
     </van-row>
+    <tabbar name="home"/>
   </div>
 </template>
 <script>
 import global from "../global";
+import tabbar from "../components/common/tabbar";
 export default {
+  components:{
+    tabbar
+  },
   data() {
     return {
       active: "home",
       resourse: global.imgAddress,
       categoryList: [], //分类组合
       newList: [], //新闻list
+      notify: "", //通知
       images: [
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
@@ -69,16 +77,23 @@ export default {
   },
   mounted() {
     let that = this;
+    // 大类
     this.axios.get("/portal/categories").then(res => {
       window.console.log(res);
       if (res.data.code == 1) {
         that.categoryList = res.data.data;
       }
     });
+    // 新闻list
     this.axios.get("/portal/categories/new_list").then(res => {
       window.console.log(res);
       if (res.data.code == 1) {
         that.newList = res.data.data;
+      }
+    });
+    this.axios.get("/portal/categories/get_notice").then(res => {
+      if (res.data.code == 1) {
+        that.notify = res.data.data;
       }
     });
   },

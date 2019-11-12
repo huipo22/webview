@@ -1,5 +1,7 @@
 <template>
   <div id="login">
+    <!-- navbar -->
+    <van-nav-bar title="登录"></van-nav-bar>
     <van-cell-group class="pageSetting">
       <van-field v-model="phone" label="手机号" placeholder="请输入手机号" required />
       <van-field v-model="sms" center clearable label="验证码" placeholder="请输入短信验证码" required>
@@ -26,8 +28,8 @@ Vue.use(Toast);
 export default {
   data() {
     return {
-      phone: "",
-      sms: "",
+      phone: "13279200816",
+      sms: "1234",
       btnTitle: "发送验证码",
       disabled: false
     };
@@ -44,7 +46,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            this.$router.push({ path: "/person" });
+            this.$router.replace({ path: "/person" });
           } else {
             Toast.fail(res.data.msg);
           }

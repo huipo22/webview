@@ -33,10 +33,15 @@
         </van-panel>
       </van-grid-item>
     </van-grid>
+    <tabbar name="study"/>
   </div>
 </template>
 <script>
+import tabbar from "../components/common/tabbar";
 export default {
+  components:{
+    tabbar
+  },
   data() {
     return {
       images: [
