@@ -2,7 +2,7 @@ const host = "https://gh.jishanhengrui.com";
 const imgAddress = "https://gh.jishanhengrui.com/upload/";
 const ContentType = "application/x-www-form-urlencoded"
 const deviceType = "android";
-const token = "2e5f7137db69c5228c8d088ea7772174623c21c839bf26cd30f364ae6c8e4088"
+const token = "e1db3b8577be483c476ee9932551c21f00d1a1b32becb95513284eed1e5d8387"
 const dataURLtoFile = (dataurl, filename) => {
     //将base64转换为文件
     var arr = dataurl.split(","),

@@ -48,7 +48,7 @@
         @click="showPicker = true"
       />-->
       <van-cell>
-        <van-uploader :after-read="afterRead" result-type="file" />
+        <van-uploader :after-read="afterRead" />
       </van-cell>
       <input type="file" @change="aa" />
     </van-cell-group>
@@ -146,18 +146,37 @@ export default {
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       window.console.log(file);
-      this.axios.post("/user/upload/one",{
-       headers: {
+      this.axios
+        .post("/user/upload/one", {
+          headers: {
             "Device-Type": global.deviceType,
-            token: global.token
+            token: global.token,
+            "Content-Type": "application/x-www-form-urlencoded"
           },
           params: {
-            file:file
+            file: file.content
           }
-      })
+        })
+        .then(res => {
+          window.console.log(res);
+        });
     },
     aa(file) {
       window.console.log(file);
+      // this.axios
+      //   .post("/user/upload/one", {
+      //     headers: {
+      //       "Device-Type": global.deviceType,
+      //       token: global.token,
+      //       "Content-Type": "application/x-www-form-urlencoded"
+      //     },
+      //     params: {
+      //       file: file
+      //     }
+      //   })
+      //   .then(res => {
+      //     window.console.log(res);
+      //   });
     },
     // 点击展示地址弹窗
     showAddressChuang() {

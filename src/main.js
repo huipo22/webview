@@ -21,6 +21,7 @@ Vue.prototype.qs = qs
 // axios.defaults.baseURL = 'https://gh.jishanhengrui.com/api/'
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded format';
+
 Vue.config.productionTip = false
 
 import filter from '../src/filter'
