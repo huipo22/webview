@@ -11,15 +11,29 @@
     <!-- list -->
     <van-grid :column-num="2">
       <van-grid-item @click="studyDetail(item.id)" item.id v-for="item in study" :key="item.id">
-        <van-panel>
+        <van-row>
           <div slot="default">
             <van-image fit="contain" :src="resource+item.img" />
-            <div class="default-title">{{item.content}}</div>
+            <div class="default-title title">{{item.title}}</div>
           </div>
-          <div slot="footer">
-            <van-col span="10">{{item.add_time}}</van-col>
-          </div>
-        </van-panel>
+          <van-row class="timeBox">
+            <van-col
+              span="14"
+              class="title left"
+              style="margin-top: .2rem;"
+            >{{item.add_time|dCreateTime }}</van-col>
+
+            <van-col span="10" class="title" v-if="item.type==0">
+              <van-tag plain type="primary">未学习</van-tag>
+            </van-col>
+            <van-col span="10" class="title" v-else-if="item.type==1">
+              <van-tag plain type="primary">学习中</van-tag>
+            </van-col>
+            <van-col span="10" class="title" v-else-if="item.type==2">
+              <van-tag plain type="primary">已完成</van-tag>
+            </van-col>
+          </van-row>
+        </van-row>
       </van-grid-item>
     </van-grid>
     <tabbar name="study" />
@@ -27,7 +41,7 @@
 </template>
 <script>
 import tabbar from "../components/common/tabbar";
-import global from '../global'
+import global from "../global";
 export default {
   components: {
     tabbar
@@ -51,7 +65,7 @@ export default {
   data() {
     return {
       study: {},
-      resource:global.imgAddress,
+      resource: global.imgAddress,
       images: [
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
@@ -62,13 +76,16 @@ export default {
     onClickRight() {
       this.$router.push({ path: "/my" });
     },
-    studyDetail(id){
-      this.$router.push({ path: "/studyDetail?studyId="+id });
+    studyDetail(id) {
+      this.$router.push({ path: "/studyDetail?studyId=" + id });
     }
   }
 };
 </script>
 <style scoped>
+.van-grid {
+  margin-bottom: 50px;
+}
 .m_bottom {
   margin-bottom: 1rem;
 }
@@ -82,6 +99,12 @@ export default {
   height: 100%;
 }
 .default-title {
+  padding: 0px 0px;
   text-align: left;
+  height: 3rem;
+  overflow: hidden;
+}
+.timeBox{
+  padding:0;
 }
 </style>

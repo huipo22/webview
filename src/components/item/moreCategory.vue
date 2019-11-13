@@ -1,21 +1,29 @@
 <template>
   <div id="moreCategory">
     <!-- navbar -->
-    <van-nav-bar title="更多分类" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <van-nav-bar title="新闻分类" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <!-- swipter -->
+    <van-swipe :autoplay="3000" class="swiperImg">
+      <van-swipe-item v-for="(image, index) in images" :key="index">
+        <img :src="image" />
+      </van-swipe-item>
+    </van-swipe>
     <!-- 分类 -->
     <!-- category -->
-    <van-row class="m_bottom pageSetting" v-for="item in listData" :key="item.id">
+    <van-row class="h_title" v-for="item in listData" :key="item.id" >
       <van-row>
-        <van-col>{{item.name}}</van-col>
+        <van-col offset="1">{{item.name}}</van-col>
       </van-row>
-      <van-grid :column-num="5">
+      <van-grid :column-num="4">
         <van-grid-item
           v-for="item1 in item.children"
           :key="item1.id"
           :icon="resourse+item1.more['thumbnail']"
           :text="item1.name"
+          @click="moreList(item1.id,item1.name)"
         />
       </van-grid>
+      <van-row class="bgcolor"></van-row>
     </van-row>
   </div>
 </template>
@@ -25,7 +33,11 @@ export default {
   data() {
     return {
       listData: [],
-      resourse: global.imgAddress
+      resourse: global.imgAddress,
+      images: [
+        "https://img.yzcdn.cn/vant/apple-1.jpg",
+        "https://img.yzcdn.cn/vant/apple-2.jpg"
+      ]
     };
   },
   mounted() {
@@ -40,7 +52,20 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    // 分类更多
+    moreList(id,title) {
+      this.$router.push({ path: "/itemList?categoryId=" + id+"&title="+title });
     }
   }
 };
 </script>
+<style scoped>
+.bgcolor {
+  height: 0.5rem;
+  background: #f0f3f6;
+}
+.h_title {
+  font-size: 16px;
+}
+</style>

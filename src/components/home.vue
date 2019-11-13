@@ -16,22 +16,29 @@
           :key="item.id"
           :icon="resourse+item.more['thumbnail']"
           :text="item.name"
+          @click="moreCategory"
         />
-        <van-grid-item text="问答广场" @click="questionAll" />
-        <van-grid-item text="更多" @click="moreCategory" />
+        <!-- <van-grid-item icon="coupon-o" text="问答广场" @click="questionAll" /> -->
+        <van-grid-item icon="coupon-o" text="服务站" @click="love()" />
+        <van-grid-item icon="ellipsis" text="更多" @click="moreCategory" />
       </van-grid>
     </van-row>
     <!-- 通知 -->
     <van-row>
-      <van-notice-bar :text="notify" left-icon="volume-o"/>
+      <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" />
     </van-row>
     <!-- category_detail -->
     <van-row>
       <van-list>
-        <van-panel v-for="item in newList.list" :key="item.id">
+        <van-panel v-for="item in newList.list" :key="item.id" class="m_bottom">
           <div slot="header" class="pannel-head">
-            <van-col span="6">{{item.name}}</van-col>
-            <van-col offset="14" span="4" @click="moreList(item.id)">更多</van-col>
+            <van-col span="5" offset="1" class="font_h1 h_titles">{{item.name}}</van-col>
+            <van-col
+              offset="15"
+              span="3"
+              @click="moreList(item.id,item.name)"
+              class="font_h1 h_titles h_titlescolor"
+            >更多</van-col>
           </div>
           <div
             slot="default"
@@ -40,30 +47,30 @@
             v-if="item.new"
           >
             <van-row>
-              <van-col offset="1" span="16" class="left title">{{item.new.post_title}}</van-col>
-              <van-col span="8">
-                <image :src="resourse+item.more['thumbnail']" alt height="50px" />
+              <van-col offset="1" span="16" class="left h_content">{{item.new.post_title}}</van-col>
+              <van-col span="7">
+                <img :src="resourse+item.new.thumbnail" alt height="50px" />
               </van-col>
             </van-row>
             <van-row>
-              <van-col offset="1" span="13" class="left">{{item.new.create_time |dCreateTime}}</van-col>
+              <van-col offset="1" span="13" class="left h_titles">{{item.new.create_time |dCreateTime}}</van-col>
             </van-row>
           </div>
         </van-panel>
       </van-list>
     </van-row>
-    <tabbar name="home"/>
+    <tabbar name="home" />
   </div>
 </template>
 <script>
-import Vue from 'vue';
-import { NoticeBar } from 'vant';
+import Vue from "vue";
+import { NoticeBar } from "vant";
 
 Vue.use(NoticeBar);
 import global from "../global";
 import tabbar from "../components/common/tabbar";
 export default {
-  components:{
+  components: {
     tabbar
   },
   data() {
@@ -102,6 +109,9 @@ export default {
     });
   },
   methods: {
+    love() {
+      this.$router.push("/love");
+    },
     getHome() {},
     // 详情
     itemDetail(id) {
@@ -117,26 +127,54 @@ export default {
       this.$router.push({ path: "/moreCategory" });
     },
     // 分类更多
-    moreList(id) {
-      this.$router.push({ path: "/itemList?categoryId=" + id });
+    moreList(id,title) {
+      this.$router.push({ path: "/itemList?categoryId=" + id+"&title="+title });
     }
   }
 };
 </script>
 <style  scoped>
+#home{
+    background: #f0f3f6;
+}
 .title {
-  height: 4.5rem;
+  height: 3rem;
+  font-size: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.h_titles {
+  font-size: 12px;
+  color: #7d7e80;
+  text-align: left
+}
+.h_titlescolor {
+  color: #1989fa;
+}
+.h_content {
+  font-size: 16px;
+  /* color: #1989fa; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.font {
+  font-size: 0.5rem;
 }
 .m_bottom {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
-
+.van-list {
+  margin-bottom: 50px;
+}
 .pannel-head {
   height: 2rem;
   display: flex;
   align-items: center;
 }
 .pannel-default {
-  height: 8rem;
+  /* height: 8rem; */
 }
 </style>

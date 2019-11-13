@@ -1,13 +1,11 @@
 <template>
   <div id="baseInfo">
     <!-- navbar -->
-    <van-nav-bar
-      title="基本信息"
-      left-arrow
-      @click-left="onClickLeft"
-      right-text="提交"
+    <van-nav-bar title="基本信息" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <!-- 
+       right-text="提交"
       @click-right="onClickRight"
-    ></van-nav-bar>
+    -->
     <!-- 设置区域 -->
     <van-cell-group class="pageSetting">
       <van-field
@@ -22,8 +20,8 @@
           <van-col style="text-align:center;width:90px">性别</van-col>
           <van-col>
             <van-radio-group v-model="baseInfo.sex" class="radioBox">
-              <van-radio name="0">男</van-radio>
-              <van-radio name="1">女</van-radio>
+              <van-radio name="1">男</van-radio>
+              <van-radio name="2">女</van-radio>
             </van-radio-group>
           </van-col>
         </van-row>
@@ -47,11 +45,14 @@
         placeholder="选择工会"
         @click="showPicker = true"
       />-->
-      <van-cell>
+      <!-- <van-cell>
         <van-uploader :after-read="afterRead" />
       </van-cell>
-      <input type="file" @change="aa" />
+      <input type="file" @change="aa" />-->
     </van-cell-group>
+    <van-row>
+      <van-button class="tijao" type="primary" @click="onClickRight">提交</van-button>
+    </van-row>
     <!-- 省市区选择弹窗 -->
     <van-popup v-model="showAddress" position="bottom" :style="{ height: '50%' }">
       <van-area
@@ -107,7 +108,7 @@ export default {
       .get("/user/profile/userInfo", {
         headers: {
           "Device-Type": global.deviceType,
-          token: global.token
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
         }
       })
       .then(res => {
@@ -124,23 +125,38 @@ export default {
     //提交
     onClickRight() {
       let that = this;
+      if (!that.baseInfo.user_nickname) {
+        Toast.fail("请输入昵称");
+        return;
+      } else if (!that.baseInfo.signature) {
+        Toast.fail("请输入个性签名");
+        return;
+      } else if (!that.baseInfo.sex) {
+        Toast.fail("请输入性别");
+        return;
+      } else if (!that.baseInfo.address) {
+        Toast.fail("请输入详细地址");
+        return;
+      } else if (!that.baseInfo.gonghui) {
+        Toast.fail("请输入工会地址");
+        return;
+      }
       window.console.log(JSON.parse(sessionStorage.getItem("userInfo")).token);
-      let params=this.qs.stringify({
-            user_nickname: that.baseInfo.user_nickname,
-            avatar: that.baseInfo.avatar,
-            signature: that.baseInfo.signature,
-            sex: that.baseInfo.sex,
-            address: that.baseInfo.address,
-            gonghui: that.baseInfo.gonghui
-          })
+      let params = this.qs.stringify({
+        user_nickname: that.baseInfo.user_nickname,
+        avatar: that.baseInfo.avatar,
+        signature: that.baseInfo.signature,
+        sex: that.baseInfo.sex,
+        address: that.baseInfo.address,
+        gonghui: that.baseInfo.gonghui
+      });
       this.axios
-        .post("/user/profile/userInfo",params, {
+        .post("/user/profile/userInfo", params, {
           headers: {
             "Device-Type": global.deviceType,
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
             token: JSON.parse(sessionStorage.getItem("userInfo")).token
-            // token: "3014ceb861431cf7f7870f7c5b9af79605a26c60a8a40db1e0132e6ed576178b"
-          },
+          }
         })
         .then(res => {
           window.console.log(res);
@@ -219,5 +235,9 @@ export default {
 }
 .radioBox > .van-radio {
   padding: 0 0.5rem;
+}
+.tijao {
+  width: 100px;
+  margin-top: 50px;
 }
 </style>

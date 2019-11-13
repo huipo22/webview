@@ -7,12 +7,14 @@
     <van-row id="avatarBox">
       <van-col span="8">
         <div id="icon1">
-          <img width="50px" height="50px" :src="userInfo.user.avatar" :alt="userInfo.user.avatar" />
+          <img width="50px" height="50px" :src="resourse+userInfo.user.avatar" />
         </div>
       </van-col>
       <van-col span="16">
-        <div class="name">{{userInfo.user.user_nickname==""?"暂无昵称":userInfo.user.user_nickname}}</div>
-        <div class="name_tag">{{userInfo.user.signature==""?"暂无签名":userInfo.user.signature}}</div>
+        <div
+          class="name"
+        >{{!userInfo.user.user_nickname?userInfo.user.mobile:baseInfos.user_nickname}}</div>
+        <div class="name_tag">{{!userInfo.user.signature?"暂无签名":baseInfos.signature}}</div>
       </van-col>
     </van-row>
     <!-- 基本信息 我的积分 -->
@@ -34,19 +36,37 @@
 
 <script>
 import tabbar from "../components/common/tabbar";
-
+import global from "../global";
 export default {
   components: {
     tabbar
   },
   data() {
     return {
-      userInfo: null
+      userInfo: {},
+      resourse: global.imgAddress,
+      baseInfos: {}
     };
   },
   mounted() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     window.console.log(this.userInfo);
+
+    // get 基本信息
+    let that = this;
+    this.axios
+      .get("/user/profile/userInfo", {
+        headers: {
+          "Device-Type": global.deviceType,
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.baseInfos = res.data.data;
+        }
+      });
   },
   methods: {
     baseInfo() {

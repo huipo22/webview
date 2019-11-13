@@ -26,6 +26,10 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import global from "../../global";
+import Vue from "vue";
+import { Toast } from "vant";
+
+Vue.use(Toast);
 export default {
   data() {
     return {
@@ -53,6 +57,10 @@ export default {
       let params = this.qs.stringify({
         content: this.content
       });
+      if (this.content == null) {
+        Toast.fail("请输入问题");
+        return;
+      }
       this.axios
         .post("/home/forum/add_question", params, {
           headers: {
@@ -64,7 +72,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            that.$router.push({ path: "/questionDetail" });
+            that.$router.push({ path: "/questionDetail?questionId=0"+res.data.data });
           } else {
             Toast.fail(res.data.msg);
           }

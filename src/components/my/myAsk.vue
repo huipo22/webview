@@ -26,6 +26,7 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import global from "../../global";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -49,11 +50,15 @@ export default {
       this.$router.go(-1);
     },
     onClickRight() {
+      if (!this.content) {
+        Toast.fail("请输入回答");
+        return;
+      }
       let that = this;
-       let id = this.$route.query.questionId;
+      let id = this.$route.query.questionId;
       let params = this.qs.stringify({
         content: this.content,
-        question_id:id
+        question_id: id
       });
       this.axios
         .post("/home/forum/add_answer", params, {
@@ -66,7 +71,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            that.$router.push({ path: "/myQuestion" });
+            that.$router.push({ path: "/questionDetail?questionId=" +id});
           } else {
             Toast.fail(res.data.msg);
           }

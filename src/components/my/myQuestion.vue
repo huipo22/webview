@@ -1,63 +1,80 @@
 <template>
   <div id="myQuestion">
     <!-- navbar -->
-    <van-nav-bar title="我的回答" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <van-nav-bar title="我的问答" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <van-tabs v-model="active">
-      <van-tab title="我的回答(3)">
+      <van-tab :title="mys">
         <van-row>
           <van-list>
-            <van-panel class="questionList" v-for="item in answerList" :key="item.id">
-              <div slot="header" class="pannel-header">
-                <van-row>
-                  <van-col>{{item.content}}</van-col>
-                </van-row>
-                <van-row>
-                  <van-col span="12">
-                    <div class="itemleft">{{}}个回答</div>
-                  </van-col>
-                  <van-col span="12">
-                    <div class="itemright">{{item.add_time}}</div>
-                  </van-col>
-                </van-row>
-              </div>
-              <div slot="default" class="pannel-default">
-                <van-row>
-                  <van-col class="userInfo">
-                    <div>
-                      <img
-                        class="avatar"
-                        width="50px"
-                        height="50px"
-                        src="https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png"
-                      />
-                    </div>
-                    <div class="name">十号</div>
-                    <div class="time">{{item.question.add_time}}</div>
-                  </van-col>
-                  <van-col class="questionCon">
-                    {{item.question.content}}
-                  </van-col>
-                </van-row>
-              </div>
+            <van-panel v-for="item in answerList.answer" :key="item.id"  @click="askDetail(item.question.id)">
+              <!-- 问题 -->
+              <van-row class="questionList">
+                <van-col v-html="item.question.content" style="font-weight:bold"></van-col>
+              </van-row>
+              <van-row class="questionList">
+                <van-col class="userInfo">
+                  <div>
+                    <img
+                      class="avatar"
+                      width="30px"
+                      height="30px"
+                      :src="resource+item.question.user_info.avatar"
+                    />
+                  </div>
+                  <div
+                    class="name h_titles"
+                  >{{!item.question.user_info.user_nickname?'游客':item.question.user_info.user_nickname}}</div>
+                  <div class="name h_titles" style="padding: 0;">{{item.question.count}}条回答</div>
+                  <div class="time h_titles">{{item.question.user_info.create_time |dCreateTime}}</div>
+                </van-col>
+              </van-row>
+              <div class="fenge1"></div>
+              <!-- 答案 -->
+              <van-row class="questionList">
+                <van-col class="userInfo">
+                  <div>
+                    <img
+                      class="avatar"
+                      width="30px"
+                      height="30px"
+                      :src="item.user_info.avatar==''?'https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png':resource+item.user_info.avatar"
+                    />
+                  </div>
+                  <div class="name h_titles">{{item.user_info.user_nickname}}</div>
+                  <div class="time h_titles">{{item.add_time|dCreateTime}}</div>
+                </van-col>
+                <van-col class="questionCon" v-html="item.content"></van-col>
+              </van-row>
+              <div class="fenge"></div>
             </van-panel>
           </van-list>
         </van-row>
       </van-tab>
-      <van-tab title="我的提问(3)">
+      <van-tab :title="myq">
         <van-row>
           <van-list>
-            <van-panel class="questionList" v-for="item in questionList" :key="item.id">
-              <div slot="header" class="pannel-header" @click="askDetail">
-                <van-row>
-                  <van-col v-html="item.content"></van-col>
-                </van-row>
-              </div>
-              <div slot="footer" class="pannel-foot">
-                <van-row>
-                  <van-col span="12" class="left">{{item.add_time}}</van-col>
-                  <van-col span="12" class="right">{{item.count}}个回答</van-col>
-                </van-row>
-              </div>
+            <van-panel class="questionList" v-for="item in questionList.question" :key="item.id" @click="askDetail(item.id)">
+              <van-row class="questionList">
+                <van-col v-html="item.content" style="font-weight:bold" @click="askDetail()"></van-col>
+              </van-row>
+              <van-row class="questionList">
+                <van-col class="userInfo">
+                  <div>
+                    <img
+                      class="avatar"
+                      width="30px"
+                      height="30px"
+                      :src="resource+item.user_info.avatar"
+                    />
+                  </div>
+                  <div
+                    class="name h_titles"
+                  >{{!item.user_info.user_nickname?'游客':item.user_info.user_nickname}}</div>
+                  <div class="name h_titles" style="padding: 0;">{{item.count}}条回答</div>
+                  <div class="time h_titles">{{item.user_info.create_time |dCreateTime}}</div>
+                </van-col>
+              </van-row>
+              <div class="fenge1"></div>
             </van-panel>
           </van-list>
         </van-row>
@@ -72,7 +89,10 @@ export default {
     return {
       active: 0,
       questionList: [],
-      answerList: []
+      answerList: [],
+      myq: null,
+      mys: null,
+      resource: global.imgAddress
     };
   },
   mounted() {
@@ -94,7 +114,8 @@ export default {
       .then(res => {
         window.console.log(res);
         if (res.data.code == 1) {
-          that.answerList = res.data.data.answer;
+          that.mys = "我的回答(" + res.data.data.a_conunt + ")";
+          that.answerList = res.data.data;
         } else {
           Toast.fail(res.data.msg);
         }
@@ -110,7 +131,8 @@ export default {
       .then(res => {
         window.console.log(res);
         if (res.data.code == 1) {
-          that.questionList = res.data.data.question;
+          that.myq = "我的提问(" + res.data.data.q_conunt + ")";
+          that.questionList = res.data.data;
         } else {
           Toast.fail(res.data.msg);
         }
@@ -120,8 +142,8 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    askDetail() {
-      this.$router.push({ path: "/questionDetail" });
+    askDetail(id) {
+      this.$router.push({ path: "/questionDetail?questionId="+id });
     }
   }
 };
@@ -133,6 +155,9 @@ export default {
 .pannel-header {
   text-align: left;
   margin-bottom: 1rem;
+}
+.van-panel__header {
+  display: none !important;
 }
 .pannel-foot .left {
   text-align: left;
@@ -167,5 +192,15 @@ export default {
 }
 .quill-editor {
   height: 20rem;
+}
+.fenge {
+  width: 100%;
+  height: 10px;
+  background: #f0f3f6;
+}
+.fenge1 {
+  width: 100%;
+  height: 2px;
+  background: #f0f3f6;
 }
 </style>
