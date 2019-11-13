@@ -13,7 +13,12 @@
         >
           <div slot="title" class="head" v-html="item.study.title"></div>
           <div slot="tags">
-            <van-progress :percentage="!item.process?'0':item.process" class="progressBox" />
+            <div v-if="!item.process">
+              <van-progress :percentage="0" class="progressBox" />
+            </div>
+            <div v-else>
+              <van-progress :percentage="Number(item.process)" class="progressBox" />
+            </div>
             <van-row class="head">
               <van-col span="12" class="left" v-if="item.study.type==0">
                 <van-tag plain type="primary">未学习</van-tag>
@@ -40,7 +45,12 @@
         >
           <div slot="title" class="head" v-html="item.study.title"></div>
           <div slot="tags">
-            <van-progress :percentage="!item.process?'0':item.process" class="progressBox" />
+            <div v-if="!item.process">
+              <van-progress :percentage="0" class="progressBox" />
+            </div>
+            <div v-else>
+              <van-progress :percentage="Number(item.process)" class="progressBox" />
+            </div>
             <van-row class="head">
               <van-col span="12" class="left" v-if="item.study.type==0">
                 <van-tag plain type="primary">未学习</van-tag>
@@ -57,9 +67,7 @@
           <div slot="footer"></div>
         </van-card>
       </van-tab>
-      <van-tab title="已完成" v-else>
-        暂无数据
-      </van-tab>
+      <van-tab title="已完成" v-else>暂无数据</van-tab>
     </van-tabs>
     <tabbar name="study" />
   </div>
@@ -67,6 +75,9 @@
 <script>
 import global from "../../global";
 import tabbar from "../../components/common/tabbar";
+import Vue from "vue";
+import { Toast } from "vant";
+Vue.use(Toast);
 export default {
   components: {
     tabbar
@@ -80,7 +91,6 @@ export default {
   },
   mounted() {
     let that = this;
-    let id = this.$route.query.studyId;
     let params = this.qs.stringify({
       type: 1
     });

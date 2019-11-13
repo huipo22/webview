@@ -6,7 +6,11 @@
       <van-tab :title="mys">
         <van-row>
           <van-list>
-            <van-panel v-for="item in answerList.answer" :key="item.id"  @click="askDetail(item.question.id)">
+            <van-panel
+              v-for="item in answerList.answer"
+              :key="item.id"
+              @click="askDetail(item.question.id)"
+            >
               <!-- 问题 -->
               <van-row class="questionList">
                 <van-col v-html="item.question.content" style="font-weight:bold"></van-col>
@@ -53,7 +57,12 @@
       <van-tab :title="myq">
         <van-row>
           <van-list>
-            <van-panel class="questionList" v-for="item in questionList.question" :key="item.id" @click="askDetail(item.id)">
+            <van-panel
+              class="questionList"
+              v-for="item in questionList.question"
+              :key="item.id"
+              @click="askDetail(item.id)"
+            >
               <van-row class="questionList">
                 <van-col v-html="item.content" style="font-weight:bold" @click="askDetail()"></van-col>
               </van-row>
@@ -84,6 +93,9 @@
 </template>
 <script>
 import global from "../../global";
+import Vue from "vue";
+import { Toast } from "vant";
+Vue.use(Toast);
 export default {
   data() {
     return {
@@ -143,7 +155,7 @@ export default {
       this.$router.go(-1);
     },
     askDetail(id) {
-      this.$router.push({ path: "/questionDetail?questionId="+id });
+      this.$router.push({ path: "/questionDetail?questionId=" + id });
     }
   }
 };

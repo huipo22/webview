@@ -48,7 +48,7 @@ export default {
       baseInfos: {}
     };
   },
-  mounted() {
+  created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     window.console.log(this.userInfo);
 

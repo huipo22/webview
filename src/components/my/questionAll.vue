@@ -28,7 +28,9 @@
                     :src="resource+item.user_info.avatar"
                   />
                 </div>
-                <div class="name h_titles">{{!item.user_info.user_nickname?'游客':item.user_info.user_nickname}}</div>
+                <div
+                  class="name h_titles"
+                >{{!item.user_info.user_nickname?'游客':item.user_info.user_nickname}}</div>
                 <div class="name h_titles" style="padding: 0;">{{item.count}}条回答</div>
                 <div class="time h_titles">{{item.user_info.create_time |dCreateTime}}</div>
               </van-col>
@@ -47,6 +49,9 @@
 </template>
 <script>
 import global from "../../global";
+import Vue from "vue";
+import { Toast } from "vant";
+Vue.use(Toast);
 export default {
   data() {
     return {
