@@ -1,7 +1,8 @@
 <template>
   <div id="baseInfo">
     <!-- navbar -->
-    <van-nav-bar title="基本信息" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <van-nav-bar title="基本信息" left-arrow @click-left="onClickLeft" v-if="flag==true"></van-nav-bar>
+    <van-nav-bar title="基本信息" v-else-if="flag==false"></van-nav-bar>
     <!-- 
        right-text="提交"
       @click-right="onClickRight"
@@ -84,6 +85,7 @@ import global from "../../global";
 export default {
   data() {
     return {
+      flag: null,
       baseInfo: {},
       // username: "", //昵称
       // signname: "", //签名
@@ -117,6 +119,11 @@ export default {
           that.baseInfo = res.data.data;
         }
       });
+    if(this.$route.query.new){
+      that.flag=false
+    }else{
+      that.flag=true
+    }
   },
   methods: {
     onClickLeft() {

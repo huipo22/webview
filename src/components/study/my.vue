@@ -20,13 +20,13 @@
               <van-progress :percentage="Number(item.process)" class="progressBox" />
             </div>
             <van-row class="head">
-              <van-col span="12" class="left" v-if="item.study.type==0">
+              <van-col span="12" class="left" v-if="item.process_type==0">
                 <van-tag plain type="primary">未学习</van-tag>
               </van-col>
-              <van-col span="12" class="left" v-else-if="item.study.type==1">
+              <van-col span="12" class="left" v-else-if="item.process_type==1">
                 <van-tag plain type="primary">学习中</van-tag>
               </van-col>
-              <van-col span="12" class="left" v-else-if="item.study.type==2">
+              <van-col span="12" class="left" v-else-if="item.process_type==2">
                 <van-tag plain type="primary">已完成</van-tag>
               </van-col>
               <van-col span="12" class="right">{{item.study.add_time | dCreateTime}}</van-col>
@@ -52,13 +52,13 @@
               <van-progress :percentage="Number(item.process)" class="progressBox" />
             </div>
             <van-row class="head">
-              <van-col span="12" class="left" v-if="item.study.type==0">
-                <van-tag plain type="primary">未学习</van-tag>
+              <van-col span="12" class="left" v-if="item.process_type==0">
+                <van-tag plain type="primary">  </van-tag>
               </van-col>
-              <van-col span="12" class="left" v-else-if="item.study.type==1">
+              <van-col span="12" class="left" v-else-if="item.process_type==1">
                 <van-tag plain type="primary">学习中</van-tag>
               </van-col>
-              <van-col span="12" class="left" v-else-if="item.study.type==2">
+              <van-col span="12" class="left" v-else-if="item.process_type==2">
                 <van-tag plain type="primary">已完成</van-tag>
               </van-col>
               <van-col span="12" class="right">{{item.study.add_time | dCreateTime}}</van-col>

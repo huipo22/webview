@@ -41,3 +41,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+/* .van-tabbar{
+  background:#1989fa
+}
+.van-tabbar-item{
+  color: #fff;
+} */
+</style>

@@ -23,13 +23,13 @@
               style="margin-top: .2rem;"
             >{{item.add_time|dCreateTime }}</van-col>
 
-            <van-col span="10" class="title" v-if="item.type==0">
+            <van-col span="10" class="title" v-if="item.process_type==0">
               <van-tag plain type="primary">未学习</van-tag>
             </van-col>
-            <van-col span="10" class="title" v-else-if="item.type==1">
+            <van-col span="10" class="title" v-else-if="item.process_type==1">
               <van-tag plain type="primary">学习中</van-tag>
             </van-col>
-            <van-col span="10" class="title" v-else-if="item.type==2">
+            <van-col span="10" class="title" v-else-if="item.process_type==2">
               <van-tag plain type="primary">已完成</van-tag>
             </van-col>
           </van-row>
@@ -42,6 +42,7 @@
 <script>
 import tabbar from "../components/common/tabbar";
 import global from "../global";
+import { Notify } from 'vant';
 export default {
   components: {
     tabbar
@@ -59,6 +60,12 @@ export default {
         window.console.log(res);
         if (res.data.code == 1) {
           that.study = res.data.data;
+        } else {
+          Notify({
+            message: "未登录",
+            duration: 3000
+          });
+          this.$router.push({ path: "/my" });
         }
       });
   },
@@ -67,9 +74,9 @@ export default {
       study: {},
       resource: global.imgAddress,
       images: [
-       "https://gh.jishanhengrui.com/upload/default/lunbo/7.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/7.jpg",
         "https://gh.jishanhengrui.com/upload/default/lunbo/8.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/9.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/9.jpg"
       ]
     };
   },
@@ -105,7 +112,7 @@ export default {
   height: 2.5rem;
   overflow: hidden;
 }
-.timeBox{
-  padding:0;
+.timeBox {
+  padding: 0;
 }
 </style>

@@ -63,7 +63,16 @@ export default {
           window.console.log(res);
           if (res.data.code == 1) {
             sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
-            this.$router.replace({ path: "/person" });
+            let user = JSON.parse(sessionStorage.getItem("userInfo"));
+            if (
+              !user.user.user_nickname ||
+              !user.user.signature ||
+              !user.user.address
+            ) {
+              this.$router.replace({ path: "/baseInfo?new=0" });
+            } else {
+              this.$router.replace({ path: "/person" });
+            }
           } else {
             Toast.fail(res.data.msg);
           }

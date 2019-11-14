@@ -35,6 +35,7 @@ export default {
     return {
       content: null,
       editorOption: {
+        placeholder: "请输入你的提问",
         modules: {
           toolbar: [
             ["bold", "italic", "underline", "strike"], // 加粗、倾斜、下划线、删除线

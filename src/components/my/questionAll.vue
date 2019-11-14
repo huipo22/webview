@@ -42,7 +42,8 @@
     <!-- +号 -->
     <van-row>
       <van-col span="24" class="plusBox">
-        <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" />
+        <van-button round type="info" color="#1989fa" @click="askQuestion">我要提问</van-button>
+        <!-- <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" /> -->
       </van-col>
     </van-row>
   </div>
@@ -125,7 +126,7 @@ export default {
 }
 .plusBox {
   position: fixed;
-  bottom: 50px;
+  bottom: 18px;
 }
 .plus {
   border-radius: 50%;

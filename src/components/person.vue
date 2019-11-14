@@ -13,8 +13,8 @@
       <van-col span="16">
         <div
           class="name"
-        >{{!userInfo.user.user_nickname?userInfo.user.mobile:baseInfos.user_nickname}}</div>
-        <div class="name_tag">{{!userInfo.user.signature?"暂无签名":baseInfos.signature}}</div>
+        >{{baseInfos.user_nickname}}</div>
+        <div class="name_tag">{{baseInfos.signature}}</div>
       </van-col>
     </van-row>
     <!-- 基本信息 我的积分 -->

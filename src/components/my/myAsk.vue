@@ -32,6 +32,7 @@ export default {
     return {
       content: null,
       editorOption: {
+        placeholder: "请输入你的回答",
         modules: {
           toolbar: [
             ["bold", "italic", "underline", "strike"], // 加粗、倾斜、下划线、删除线
@@ -71,7 +72,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            that.$router.push({ path: "/questionDetail?questionId=" +id});
+            that.$router.push({ path: "/questionDetail?questionId=" + id });
           } else {
             Toast.fail(res.data.msg);
           }

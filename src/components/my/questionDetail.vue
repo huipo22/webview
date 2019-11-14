@@ -1,12 +1,7 @@
 <template>
   <div id="questionDetail">
     <!-- navbar -->
-    <van-nav-bar
-      title="问题详情"
-      left-arrow
-      @click-left="onClickLeft"
-     
-    ></van-nav-bar>
+    <van-nav-bar title="问题详情" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <!-- 问题内容 -->
     <!-- title -->
     <div slot="header" class="pannel-header questionDetail">
@@ -28,12 +23,6 @@
           >{{!question.user_info.user_nickname?'游客':question.user_info.user_nickname}}</div>
           <div class="name h_titles" style="padding: 0;">{{question.count}}条回答</div>
           <div class="time h_titles">{{question.user_info.create_time |dCreateTime}}</div>
-        </van-col>
-      </van-row>
-      <!-- +号 -->
-      <van-row>
-        <van-col span="24" class="plusBox">
-          <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" />
         </van-col>
       </van-row>
     </div>
@@ -65,6 +54,13 @@
           <van-divider />
         </div>
       </van-list>
+    </van-row>
+    <!-- +号 -->
+    <van-row>
+      <van-col span="24" class="plusBox">
+        <van-button round type="info" color="#1989fa" @click="askQuestion">我要回答</van-button>
+        <!-- <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" /> -->
+      </van-col>
     </van-row>
   </div>
 </template>
