@@ -1,5 +1,4 @@
 let dCreateTime = value => {
-    window.console.log(value);
     var date = new Date(parseInt(value + '000'));
     var Y = date.getFullYear() + "-";
     var M =
@@ -12,7 +11,6 @@ let dCreateTime = value => {
     // var s = date.getSeconds();
     // var df = Y + M + D + h + m + s;
     var df = Y + M + D;
-    window.console.log(df);
     return df;
 }
 export default {

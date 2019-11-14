@@ -81,8 +81,9 @@ export default {
       newList: [], //新闻list
       notify: "", //通知
       images: [
-        "https://img.yzcdn.cn/vant/apple-1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg"
+        "https://gh.jishanhengrui.com/upload/default/lunbo/6.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/5.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/2.jpg",
       ]
     };
   },
@@ -90,14 +91,14 @@ export default {
     let that = this;
     // 大类
     this.axios.get("/portal/categories").then(res => {
-      window.console.log(res);
+      // window.console.log(res);
       if (res.data.code == 1) {
         that.categoryList = res.data.data;
       }
     });
     // 新闻list
     this.axios.get("/portal/categories/new_list").then(res => {
-      window.console.log(res);
+      // window.console.log(res);
       if (res.data.code == 1) {
         that.newList = res.data.data;
       }

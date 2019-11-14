@@ -80,6 +80,7 @@ export default {
 }
 #title {
   text-align: center;
+  font-size: 18px
 }
 #titleInfo {
   display: flex;

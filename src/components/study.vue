@@ -67,8 +67,9 @@ export default {
       study: {},
       resource: global.imgAddress,
       images: [
-        "https://img.yzcdn.cn/vant/apple-1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg"
+       "https://gh.jishanhengrui.com/upload/default/lunbo/7.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/8.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/9.jpg",
       ]
     };
   },
@@ -101,7 +102,7 @@ export default {
 .default-title {
   padding: 0px 0px;
   text-align: left;
-  height: 3rem;
+  height: 2.5rem;
   overflow: hidden;
 }
 .timeBox{

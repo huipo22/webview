@@ -35,8 +35,9 @@ export default {
       listData: [],
       resourse: global.imgAddress,
       images: [
-        "https://img.yzcdn.cn/vant/apple-1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg"
+        "https://gh.jishanhengrui.com/upload/default/lunbo/1.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/3.jpg",
+        "https://gh.jishanhengrui.com/upload/default/lunbo/4.jpg",
       ]
     };
   },

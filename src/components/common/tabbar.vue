@@ -19,7 +19,7 @@ export default {
     };
   },
   mounted(){
-    window.console.log(this)
+    // window.console.log(this)
     this.active=this.$props.name
   },
   methods: {

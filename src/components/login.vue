@@ -2,19 +2,27 @@
   <div id="login">
     <!-- navbar -->
     <van-nav-bar title="登录"></van-nav-bar>
-    <van-cell-group class="pageSetting">
+    <van-cell-group class="pageSetting page">
       <van-field v-model="phone" label="手机号" placeholder="请输入手机号" required />
       <van-field v-model="sms" center clearable label="验证码" placeholder="请输入短信验证码" required>
         <van-button
           slot="button"
           size="small"
+          color="#1989fa"
           type="primary"
           :disabled="disabled"
           @click="validateBtn"
         >{{btnTitle}}</van-button>
       </van-field>
       <van-row class="btnBox">
-        <van-button size="small" type="primary" @click="submit">提交</van-button>
+        <van-button
+          size="small"
+          round
+          style="width:100%"
+          color="#1989fa"
+          type="primary"
+          @click="submit"
+        >提交</van-button>
       </van-row>
     </van-cell-group>
   </div>
@@ -28,11 +36,19 @@ Vue.use(Toast);
 export default {
   data() {
     return {
-      phone: "13279200816",
-      sms: "1234",
+      phone: "",
+      sms: "",
       btnTitle: "发送验证码",
       disabled: false
     };
+  },
+  created() {
+    if (!sessionStorage.getItem("userInfo")) {
+      this.phone = "";
+    } else {
+      let mobile = JSON.parse(sessionStorage.getItem("userInfo")).user.mobile;
+      this.phone = mobile;
+    }
   },
   methods: {
     submit() {
@@ -46,7 +62,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            sessionStorage.setItem('userInfo',JSON.stringify(res.data.data))
+            sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
             this.$router.replace({ path: "/person" });
           } else {
             Toast.fail(res.data.msg);
@@ -74,5 +90,8 @@ export default {
 <style >
 .btnBox {
   margin-top: 5rem;
+}
+.page {
+  height: 88vh;
 }
 </style>

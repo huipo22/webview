@@ -50,8 +50,8 @@
       </van-cell>
       <input type="file" @change="aa" />-->
     </van-cell-group>
-    <van-row>
-      <van-button class="tijao" type="primary" @click="onClickRight">提交</van-button>
+    <van-row style="padding: 10px 16px;" color>
+      <van-button class="tijao" color="#1989fa" type="primary" @click="onClickRight">提交</van-button>
     </van-row>
     <!-- 省市区选择弹窗 -->
     <van-popup v-model="showAddress" position="bottom" :style="{ height: '50%' }">
@@ -112,7 +112,7 @@ export default {
         }
       })
       .then(res => {
-        window.console.log(res);
+        // window.console.log(res);
         if (res.data.code == 1) {
           that.baseInfo = res.data.data;
         }
@@ -159,7 +159,7 @@ export default {
           }
         })
         .then(res => {
-          window.console.log(res);
+          // window.console.log(res);
           if (res.data.code == 1) {
             this.$router.push({ path: "/person" });
           } else {
@@ -237,7 +237,7 @@ export default {
   padding: 0 0.5rem;
 }
 .tijao {
-  width: 100px;
+  width: 100%;
   margin-top: 50px;
 }
 </style>

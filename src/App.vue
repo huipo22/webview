@@ -43,12 +43,16 @@ export default {
 </script>
 
 <style>
+html,body,#app{
+  height: 100%;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
   /* margin-top: 60px; */
   /* background: #f8f8f8; */
   background: #fff;
@@ -80,7 +84,7 @@ export default {
   background: #fff;
 }
 .swiperImg img {
-  height: 100%;
+  width: 100%;
 }
 .left {
   text-align: left;
@@ -89,7 +93,7 @@ export default {
   text-align: right;
 }
 .title {
-  font-size: 0.5rem;
+  font-size: 14px;
 }
 .font_h1 {
   font-size: 1rem;
