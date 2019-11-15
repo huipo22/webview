@@ -16,7 +16,7 @@
       <van-col span="24">
         <van-col span="24" class="title">
           学习倒计时
-          <van-count-down class="color" :time="time" />
+          <van-count-down ref="countDown" class="color" :time="time" />
         </van-col>
       </van-col>
     </van-row>
@@ -60,6 +60,32 @@ export default {
   },
   methods: {
     onClickLeft() {
+      window.console.log(this.time / 1000);
+      window.console.log(this.$refs.countDown);
+      window.console.log(
+        global.time_to_sec(this.$refs.countDown.$el.innerText)
+      );
+      let id = this.$route.query.studyId;
+      let process = "";
+      let params = this.qs.stringify({
+        id: id,
+        process: process
+      });
+      this.axios
+        .post("/home/study/update_study", params, {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+            that.studyData = res.data.data;
+            that.time = res.data.data.study_time * 60 * 60 * 1000;
+          }
+        });
+      return;
       this.$router.go(-1);
     }
   }
@@ -73,14 +99,14 @@ export default {
 #content {
   /* height: calc(100vh - 10rem); */
   width: 100%;
-  overflow: hidden
+  overflow: hidden;
 }
-#content p>image{
-  width: 100%
+#content p > image {
+  width: 100%;
 }
 #title {
   text-align: center;
-  font-size: 18px
+  font-size: 18px;
 }
 #titleInfo {
   display: flex;

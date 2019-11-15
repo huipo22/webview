@@ -17,7 +17,19 @@ const dataURLtoFile = (dataurl, filename) => {
         type: mime
     });
 }
-
+/**
+     * 时间转为秒
+     * @param time 时间(00:00:00)
+     * @returns {string} 时间戳（单位：秒）
+     */
+const time_to_sec = (time) => {
+    var s = '';
+    var hour = time.split(':')[0];
+    var min = time.split(':')[1];
+    var sec = time.split(':')[2];
+    s = Number(hour * 3600) + Number(min * 60) + Number(sec);
+    return s;
+};
 export default {
     host,//域名
     ContentType,//请求头contenttype
@@ -25,4 +37,5 @@ export default {
     imgAddress,
     token,
     dataURLtoFile,
+    time_to_sec
 }
