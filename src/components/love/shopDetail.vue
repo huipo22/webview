@@ -20,6 +20,16 @@
     <van-row>
       <van-col>商品详情</van-col>
     </van-row>
+    <van-row class="btnBox">
+      <van-button
+        size="small"
+        round
+        style="width:100%"
+        color="#1989fa"
+        type="primary"
+        @click="submit"
+      >立即预定</van-button>
+    </van-row>
   </div>
 </template>
 <script>

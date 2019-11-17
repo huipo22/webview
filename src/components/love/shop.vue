@@ -15,17 +15,21 @@
           <van-col span="24" class="comon">名字</van-col>
         </van-row>
         <van-row>
-          <van-col span="24" class="comon">简介</van-col>
+          <van-col span="12" class="comon">类型</van-col>
+          <van-col span="12" class="comon">库存</van-col>
         </van-row>
         <van-row>
-          <van-col span="12" class="left">价格</van-col>
-          <van-col span="12" class="right">预定</van-col>
+          <van-col span="12" class="left priceBox">价格</van-col>
+          <van-col span="12" class="right">
+            <van-button size="small" round color="#1989fa" type="primary">预定:2</van-button>
+          </van-col>
         </van-row>
       </div>
     </van-card>
   </div>
 </template>
 <script>
+// import BMap from 'BMap'
 export default {
   data() {
     return {
@@ -45,18 +49,37 @@ export default {
         { text: "销量排序", value: "c" }
       ],
       option3: [
-        { text: "距离", value: "A" },
+        { text: "销量", value: "A" },
         { text: "好评排序", value: "B" },
         { text: "销量排序", value: "C" }
       ]
     };
   },
+  mounted() {
+    this.city();
+  },
   methods: {
+    city() {
+      const _this=this
+      const geolocation = new BMap.Geolocation();
+      window.console.log(geolocation);
+      geolocation.getCurrentPosition(
+        function getinfo(position) {
+          let city = position.address.city; //获取城市信息
+          let province = position.address.province; //获取省份信息
+          _this.LocationCity = city;
+        },
+        function(e) {
+          _this.LocationCity = "定位失败";
+        },
+        { provider: "baidu" }
+      );
+    },
     onClickLeft() {
       this.$router.go(-1);
     },
-    shopDetail(){
-       this.$router.push("/love/shopDetail");
+    shopDetail() {
+      this.$router.push("/love/shopDetail");
     }
   }
 };
@@ -76,5 +99,17 @@ export default {
 .tags .left {
   text-align: left;
   padding-left: 1.5rem;
+}
+.priceBox {
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+.van-button--small {
+  min-width: 60px;
+  height: 20px;
+  padding: 0 8px;
+  font-size: 12px;
+  line-height: 21px;
 }
 </style>

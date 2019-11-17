@@ -43,7 +43,9 @@ export default {
 </script>
 
 <style>
-html,body,#app{
+html,
+body,
+#app {
   height: 100%;
 }
 #app {
@@ -56,7 +58,6 @@ html,body,#app{
   /* margin-top: 60px; */
   /* background: #f8f8f8; */
   background: #fff;
-
 }
 /* 公用样式 */
 .pageSetting {
@@ -65,7 +66,7 @@ html,body,#app{
 .h_titles {
   font-size: 12px;
   color: #7d7e80;
-  text-align: left
+  text-align: left;
 }
 .h_content {
   font-size: 16px;
@@ -101,7 +102,7 @@ html,body,#app{
 .bgcolor {
   background: #ecf0f3;
 }
-.bold{
+.bold {
   font-weight: bold;
 }
 </style>
