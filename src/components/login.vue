@@ -4,7 +4,7 @@
     <van-nav-bar title="登录"></van-nav-bar>
     <van-cell-group class="pageSetting page">
       <van-field v-model="phone" label="手机号" placeholder="请输入手机号" required />
-      <van-field v-model="sms" center clearable label="验证码" placeholder="请输入短信验证码" required>
+      <!-- <van-field v-model="sms" center clearable label="验证码" placeholder="请输入短信验证码" required>
         <van-button
           slot="button"
           size="small"
@@ -13,7 +13,13 @@
           :disabled="disabled"
           @click="validateBtn"
         >{{btnTitle}}</van-button>
-      </van-field>
+      </van-field>-->
+      <van-row>
+        <van-field v-model="sms" center clearable label="验证码" placeholder="请输入下方验证码" required></van-field>
+        <div class="coderight" @click="refreshCode">
+          <SIdentify :identifyCode="identifyCode" @click="refreshCode"></SIdentify>
+        </div>
+      </van-row>
       <van-row class="btnBox">
         <van-button
           size="small"
@@ -31,15 +37,21 @@
 import global from "../global";
 import Vue from "vue";
 import { Toast } from "vant";
-
 Vue.use(Toast);
+import SIdentify from "./common/identify";
 export default {
+  components: {
+    SIdentify
+  },
   data() {
     return {
+      identifyCodes: "1234567890",
+      identifyCode: "",
       phone: "",
       sms: "",
       btnTitle: "发送验证码",
-      disabled: false
+      disabled: false,
+      imgCode: "/api/user/verification_code/send"
     };
   },
   created() {
@@ -49,9 +61,31 @@ export default {
       let mobile = JSON.parse(sessionStorage.getItem("userInfo")).user.mobile;
       this.phone = mobile;
     }
+    this.identifyCode = "";
+    this.makeCode(this.identifyCodes, 4);
   },
   methods: {
+    //验证码abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+    randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    refreshCode() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
+    },
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += this.identifyCodes[
+          this.randomNum(0, this.identifyCodes.length)
+        ];
+      }
+      console.log(this.identifyCode);
+    },
     submit() {
+      if (this.sms !== this.identifyCode) {
+        Toast.fail("验证码不一致");
+        return;
+      }
       let that = this;
       this.axios
         .post("/user/public/login", {

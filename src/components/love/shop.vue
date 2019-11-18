@@ -95,7 +95,7 @@ export default {
       let that = this;
       let params = this.qs.stringify({
         category_id: val,
-        city: "运城市",
+        city: sessionStorage.getItem('city'),
         order_type: orderType
       });
 

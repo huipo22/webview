@@ -148,7 +148,7 @@ export default {
         Toast.fail("请输入工会地址");
         return;
       }
-      window.console.log(JSON.parse(sessionStorage.getItem("userInfo")).token);
+      // window.console.log(JSON.parse(sessionStorage.getItem("userInfo")).token);
       let params = this.qs.stringify({
         user_nickname: that.baseInfo.user_nickname,
         avatar: that.baseInfo.avatar,
