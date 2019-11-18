@@ -72,6 +72,7 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
+            Toast.success("提交成功");
             that.$router.push({ path: "/questionDetail?questionId=" + id });
           } else {
             Toast.fail(res.data.msg);

@@ -9,27 +9,30 @@
       </van-swipe-item>
     </van-swipe>
     <!-- detail -->
-    <van-row>
-      <van-col>商品名称:{{goodDetail.goods_name}}</van-col>
+    <van-row class="pageSetting">
+      <van-col span="24" class="left" style="font-weight:bold">商品名称:{{goodDetail.goods_name}}</van-col>
     </van-row>
-    <van-row>
-      <van-col>价格:{{goodDetail.original_price}}</van-col>
-      <van-col>销量:{{goodDetail.goods_volume}}</van-col>
-      <van-col>库存:{{goodDetail.goods_num}}</van-col>
-    </van-row>
-    <van-row>
-      <van-col>商品详情</van-col>
+    <van-row class="pageSetting">
+      <van-col span="12" class="left title">总价:{{goodDetail.original_price}}</van-col>
+      <van-col span="8" offset="4" class="left title">销量:{{goodDetail.goods_volume}}</van-col>
+      <van-col span="12" class="left title">库存:{{goodDetail.goods_num}}</van-col>
+      <van-col span="8" offset="4" class="left title">预定:{{goodDetail.goods_num}}</van-col>
+      <van-col span="24">
+        <van-divider>商品详情</van-divider>
+      </van-col>
     </van-row>
     <van-row class="detail" v-html="goodDetail.goods_detail"></van-row>
-    <van-row class="btnBox">
-      <van-button
-        size="small"
-        round
-        style="width:100%"
-        color="#1989fa"
-        type="primary"
-        @click="submit"
-      >立即预定</van-button>
+    <van-row>
+      <van-col span="24" class="plusBox">
+        <van-button
+          size="small"
+          round
+          style="width:60%"
+          color="#1989fa"
+          type="primary"
+          @click="submit"
+        >立即预定</van-button>
+      </van-col>
     </van-row>
   </div>
 </template>
@@ -74,11 +77,20 @@ export default {
 };
 </script>
 <style scoped>
-.detail{
+.detail {
   width: 100%;
   overflow: hidden;
 }
-.detail img{
+.detail img {
   width: 100%;
+}
+.van-divider {
+  margin: 16px 0 0 16px;
+}
+.plusBox {
+  text-align: center;
+  position: fixed;
+  bottom: 50px;
+  z-index: 999;
 }
 </style>

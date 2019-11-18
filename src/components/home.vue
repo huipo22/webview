@@ -19,7 +19,7 @@
           @click="moreCategory"
         />
         <!-- <van-grid-item icon="coupon-o" text="问答广场" @click="questionAll" /> -->
-        <van-grid-item icon="coupon-o" text="服务站" @click="love()" />
+        <!-- <van-grid-item icon="coupon-o" text="服务站" @click="love()" /> -->
         <van-grid-item icon="ellipsis" text="更多" @click="moreCategory" />
       </van-grid>
     </van-row>

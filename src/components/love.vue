@@ -1,7 +1,13 @@
 <template>
-  <div id="love">
+  <div id="love" v-cloak>
     <!-- navbar -->
     <van-nav-bar title="服务站"></van-nav-bar>
+
+    <van-overlay :show="!flag">
+      <div class="wrapper">
+        <van-loading color="#1989fa" vertical>加载中...</van-loading>
+      </div>
+    </van-overlay>
     <div class="love pageSetting">
       <div class="shop" @click="shop">附近商家</div>
       <div class="shop" @click="zhaoshang">招商加盟</div>
@@ -28,6 +34,7 @@ export default {
   },
   data() {
     return {
+      flag: false,
       center: {
         lng: 0,
         lat: 0
@@ -38,6 +45,8 @@ export default {
   },
   mounted() {
     this.getLocation();
+    if (this.flag == false) {
+    }
   },
   methods: {
     handler({ BMap, map }) {
@@ -46,6 +55,7 @@ export default {
       geolocation.getCurrentPosition(
         function(r) {
           sessionStorage.setItem("city", r.address.city);
+          _this.flag = true;
           _this.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
         },
         { enableHighAccuracy: true }
@@ -75,6 +85,11 @@ export default {
 };
 </script>
 <style scoped>
+.van-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .shop {
   height: 14rem;
   align-items: center;
