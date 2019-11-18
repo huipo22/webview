@@ -100,8 +100,9 @@ export default {
   /* height: calc(100vh - 10rem); */
   width: 100%;
   overflow: hidden;
+  margin-bottom: 50px
 }
-#content p > image {
+#content >>> img {
   width: 100%;
 }
 #title {

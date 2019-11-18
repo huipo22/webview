@@ -81,7 +81,7 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-.detail img {
+.detail >>> img {
   width: 100%;
 }
 .van-divider {
