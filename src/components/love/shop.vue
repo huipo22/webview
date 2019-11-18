@@ -4,82 +4,122 @@
     <van-nav-bar title="附近商家" left-arrow @click-left="onClickLeft"></van-nav-bar>
     <!-- 筛选框 -->
     <van-dropdown-menu>
-      <van-dropdown-item v-model="value1" :options="option1" />
-      <van-dropdown-item v-model="value2" :options="option2" />
-      <van-dropdown-item v-model="value3" :options="option3" />
+      <van-dropdown-item v-model="type1Value" :options="type1" @change="getGoods(type1Value,1)" />
+      <van-dropdown-item
+        v-model="type2Value"
+        :options="option2"
+        @change="getGoods(type1Value,type2Value)"
+      />
+      <van-dropdown-item
+        v-model="type3Value"
+        :options="option3"
+        @change="getGoods(type1Value,type3Value)"
+      />
     </van-dropdown-menu>
     <!-- list -->
-    <van-card thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" @click="shopDetail">
-      <div slot="tags" class="tags">
-        <van-row>
-          <van-col span="24" class="comon">名字</van-col>
-        </van-row>
-        <van-row>
-          <van-col span="12" class="comon">类型</van-col>
-          <van-col span="12" class="comon">库存</van-col>
-        </van-row>
-        <van-row>
-          <van-col span="12" class="left priceBox">价格</van-col>
-          <van-col span="12" class="right">
-            <van-button size="small" round color="#1989fa" type="primary">预定:2</van-button>
-          </van-col>
-        </van-row>
-      </div>
-    </van-card>
+    <van-row v-for="good in goodList" :key="good.id">
+      <van-card :thumb="resourse+good.goods_img" @click="shopDetail(good.id)">
+        <div slot="tags" class="tags">
+          <van-row>
+            <van-col span="24" class="comon">{{good.goods_name}}</van-col>
+          </van-row>
+          <van-row>
+            <van-col span="12" class="comon">销量:{{good.goods_volume}}</van-col>
+            <van-col span="12" class="comon">库存:{{good.goods_num}}</van-col>
+          </van-row>
+          <van-row>
+            <van-col span="12" class="left priceBox">价格:{{good.original_price}}</van-col>
+            <van-col span="12" class="right">
+              <van-button
+                size="small"
+                round
+                color="#1989fa"
+                type="primary"
+              >预定价格:{{good.present_price}}</van-button>
+            </van-col>
+          </van-row>
+        </div>
+      </van-card>
+    </van-row>
   </div>
 </template>
 <script>
 // import BMap from 'BMap'
+import global from "../../global";
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      value1: 0,
-      value2: "a",
-      value3: "A",
-      option1: [
+      goodList: [],
+      resourse: global.imgAddress,
+      type1Value: 0,
+      type2Value: null,
+      type3Value: 1,
+      type1: [
         { text: "商家类型", value: 0 },
-        { text: "etc", value: 1 },
-        { text: "酒店", value: 2 },
-        { text: "加油", value: 3 },
-        { text: "维修", value: 4 }
+        { text: "酒店", value: 62 },
+        { text: "etc", value: 63 },
+        { text: "加油", value: 64 },
+        { text: "维修", value: 65 }
       ],
       option2: [
-        { text: "价格", value: "a" },
-        { text: "好评排序", value: "b" },
-        { text: "销量排序", value: "c" }
+        { text: "预定价格", value: null },
+        { text: "价格从高到低", value: 3 },
+        { text: "价格从低到高", value: 4 }
       ],
-      option3: [
-        { text: "销量", value: "A" },
-        { text: "好评排序", value: "B" },
-        { text: "销量排序", value: "C" }
-      ]
+      option3: [{ text: "默认排序", value: 1 }, { text: "销量", value: 5 }]
     };
   },
   mounted() {
-    this.city();
+    this.getType();
+    this.getGoods(0, 1);
   },
   methods: {
-    city() {
-      const _this=this
-      const geolocation = new BMap.Geolocation();
-      window.console.log(geolocation);
-      geolocation.getCurrentPosition(
-        function getinfo(position) {
-          let city = position.address.city; //获取城市信息
-          let province = position.address.province; //获取省份信息
-          _this.LocationCity = city;
-        },
-        function(e) {
-          _this.LocationCity = "定位失败";
-        },
-        { provider: "baidu" }
-      );
+    // 类型
+    getType() {
+      this.axios
+        .get("/goods/goods/get_type", {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+          }
+        });
+    },
+    // 商品列表
+    getGoods(val, orderType) {
+      let that = this;
+      let params = this.qs.stringify({
+        category_id: val,
+        city: "运城市",
+        order_type: orderType
+      });
+
+      this.axios
+        .post("/goods/goods/get_goods", params, {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+            that.goodList = res.data.data;
+          } else {
+            Toast.fail(res.data.msg);
+          }
+        });
     },
     onClickLeft() {
       this.$router.go(-1);
     },
-    shopDetail() {
-      this.$router.push("/love/shopDetail");
+    shopDetail(goodId) {
+      this.$router.push("/love/shopDetail?goodId=" + goodId);
     }
   }
 };
