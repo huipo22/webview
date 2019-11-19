@@ -5,7 +5,7 @@
     <!-- swipter -->
     <van-swipe :autoplay="3000" class="swiperImg">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img :src="image" />
+        <img :src="resource +image.url" />
       </van-swipe-item>
     </van-swipe>
     <!-- list -->
@@ -42,13 +42,19 @@
 <script>
 import tabbar from "../components/common/tabbar";
 import global from "../global";
-import { Notify } from 'vant';
+import { Notify } from "vant";
 export default {
   components: {
     tabbar
   },
   mounted() {
     let that = this;
+    //轮播图
+    this.axios.get("home/index/get_swipe?swipe_id=3").then(res => {
+      if (res.data.code == 1) {
+        that.images = res.data.data;
+      }
+    });
     this.axios
       .get("home/study", {
         headers: {
@@ -73,11 +79,7 @@ export default {
     return {
       study: {},
       resource: global.imgAddress,
-      images: [
-        "https://gh.jishanhengrui.com/upload/default/lunbo/7.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/8.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/9.jpg"
-      ]
+      images: []
     };
   },
   methods: {

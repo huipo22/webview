@@ -5,7 +5,7 @@
     <!-- swipter -->
     <van-swipe :autoplay="3000" class="swiperImg">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img :src="image" />
+        <img :src="resourse+image.url" />
       </van-swipe-item>
     </van-swipe>
     <!-- category -->
@@ -53,7 +53,11 @@
               </van-col>
             </van-row>
             <van-row>
-              <van-col offset="1" span="13" class="left h_titles">{{item.new.create_time |dCreateTime}}</van-col>
+              <van-col
+                offset="1"
+                span="13"
+                class="left h_titles"
+              >{{item.new.create_time |dCreateTime}}</van-col>
             </van-row>
           </div>
         </van-panel>
@@ -65,7 +69,6 @@
 <script>
 import Vue from "vue";
 import { NoticeBar } from "vant";
-
 Vue.use(NoticeBar);
 import global from "../global";
 import tabbar from "../components/common/tabbar";
@@ -80,15 +83,17 @@ export default {
       categoryList: [], //分类组合
       newList: [], //新闻list
       notify: "", //通知
-      images: [
-        "https://gh.jishanhengrui.com/upload/default/lunbo/6.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/5.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/2.jpg",
-      ]
+      images: []
     };
   },
   mounted() {
     let that = this;
+    //轮播图
+    this.axios.get("home/index/get_swipe?swipe_id=1").then(res => {
+      if (res.data.code == 1) {
+        that.images = res.data.data;
+      }
+    });
     // 大类
     this.axios.get("/portal/categories").then(res => {
       // window.console.log(res);
@@ -128,15 +133,17 @@ export default {
       this.$router.push({ path: "/moreCategory" });
     },
     // 分类更多
-    moreList(id,title) {
-      this.$router.push({ path: "/itemList?categoryId=" + id+"&title="+title });
+    moreList(id, title) {
+      this.$router.push({
+        path: "/itemList?categoryId=" + id + "&title=" + title
+      });
     }
   }
 };
 </script>
 <style  scoped>
-#home{
-    background: #f0f3f6;
+#home {
+  background: #f0f3f6;
 }
 .title {
   height: 3rem;
@@ -147,7 +154,7 @@ export default {
 .h_titles {
   font-size: 12px;
   color: #7d7e80;
-  text-align: left
+  text-align: left;
 }
 .h_titlescolor {
   color: #1989fa;

@@ -5,12 +5,12 @@
     <!-- swipter -->
     <van-swipe :autoplay="3000" class="swiperImg">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img :src="image" />
+        <img :src="resourse+image.url" />
       </van-swipe-item>
     </van-swipe>
     <!-- 分类 -->
     <!-- category -->
-    <van-row class="h_title" v-for="item in listData" :key="item.id" >
+    <van-row class="h_title" v-for="item in listData" :key="item.id">
       <van-row>
         <van-col offset="1">{{item.name}}</van-col>
       </van-row>
@@ -34,15 +34,17 @@ export default {
     return {
       listData: [],
       resourse: global.imgAddress,
-      images: [
-        "https://gh.jishanhengrui.com/upload/default/lunbo/1.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/3.jpg",
-        "https://gh.jishanhengrui.com/upload/default/lunbo/4.jpg",
-      ]
+      images: []
     };
   },
   mounted() {
     let that = this;
+    //轮播图
+    this.axios.get("home/index/get_swipe?swipe_id=2").then(res => {
+      if (res.data.code == 1) {
+        that.images = res.data.data;
+      }
+    });
     this.axios.get("/portal/categories/cate_list").then(res => {
       window.console.log(res);
       if (res.data.code == 1) {
@@ -55,8 +57,10 @@ export default {
       this.$router.go(-1);
     },
     // 分类更多
-    moreList(id,title) {
-      this.$router.push({ path: "/itemList?categoryId=" + id+"&title="+title });
+    moreList(id, title) {
+      this.$router.push({
+        path: "/itemList?categoryId=" + id + "&title=" + title
+      });
     }
   }
 };

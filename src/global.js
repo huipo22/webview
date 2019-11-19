@@ -37,5 +37,5 @@ export default {
     imgAddress,
     token,
     dataURLtoFile,
-    time_to_sec
+    time_to_sec,
 }

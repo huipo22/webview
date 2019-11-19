@@ -12,8 +12,13 @@
       <div id="content" class="title" v-html="studyData.content"></div>
     </div>
     <van-row class="bottomBox">
-      <!-- <van-col>已完成</van-col> -->
-      <van-col span="24">
+      <van-col span="24" v-if="studyData.process==100" class="succ">
+        <van-col span="24" class="title">
+          <van-icon name="success" color="red" size="20px" />
+          <!-- 已完成 -->
+        </van-col>
+      </van-col>
+      <van-col span="24" v-else>
         <van-col span="24" class="title">
           学习倒计时
           <van-count-down ref="countDown" class="color" :time="time" />
@@ -34,7 +39,8 @@ export default {
     return {
       // time: 3 * 60 * 60 * 1000,
       time: null,
-      studyData: {}
+      studyData: {},
+      count: null
     };
   },
   mounted() {
@@ -54,23 +60,29 @@ export default {
         window.console.log(res);
         if (res.data.code == 1) {
           that.studyData = res.data.data;
-          that.time = res.data.data.study_time * 60 * 60 * 1000;
+          that.count = res.data.data.study_time; //总分钟
+          // 剩余学习进度
+          that.time =
+            ((100 - res.data.data.process) / 100) *
+            res.data.data.study_time *
+            60 *
+            1000;
         }
       });
   },
   methods: {
     onClickLeft() {
-      window.console.log(this.time / 1000);
-      window.console.log(this.$refs.countDown);
-      window.console.log(
-        global.time_to_sec(this.$refs.countDown.$el.innerText)
-      );
+      let total = this.count * 60; //总分钟
+      let Surplus = global.time_to_sec(this.$refs.countDown.$el.innerText); //剩余分钟
+      window.console.log(total, Surplus);
+      // return
+      let process = 100 - Math.round((Surplus / total) * 100); //学习进度
       let id = this.$route.query.studyId;
-      let process = "";
       let params = this.qs.stringify({
         id: id,
         process: process
       });
+      let that = this;
       this.axios
         .post("/home/study/update_study", params, {
           headers: {
@@ -81,11 +93,8 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            that.studyData = res.data.data;
-            that.time = res.data.data.study_time * 60 * 60 * 1000;
           }
         });
-      return;
       this.$router.go(-1);
     }
   }
@@ -100,7 +109,7 @@ export default {
   /* height: calc(100vh - 10rem); */
   width: 100%;
   overflow: hidden;
-  margin-bottom: 50px
+  margin-bottom: 50px;
 }
 #content >>> img {
   width: 100%;
@@ -130,5 +139,11 @@ export default {
 }
 .color {
   color: red;
+}
+.succ {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
