@@ -18,14 +18,12 @@
           :text="item.name"
           @click="moreCategory"
         />
-        <!-- <van-grid-item icon="coupon-o" text="问答广场" @click="questionAll" /> -->
-        <!-- <van-grid-item icon="coupon-o" text="服务站" @click="love()" /> -->
         <van-grid-item icon="ellipsis" text="更多" @click="moreCategory" />
       </van-grid>
     </van-row>
     <!-- 通知 -->
     <van-row>
-      <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" />
+      <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true"/>
     </van-row>
     <!-- category_detail -->
     <van-row>

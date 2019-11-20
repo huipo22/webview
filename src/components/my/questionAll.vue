@@ -22,10 +22,18 @@
               <van-col class="userInfo">
                 <div>
                   <img
+                    v-if="item.user_info.avatar.startsWith('default')"
                     class="avatar"
                     width="30px"
                     height="30px"
                     :src="resource+item.user_info.avatar"
+                  />
+                  <img
+                    v-else
+                    class="avatar"
+                    width="30px"
+                    height="30px"
+                    :src="item.user_info.avatar"
                   />
                 </div>
                 <div

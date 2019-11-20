@@ -7,7 +7,8 @@
     <van-row id="avatarBox">
       <van-col span="8">
         <div id="icon1">
-          <img width="50px" height="50px" :src="resourse+userInfo.user.avatar" />
+          <img width="50px" height="50px" :src="resourse+userInfo.user.avatar" v-if="baseInfos.avater==''"/>
+          <img width="50px" height="50px" :src="baseInfos.avatar" v-else/>
         </div>
       </van-col>
       <van-col span="16">
@@ -28,7 +29,7 @@
     <van-cell-group>
       <van-cell icon="points" value="我的学习" to="/my" is-link />
       <van-cell icon="gold-coin-o" value="我的问答" to="/myQuestion" is-link />
-      <van-cell icon="gift-o" value="我的订单" is-link />
+      <van-cell icon="gift-o" value="我的订单" to="/order" is-link />
     </van-cell-group>
     <tabbar name="person" />
   </div>

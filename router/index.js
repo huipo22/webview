@@ -19,6 +19,7 @@ import baseInfo from '../src/components/my/baseInfo'
 import login from '../src/components/login'
 import moreCategory from '../src/components/item/moreCategory'
 import myAsk from '../src/components/my/myAsk'
+import order from '../src/components/my/Order'
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -127,6 +128,11 @@ export default new Router({
             path: '/myAsk',
             name: 'myAsk',
             component: myAsk
+        },
+        {
+            path: '/order',
+            name: 'order',
+            component: order
         },
     ]
 })

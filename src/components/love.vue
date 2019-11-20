@@ -9,8 +9,12 @@
       </div>
     </van-overlay>
     <div class="love pageSetting">
-      <div class="shop" @click="shop">附近商家</div>
-      <div class="shop" @click="zhaoshang">招商加盟</div>
+      <div class="shop" @click="shop">
+        <img src="../assets/shop.jpg" alt />
+      </div>
+      <div class="shop" @click="zhaoshang">
+        <img src="../assets/zhaosehng.jpg" alt />
+      </div>
       <div class="shop">
         <baidu-map
           class="map"
@@ -91,15 +95,19 @@ export default {
   justify-content: center;
 }
 .shop {
-  height: 14rem;
+  height: 10rem;
   align-items: center;
   display: flex;
   justify-content: center;
   border: 1px solid;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 .shop:last-child {
+  height: 14rem;
   margin-bottom: 50px;
+}
+.shop > img {
+  width: 100%;
 }
 .map,
 .BMap_mask {

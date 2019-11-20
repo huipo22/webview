@@ -19,10 +19,18 @@
                 <van-col class="userInfo">
                   <div>
                     <img
+                     v-if="item.question.user_info.avatar.startsWith('default')"
                       class="avatar"
                       width="30px"
                       height="30px"
                       :src="resource+item.question.user_info.avatar"
+                    />
+                    <img
+                     v-else
+                      class="avatar"
+                      width="30px"
+                      height="30px"
+                      :src="item.question.user_info.avatar"
                     />
                   </div>
                   <div
@@ -38,10 +46,18 @@
                 <van-col class="userInfo">
                   <div>
                     <img
+                    v-if="item.user_info.avatar.startsWith('default')"
                       class="avatar"
                       width="30px"
                       height="30px"
                       :src="item.user_info.avatar==''?'https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png':resource+item.user_info.avatar"
+                    />
+                    <img
+                    v-else
+                      class="avatar"
+                      width="30px"
+                      height="30px"
+                      :src="item.user_info.avatar==''?'https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png':item.user_info.avatar"
                     />
                   </div>
                   <div class="name h_titles">{{item.user_info.user_nickname}}</div>
@@ -70,10 +86,18 @@
                 <van-col class="userInfo">
                   <div>
                     <img
+                      v-if="item.user_info.avatar.startsWith('default')"
                       class="avatar"
                       width="30px"
                       height="30px"
                       :src="resource+item.user_info.avatar"
+                    />
+                    <img
+                      v-else
+                      class="avatar"
+                      width="30px"
+                      height="30px"
+                      :src="item.user_info.avatar"
                     />
                   </div>
                   <div

@@ -46,9 +46,11 @@
         placeholder="选择工会"
         @click="showPicker = true"
       />-->
-      <van-cell>
-        <van-uploader :after-read="afterRead" result-type="file" />
-      </van-cell>
+      <van-field label="头像" abel-align="center" required>
+        <van-uploader :after-read="afterRead" result-type="file" slot="input">
+          <img :src="avatar" ref="usersImg" class="avater" />
+        </van-uploader>
+      </van-field>
     </van-cell-group>
     <van-row style="padding: 10px 16px;" color>
       <van-button class="tijao" color="#1989fa" type="primary" @click="onClickRight">提交</van-button>
@@ -95,7 +97,8 @@ export default {
       // 当前选中的省市区code
       areaNum: "",
       // 省市区列表
-      areaList: addressList
+      areaList: addressList,
+      avatar: ""
       // 工会
       // value: "",
       // showPicker: false,
@@ -116,6 +119,7 @@ export default {
         // window.console.log(res);
         if (res.data.code == 1) {
           that.baseInfo = res.data.data;
+          that.avatar = global.imgAddress + res.data.data.avatar;
         }
       });
     if (this.$route.query.new) {
@@ -150,7 +154,7 @@ export default {
       // window.console.log(JSON.parse(sessionStorage.getItem("userInfo")).token);
       let params = this.qs.stringify({
         user_nickname: that.baseInfo.user_nickname,
-        avatar: that.baseInfo.avatar,
+        avatar: that.avatar,
         signature: that.baseInfo.signature,
         sex: that.baseInfo.sex,
         address: that.baseInfo.address,
@@ -178,19 +182,21 @@ export default {
       // 此时可以自行将文件上传至服务器
       let formData = new window.FormData();
       formData.append("file", file.file);
-      window.console.log(formData.get('file'));
-      let params = this.qs.stringify({
-        file: file.file
-      });
+      window.console.log(formData.get("file"));
+      let that=this;
       this.axios
-        .post("/user/upload/one", params, {
+        .post("/user/upload/one", formData, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token,
+            "Content-Type":
+              "multipart/form-data;boundary = " + new Date().getTime()
           }
         })
         .then(res => {
-          window.console.log(res);
+          if (res.data.code == 1) {
+            that.avatar = global.imgAddress + res.data.data.url;
+          }
         });
     },
     // 点击展示地址弹窗
@@ -228,5 +234,8 @@ export default {
 .tijao {
   width: 100%;
   margin-top: 50px;
+}
+.avater {
+  width: 50px;
 }
 </style>
