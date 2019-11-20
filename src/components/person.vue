@@ -7,7 +7,7 @@
     <van-row id="avatarBox">
       <van-col span="8">
         <div id="icon1">
-          <img width="50px" height="50px" :src="resourse+userInfo.user.avatar" v-if="baseInfos.avater==''"/>
+          <img width="50px" height="50px" :src="resourse+userInfo.user.avatar" v-if="userInfo.user.avatar.startsWith('default')"/>
           <img width="50px" height="50px" :src="baseInfos.avatar" v-else/>
         </div>
       </van-col>

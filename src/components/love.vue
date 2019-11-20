@@ -99,7 +99,7 @@ export default {
   align-items: center;
   display: flex;
   justify-content: center;
-  border: 1px solid;
+  /* border: 1px solid; */
   margin-bottom: 1rem;
 }
 .shop:last-child {
