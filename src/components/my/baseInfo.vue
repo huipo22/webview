@@ -46,10 +46,9 @@
         placeholder="选择工会"
         @click="showPicker = true"
       />-->
-      <!-- <van-cell>
-        <van-uploader :after-read="afterRead" />
+      <van-cell>
+        <van-uploader :after-read="afterRead" result-type="file" />
       </van-cell>
-      <input type="file" @change="aa" />-->
     </van-cell-group>
     <van-row style="padding: 10px 16px;" color>
       <van-button class="tijao" color="#1989fa" type="primary" @click="onClickRight">提交</van-button>
@@ -119,10 +118,10 @@ export default {
           that.baseInfo = res.data.data;
         }
       });
-    if(this.$route.query.new){
-      that.flag=false
-    }else{
-      that.flag=true
+    if (this.$route.query.new) {
+      that.flag = false;
+    } else {
+      that.flag = true;
     }
   },
   methods: {
@@ -177,39 +176,22 @@ export default {
     // 上传文件
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-      window.console.log(file);
-
+      let formData = new window.FormData();
+      formData.append("file", file.file);
+      window.console.log(formData.get('file'));
+      let params = this.qs.stringify({
+        file: file.file
+      });
       this.axios
-        .post("/user/upload/one", {
+        .post("/user/upload/one", params, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token,
-            "Content-Type": "multipart/form-data"
-          },
-          params: {
-            file: file.content
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
           }
         })
         .then(res => {
           window.console.log(res);
         });
-    },
-    aa(file) {
-      window.console.log(file);
-      // this.axios
-      //   .post("/user/upload/one", {
-      //     headers: {
-      //       "Device-Type": global.deviceType,
-      //       token: global.token,
-      //       "Content-Type": "application/x-www-form-urlencoded"
-      //     },
-      //     params: {
-      //       file: file
-      //     }
-      //   })
-      //   .then(res => {
-      //     window.console.log(res);
-      //   });
     },
     // 点击展示地址弹窗
     showAddressChuang() {
