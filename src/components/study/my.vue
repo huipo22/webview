@@ -2,7 +2,7 @@
   <div id="detail">
     <!-- navbar -->
     <van-nav-bar title="我的" left-arrow @click-left="onClickLeft"></van-nav-bar>
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" color="#1989fa">
       <van-tab title="学习中">
         <van-card
           thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"

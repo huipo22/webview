@@ -2,7 +2,7 @@
   <div id="myQuestion">
     <!-- navbar -->
     <van-nav-bar title="我的问答" left-arrow @click-left="onClickLeft"></van-nav-bar>
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" color="#1989fa">
       <van-tab :title="mys">
         <van-row>
           <van-list>

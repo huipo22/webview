@@ -61,7 +61,7 @@
           style="width:100%"
           color="#1989fa"
           type="primary"
-          @click="submit"
+          @click="submit(goodDetail.id)"
         >立即预定:{{goodDetail.goods_num}}</van-button>
       </van-col>
     </van-row>
@@ -104,7 +104,9 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    submit() {},
+    submit(id) {
+      
+    },
     nav(address) {
       window.location.href =
         "http://api.map.baidu.com/geocoder?address=" +
