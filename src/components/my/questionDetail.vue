@@ -9,17 +9,9 @@
         <van-col v-html="question.content" style="font-weight:bold"></van-col>
       </van-row>
       <van-row>
-        <van-col class="userInfo">
+        <van-col class="userInfo" v-if="question.user_info">
           <div>
             <img
-              v-if="question.user_info.avatar.startsWith('default')"
-              class="avatar"
-              width="30px"
-              height="30px"
-              :src="resource+question.user_info.avatar"
-            />
-            <img
-              v-else
               class="avatar"
               width="30px"
               height="30px"
@@ -36,7 +28,7 @@
     </div>
     <div class="fenge"></div>
     <!-- 回答list -->
-    <van-row>
+    <van-row class="list">
       <van-list>
         <div
           slot="default"
@@ -51,7 +43,7 @@
                   class="avatar"
                   width="30px"
                   height="30px"
-                  :src="item.user_info.avatar==''?'https://img.yzcdn.cn/public_files/2017/10/23/8690bb321356070e0b8c4404d087f8fd.png':resource+item.user_info.avatar"
+                  :src="item.user_info.avatar"
                 />
               </div>
               <div class="name h_titles">{{item.user_info.user_nickname}}</div>
@@ -130,5 +122,9 @@ export default {
   width: 100%;
   height: 10px;
   background: #f0f3f6;
+}
+.list {
+  height: auto;
+  background: #fff;
 }
 </style>

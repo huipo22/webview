@@ -119,7 +119,7 @@ export default {
         // window.console.log(res);
         if (res.data.code == 1) {
           that.baseInfo = res.data.data;
-          that.avatar = global.imgAddress + res.data.data.avatar;
+          that.avatar = res.data.data.avatar;
         }
       });
     if (this.$route.query.new) {
@@ -183,7 +183,7 @@ export default {
       let formData = new window.FormData();
       formData.append("file", file.file);
       window.console.log(formData.get("file"));
-      let that=this;
+      let that = this;
       this.axios
         .post("/user/upload/one", formData, {
           headers: {
@@ -195,7 +195,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 1) {
-            that.avatar = global.imgAddress + res.data.data.url;
+            that.avatar = global.imgAddress+res.data.data.url;
           }
         });
     },

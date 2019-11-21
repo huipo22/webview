@@ -80,7 +80,7 @@
               @click="askDetail(item.id)"
             >
               <van-row class="questionList">
-                <van-col v-html="item.content" style="font-weight:bold" @click="askDetail()"></van-col>
+                <van-col v-html="item.content" style="font-weight:bold" ></van-col>
               </van-row>
               <van-row class="questionList">
                 <van-col class="userInfo">
