@@ -111,7 +111,7 @@ export default {
         .post("/goods/order/order_status", params, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+            token: JSON.parse(localStorage.getItem("userInfo")).token
           }
         })
         .then(res => {
@@ -130,7 +130,7 @@ export default {
         .post("/goods/order/order_status", params, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+            token: JSON.parse(localStorage.getItem("userInfo")).token
           }
         })
         .then(res => {

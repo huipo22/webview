@@ -55,11 +55,12 @@ export default {
     };
   },
   created() {
-    if (!sessionStorage.getItem("userInfo")) {
+    if (!localStorage.getItem("userInfo")) {
       this.phone = "";
     } else {
-      let mobile = JSON.parse(sessionStorage.getItem("userInfo")).user.mobile;
+      let mobile = JSON.parse(localStorage.getItem("userInfo")).user.mobile;
       this.phone = mobile;
+      this.$router.replace({ path: "/home" });
     }
     this.identifyCode = "";
     this.makeCode(this.identifyCodes, 4);
@@ -96,8 +97,8 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
-            let user = JSON.parse(sessionStorage.getItem("userInfo"));
+            localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+            let user = JSON.parse(localStorage.getItem("userInfo"));
             if (
               !user.user.user_nickname ||
               !user.user.signature ||

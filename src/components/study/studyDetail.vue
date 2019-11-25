@@ -53,7 +53,7 @@ export default {
       .post("/home/study/study_detail", params, {
         headers: {
           "Device-Type": global.deviceType,
-          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          token: JSON.parse(localStorage.getItem("userInfo")).token
         }
       })
       .then(res => {
@@ -87,7 +87,7 @@ export default {
         .post("/home/study/update_study", params, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+            token: JSON.parse(localStorage.getItem("userInfo")).token
           }
         })
         .then(res => {

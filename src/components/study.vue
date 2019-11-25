@@ -59,7 +59,7 @@ export default {
       .get("home/study", {
         headers: {
           "Device-Type": global.deviceType,
-          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          token: JSON.parse(localStorage.getItem("userInfo")).token
         }
       })
       .then(res => {
@@ -71,7 +71,7 @@ export default {
             message: "未登录",
             duration: 3000
           });
-          this.$router.push({ path: "/my" });
+          this.$router.push({ path: "/login" });
         }
       });
   },

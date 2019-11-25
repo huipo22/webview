@@ -23,6 +23,12 @@
           :zoom="zoom"
           ak:scroll-wheel-zoom="true"
         >
+          <bm-geolocation
+            anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
+            :showAddressBar="true"
+            :autoLocation="true"
+          ></bm-geolocation>
+          <bm-marker :position="center"></bm-marker>
           <bm-marker v-for="marker in markers" :key="marker.id" :position="marker"></bm-marker>
         </baidu-map>
       </div>
@@ -43,7 +49,7 @@ export default {
         lng: 0,
         lat: 0
       },
-      zoom: 3,
+      zoom: 25,
       markers: []
     };
   },
@@ -58,7 +64,8 @@ export default {
       var geolocation = new BMap.Geolocation();
       geolocation.getCurrentPosition(
         function(r) {
-          sessionStorage.setItem("city", r.address.city);
+          window.console.log(r);
+          localStorage.setItem("city", r.address.city);
           _this.flag = true;
           _this.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
         },

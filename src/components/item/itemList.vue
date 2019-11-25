@@ -12,14 +12,20 @@
           v-for="item in listData"
           :key="item.id"
         >
+          <van-row>
+            `
+            <van-col span="24">
+              <img :src="resourse+item.thumbnail" alt width="100%" />
+            </van-col>
+          </van-row>
           <van-row style="padding: 10px 0;">
-            <van-col offset="1" span="13" >
+            <van-col offset="1" span="23">
               <van-row class="left h_content">{{item.post_title}}</van-row>
-              <van-row class="left h_titles">{{item.published_time|dCreateTime}}</van-row>
+              <!-- <van-row class="left h_titles">{{item.published_time|dCreateTime}}</van-row> -->
             </van-col>
-            <van-col offset="2" span="8">
+            <!-- <van-col offset="2" span="8">
               <img :src="resourse+item.thumbnail" alt height="50px" />
-            </van-col>
+            </van-col>-->
           </van-row>
           <van-row>
             <!-- <van-col offset="1" span="13" class="left h_titles">{{item.published_time|dCreateTime}}</van-col> -->

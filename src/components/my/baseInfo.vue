@@ -112,7 +112,7 @@ export default {
       .get("/user/profile/userInfo", {
         headers: {
           "Device-Type": global.deviceType,
-          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          token: JSON.parse(localStorage.getItem("userInfo")).token
         }
       })
       .then(res => {
@@ -151,7 +151,7 @@ export default {
         Toast.fail("请输入工会地址");
         return;
       }
-      // window.console.log(JSON.parse(sessionStorage.getItem("userInfo")).token);
+      // window.console.log(JSON.parse(localStorage.getItem("userInfo")).token);
       let params = this.qs.stringify({
         user_nickname: that.baseInfo.user_nickname,
         avatar: that.avatar,
@@ -165,13 +165,13 @@ export default {
           headers: {
             "Device-Type": global.deviceType,
             "Content-Type": "application/x-www-form-urlencoded",
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+            token: JSON.parse(localStorage.getItem("userInfo")).token
           }
         })
         .then(res => {
           // window.console.log(res);
           if (res.data.code == 1) {
-            this.$router.push({ path: "/person" });
+            this.$router.push({ path: "/home" });
           } else {
             Toast.fail(res.data.msg);
           }
@@ -188,7 +188,7 @@ export default {
         .post("/user/upload/one", formData, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(sessionStorage.getItem("userInfo")).token,
+            token: JSON.parse(localStorage.getItem("userInfo")).token,
             "Content-Type":
               "multipart/form-data;boundary = " + new Date().getTime()
           }

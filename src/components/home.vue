@@ -23,7 +23,7 @@
     </van-row>
     <!-- 通知 -->
     <van-row>
-      <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true"/>
+      <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true" />
     </van-row>
     <!-- category_detail -->
     <van-row>
@@ -45,18 +45,23 @@
             v-if="item.new"
           >
             <van-row>
-              <van-col offset="1" span="16" class="left h_content">{{item.new.post_title}}</van-col>
-              <van-col span="7">
-                <img :src="resourse+item.new.thumbnail" alt height="50px" />
+              <van-col span="24">
+                <img :src="resourse+item.new.thumbnail" alt width="100%" />
               </van-col>
             </van-row>
             <van-row>
+              <van-col offset="1" span="23" class="left h_content">{{item.new.post_title}}</van-col>
+              <!-- <van-col span="7">
+                <img :src="resourse+item.new.thumbnail" alt height="50px" />
+              </van-col>-->
+            </van-row>
+            <!-- <van-row>
               <van-col
                 offset="1"
                 span="13"
                 class="left h_titles"
               >{{item.new.create_time |dCreateTime}}</van-col>
-            </van-row>
+            </van-row>-->
           </div>
         </van-panel>
       </van-list>

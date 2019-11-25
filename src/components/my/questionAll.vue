@@ -67,7 +67,7 @@ export default {
         headers: {
           "Device-Type": global.deviceType,
           "Content-Type": "application/x-www-form-urlencoded",
-          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          token: JSON.parse(localStorage.getItem("userInfo")).token
         }
       })
       .then(res => {
