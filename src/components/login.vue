@@ -106,7 +106,7 @@ export default {
             ) {
               this.$router.replace({ path: "/baseInfo?new=0" });
             } else {
-              Toast.success('登录成功');
+              Toast.success("登录成功");
               this.$router.replace({ path: "/person" });
             }
           } else {
