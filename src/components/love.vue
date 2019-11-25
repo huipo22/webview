@@ -62,6 +62,7 @@ export default {
     handler({ BMap, map }) {
       let _this = this;
       var geolocation = new BMap.Geolocation();
+      window.console.log(geolocation)
       geolocation.getCurrentPosition(
         function(r) {
           window.console.log(r);
