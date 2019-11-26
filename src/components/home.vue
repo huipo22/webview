@@ -91,12 +91,10 @@ export default {
   },
   mounted() {
     let token = this.$route.query.token;
-    if(token==1){
-      
-    }
-    sessionStorage.setItem("userInfo", JSON.stringify({ token: token }));
-    if (!sessionStorage.getItem("userInfo")) {
+    if (!token) {
       this.$router.replace({ path: "/login" });
+    } else {
+      sessionStorage.setItem("userInfo", JSON.stringify({ 'token': token }));
     }
     let that = this;
     //轮播图
