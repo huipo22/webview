@@ -90,6 +90,14 @@ export default {
     };
   },
   mounted() {
+    let token = this.$route.query.token;
+    if(token==1){
+      
+    }
+    sessionStorage.setItem("userInfo", JSON.stringify({ token: token }));
+    if (!sessionStorage.getItem("userInfo")) {
+      this.$router.replace({ path: "/login" });
+    }
     let that = this;
     //轮播图
     this.axios.get("home/index/get_swipe?swipe_id=1").then(res => {

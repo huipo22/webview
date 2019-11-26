@@ -81,7 +81,7 @@ export default {
         .get("/goods/goods/get_type", {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(localStorage.getItem("userInfo")).token
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
           }
         })
         .then(res => {
@@ -95,7 +95,7 @@ export default {
       let that = this;
       let params = this.qs.stringify({
         category_id: val,
-        city: localStorage.getItem('city'),
+        city: sessionStorage.getItem('city'),
         order_type: orderType
       });
 
@@ -103,7 +103,7 @@ export default {
         .post("/goods/goods/get_goods", params, {
           headers: {
             "Device-Type": global.deviceType,
-            token: JSON.parse(localStorage.getItem("userInfo")).token
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
           }
         })
         .then(res => {

@@ -59,7 +59,7 @@ export default {
       .get("home/study", {
         headers: {
           "Device-Type": global.deviceType,
-          token: JSON.parse(localStorage.getItem("userInfo")).token
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
         }
       })
       .then(res => {

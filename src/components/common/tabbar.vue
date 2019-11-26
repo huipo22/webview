@@ -17,13 +17,14 @@ export default {
       active: null
     };
   },
-  mounted(){
-    // window.console.log(this)
-    this.active=this.$props.name
+  mounted() {
+    this.active = this.$props.name;
   },
   methods: {
     home() {
-      this.$router.push("/home");
+      this.$router.push(
+        "/home?token=" + JSON.parse(sessionStorage.getItem("userInfo")).token
+      );
     },
     study() {
       this.$router.push("/study");

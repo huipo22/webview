@@ -55,12 +55,15 @@ export default {
     };
   },
   created() {
-    if (!localStorage.getItem("userInfo")) {
+    if (!sessionStorage.getItem("userInfo")) {
       this.phone = "";
     } else {
-      let mobile = JSON.parse(localStorage.getItem("userInfo")).user.mobile;
+      let mobile = JSON.parse(sessionStorage.getItem("userInfo")).user.mobile;
       this.phone = mobile;
-      this.$router.replace({ path: "/home" });
+      this.$router.replace({
+        path:
+          "/home?token=" + JSON.parse(sessionStorage.getItem("userInfo")).token
+      });
     }
     this.identifyCode = "";
     this.makeCode(this.identifyCodes, 4);
@@ -97,8 +100,8 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
-            localStorage.setItem("userInfo", JSON.stringify(res.data.data));
-            let user = JSON.parse(localStorage.getItem("userInfo"));
+            sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
+            let user = JSON.parse(sessionStorage.getItem("userInfo"));
             if (
               !user.user.user_nickname ||
               !user.user.signature ||

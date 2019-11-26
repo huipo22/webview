@@ -66,7 +66,7 @@ export default {
       geolocation.getCurrentPosition(
         function(r) {
           window.console.log(r);
-          localStorage.setItem("city", r.address.city);
+          sessionStorage.setItem("city", r.address.city);
           _this.flag = true;
           _this.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
         },

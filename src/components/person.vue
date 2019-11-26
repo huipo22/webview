@@ -49,7 +49,7 @@ export default {
     };
   },
   created() {
-    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     window.console.log(this.userInfo);
 
     // get 基本信息
@@ -58,7 +58,7 @@ export default {
       .get("/user/profile/userInfo", {
         headers: {
           "Device-Type": global.deviceType,
-          token: JSON.parse(localStorage.getItem("userInfo")).token
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
         }
       })
       .then(res => {

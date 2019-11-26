@@ -25,20 +25,20 @@ export default {
   //     this.flag = false;
   //   }
   // },
-  methods: {
-    home() {
-      this.$router.push("/home");
-    },
-    study() {
-      this.$router.push("/study");
-    },
-    love() {
-      this.$router.push("/love");
-    },
-    person() {
-      this.$router.push("/person");
-    }
-  }
+  // methods: {
+  //   home() {
+  //     this.$router.push("/home");
+  //   },
+  //   study() {
+  //     this.$router.push("/study");
+  //   },
+  //   love() {
+  //     this.$router.push("/love");
+  //   },
+  //   person() {
+  //     this.$router.push("/person");
+  //   }
+  // }
 };
 </script>
 
