@@ -90,7 +90,9 @@ export default {
     };
   },
   mounted() {
+    window.console.log(this)
     let token = this.$route.query.token;
+    window.console.log(token)
     if (!token) {
       this.$router.replace({ path: "/login" });
     } else {

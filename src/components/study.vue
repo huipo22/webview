@@ -68,7 +68,7 @@ export default {
           that.study = res.data.data;
         } else {
           Notify({
-            message: "未登录",
+            message: "token值不对",
             duration: 3000
           });
           this.$router.push({ path: "/login" });
