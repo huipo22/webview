@@ -1,5 +1,11 @@
 <template>
   <div id="home">
+    <!-- 遮罩层 -->
+    <van-overlay :show="show">
+      <div class="wrapper">
+        <div class="block">{{showText}}</div>
+      </div>
+    </van-overlay>
     <!-- navbar -->
     <van-nav-bar title="首页"></van-nav-bar>
     <!-- swipter -->
@@ -66,7 +72,7 @@
         </van-panel>
       </van-list>
     </van-row>
-    <tabbar name="home" />
+    <tabbar name="home" v-if="!show" />
   </div>
 </template>
 <script>
@@ -86,13 +92,13 @@ export default {
       categoryList: [], //分类组合
       newList: [], //新闻list
       notify: "", //通知
-      images: []
+      images: [],
+      show: false,
+      showText: ""
     };
   },
   mounted() {
-    window.console.log(this);
     let token = this.$route.query.token;
-    window.console.log(token);
     if (!token) {
       Toast.fail("Token值没有");
       // this.$router.replace({ path: "/login" });
@@ -110,12 +116,15 @@ export default {
         .then(res => {
           if (res.data.code == 1) {
             let user = res.data.data;
-            if (
-              !user.user_nickname ||
-              !user.signature ||
-              !user.address
-            ) {
+            window.console.log(user);
+            if (!user.user_nickname || !user.signature || !user.address) {
               this.$router.replace({ path: "/baseInfo?new=0" });
+            } else if (user.user_status == 2) {
+              that.show = true;
+              that.showText = "审核中";
+            } else if (user.user_status == 0) {
+              that.show = true;
+              that.showText = "已拉黑";
             }
           } else {
             Toast.fail("Token值错误");
@@ -219,5 +228,21 @@ export default {
 }
 .pannel-default {
   /* height: 8rem; */
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.block {
+  width: 150px;
+  height: 150px;
+  background-color: #75a6d8;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #fff;
 }
 </style>
