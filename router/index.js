@@ -16,7 +16,7 @@ import zhaoshang from '../src/components/love/zhaoshang'
 import shopDetail from '../src/components/love/shopDetail'
 import itemList from '../src/components/item/itemList'
 import baseInfo from '../src/components/my/baseInfo'
-import login from '../src/components/login'
+// import login from '../src/components/login'
 import moreCategory from '../src/components/item/moreCategory'
 import myAsk from '../src/components/my/myAsk'
 import order from '../src/components/my/Order'
@@ -28,13 +28,13 @@ Router.prototype.push = function push(location) {
 }
 
 export default new Router({
-    mode: 'history',
+    mode: 'hash',
     routes: [
-        {
-            path: '/login',
-            name: 'login',
-            component: login
-        },
+        // {
+        //     path: '/login',
+        //     name: 'login',
+        //     component: login
+        // },
         {
             path: '/',
             name: 'home',

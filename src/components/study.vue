@@ -71,7 +71,7 @@ export default {
             message: "token值不对",
             duration: 3000
           });
-          this.$router.push({ path: "/login" });
+          // this.$router.push({ path: "/login" });
         }
       });
   },

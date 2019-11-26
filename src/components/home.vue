@@ -71,7 +71,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { NoticeBar } from "vant";
+import { NoticeBar, Toast } from "vant";
 Vue.use(NoticeBar);
 import global from "../global";
 import tabbar from "../components/common/tabbar";
@@ -90,13 +90,37 @@ export default {
     };
   },
   mounted() {
-    window.console.log(this)
+    window.console.log(this);
     let token = this.$route.query.token;
-    window.console.log(token)
+    window.console.log(token);
     if (!token) {
-      this.$router.replace({ path: "/login" });
+      Toast.fail("Token值没有");
+      // this.$router.replace({ path: "/login" });
     } else {
-      sessionStorage.setItem("userInfo", JSON.stringify({ 'token': token }));
+      sessionStorage.setItem("userInfo", JSON.stringify({ token: token }));
+      // get 基本信息
+      let that = this;
+      this.axios
+        .get("/user/profile/userInfo", {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          if (res.data.code == 1) {
+            let user = res.data.data;
+            if (
+              !user.user_nickname ||
+              !user.signature ||
+              !user.address
+            ) {
+              this.$router.replace({ path: "/baseInfo?new=0" });
+            }
+          } else {
+            Toast.fail("Token值错误");
+          }
+        });
     }
     let that = this;
     //轮播图
