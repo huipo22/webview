@@ -76,7 +76,7 @@
                   color="#1989fa"
                   type="primary"
                   @click="phoneCall(item.shop_info.mobile)"
-                >拨打电话</van-button>
+                >查看电话</van-button>
               </van-col>
             </van-row>
           </div>
@@ -88,7 +88,7 @@
 </template>
 <script>
 import global from "../../global";
-import { Notify } from 'vant';
+import { Dialog } from 'vant';
 export default {
   data() {
     return {
@@ -151,7 +151,13 @@ export default {
         "&output=html&src=webapp.baidu.openAPIdemo";
     },
     phoneCall(mobile) {
-      Notify({ type: "success", message: "手机号:" + mobile });
+      // Notify({ type: "success", message: "手机号:" + mobile });
+      Dialog.alert({
+        message: "手机号:"+mobile
+      }).then(() => {
+        // on close
+      });
+
       // window.console.log(mobile)
       // window.location.href = "tel://" + mobile;
     }

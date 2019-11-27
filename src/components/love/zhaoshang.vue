@@ -13,12 +13,12 @@
         @click="showAddressChuang"
         required
       />
-      <van-field label="身份证正面(国徽)" required>
+      <van-field label="身份证正面(国徽)" label-width="150px" required>
         <van-uploader :after-read="afterReadcartTrue" result-type="file" slot="input">
           <img :src="cartTrue" ref="cartTrue" class="avater" />
         </van-uploader>
       </van-field>
-      <van-field label="身份证反面(人像)" required>
+      <van-field label="身份证反面(人像)" label-width="150px" required>
         <van-uploader :after-read="afterReadcartFalse" result-type="file" slot="input">
           <img :src="cartFalse" ref="cartFalse" class="avater" />
         </van-uploader>
@@ -200,5 +200,10 @@ export default {
 }
 .avater {
   height: 50px;
+}
+.labelBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

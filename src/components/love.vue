@@ -8,12 +8,12 @@
         <van-loading color="#1989fa" vertical>加载中...</van-loading>
       </div>
     </van-overlay>
-    <div class="love pageSetting">
+    <div class="love">
       <div class="gridBox">
-        <van-grid :border="false" :column-num="2">
+        <van-grid :border="false" :column-num="2" :gutter="8">
           <van-grid-item v-for="item in tagList" :key="item.id" @click="shop(item.id)">
             <van-image :src="resourse+item.img" />
-            <div>{{item.name}}</div>
+            <div class="itemName">{{item.name}}</div>
           </van-grid-item>
         </van-grid>
 
@@ -22,7 +22,8 @@
       <!-- <div class="shop" @click="zhaoshang">
         <img src="../assets/zhaosehng.jpg" alt />
       </div>-->
-      <div class="shop">
+      <van-divider>工会地图</van-divider>
+      <div class="shop pageSetting">
         <baidu-map
           class="map"
           :center="center"
@@ -116,7 +117,7 @@ export default {
       });
     },
     shop(id) {
-      this.$router.push("/love/shop?shopId="+id);
+      this.$router.push("/love/shop?shopId=" + id);
     }
     // zhaoshang() {
     //   this.$router.push("/love/zhaoshang");
@@ -139,7 +140,7 @@ export default {
   margin-bottom: 1rem;
 }
 .shop:last-child {
-  height: 14rem;
+  height: 13rem;
   margin-bottom: 50px;
 }
 .shop > img {
@@ -160,9 +161,20 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  background: #f0f3f6;;
+  padding: 10px 0;
+  box-sizing: border-box;
 }
 .van-image {
-  height: 100px !important;
+  height: 80px !important;
+}
+.itemName {
+  font-weight: bold;
+  padding-top: 8px;
+  font-size: 14px;
+}
+.pageSetting {
+  padding: 10px;
 }
 /* <bm-geolocation
             anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
