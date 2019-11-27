@@ -28,14 +28,14 @@
             <van-col span="12" class="comon">库存:{{good.goods_num}}</van-col>
           </van-row>
           <van-row>
-            <van-col span="12" class="left priceBox">价格:{{good.original_price}}</van-col>
+            <van-col span="12" class="left priceBox">价格:{{good.original_price}}元</van-col>
             <van-col span="12" class="right">
               <van-button
                 size="small"
                 round
                 color="#1989fa"
                 type="primary"
-              >预定价格:{{good.present_price}}</van-button>
+              >预定价格:{{good.present_price}}元</van-button>
             </van-col>
           </van-row>
         </div>
@@ -71,8 +71,11 @@ export default {
     };
   },
   mounted() {
+    let shopId= this.$route.query.shopId;
     this.getType();
-    this.getGoods(0, 1);
+    this.getGoods(Number(shopId), 1);
+    // this.getGoods(0, 1);
+    this.type1Value=Number(shopId);
   },
   methods: {
     // 类型

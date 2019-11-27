@@ -13,6 +13,27 @@
         @click="showAddressChuang"
         required
       />
+      <van-field label="身份证正面(国徽)" required>
+        <van-uploader :after-read="afterReadcartTrue" result-type="file" slot="input">
+          <img :src="cartTrue" ref="cartTrue" class="avater" />
+        </van-uploader>
+      </van-field>
+      <van-field label="身份证反面(人像)" required>
+        <van-uploader :after-read="afterReadcartFalse" result-type="file" slot="input">
+          <img :src="cartFalse" ref="cartFalse" class="avater" />
+        </van-uploader>
+      </van-field>
+      <van-field label="营业执照" required>
+        <van-uploader :after-read="afterReadLicence" result-type="file" slot="input">
+          <img :src="licence" ref="licence" class="avater" />
+        </van-uploader>
+      </van-field>
+      <van-field label="门头照" required>
+        <van-uploader :after-read="afterReadPhoto" result-type="file" slot="input">
+          <img :src="head_photo" ref="head_photo" class="avater" />
+        </van-uploader>
+      </van-field>
+      <van-field v-model="remark" placeholder="请输入备注" label="备注" />
       <van-row class="btnBox">
         <van-button
           size="small"
@@ -51,7 +72,16 @@ export default {
       // 当前选中的省市区code
       areaNum: "",
       // 省市区列表
-      areaList: addressList
+      areaList: addressList,
+      cartTrue:
+        "http://m.guojimami.com/themesmobile/mbts1/images/shenfen0813_02.jpg",
+      cartFalse:
+        "http://m.guojimami.com/themesmobile/mbts1/images/shenfen0813_03.jpg",
+      licence:
+        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574842428062&di=9974b1eb8b2f233c3af3792ab18e73ce&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190301%2Fa1247deb398c47618de1ab0ed5d0ce70.jpeg",
+      head_photo:
+        "http://img1.imgtn.bdimg.com/it/u=2912589256,2919990811&fm=26&gp=0.jpg",
+      remark: ""
     };
   },
   methods: {
@@ -72,7 +102,12 @@ export default {
         city: area[1],
         county: area[2],
         name: this.username,
-        mobile: this.phone
+        mobile: this.phone,
+        license_card: this.cartTrue, //正面
+        back_card: this.cartFalse, //反面
+        license: this.licence, //营业执照
+        head_photo: this.head_photo, //门头照,
+        remark: this.remark //备注
       });
       this.axios
         .post("/home/index/add_attract", params, {
@@ -83,9 +118,9 @@ export default {
           }
         })
         .then(res => {
-          // window.console.log(res);
+          window.console.log(res);
           if (res.data.code == 1) {
-            Toast.success('提交成功');
+            Toast.success("提交成功");
             this.$router.go(-1);
           } else {
             Toast.fail(res.data.msg);
@@ -110,12 +145,60 @@ export default {
       this.showAddress = false;
     },
     // 三级联动状态改变事件
-    onChange() {}
+    onChange() {},
+    uploadFile(file, pa) {
+      // 此时可以自行将文件上传至服务器
+      let formData = new window.FormData();
+      formData.append("file", file.file);
+      let that = this;
+      this.axios
+        .post("/user/upload/one", formData, {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token,
+            "Content-Type":
+              "multipart/form-data;boundary = " + new Date().getTime()
+          }
+        })
+        .then(res => {
+          if (res.data.code == 1) {
+            window.console.log(pa);
+            if (pa == "cartTrue") {
+              that.cartTrue = global.imgAddress + res.data.data.url;
+            } else if (pa == "cartFalse") {
+              that.cartFalse = global.imgAddress + res.data.data.url;
+            } else if (pa == "licence") {
+              that.licence = global.imgAddress + res.data.data.url;
+            } else if (pa == "head_photo") {
+              that.head_photo = global.imgAddress + res.data.data.url;
+            }
+          }
+        });
+    },
+    // 上传身份证正面
+    afterReadcartTrue(file) {
+      this.uploadFile(file, "cartTrue");
+    },
+    // 上传身份证反面
+    afterReadcartFalse(file) {
+      this.uploadFile(file, "cartFalse");
+    },
+    // 营业执照
+    afterReadLicence(file) {
+      this.uploadFile(file, "licence");
+    },
+    // 门头照
+    afterReadPhoto(file) {
+      this.uploadFile(file, "head_photo");
+    }
   }
 };
 </script>
 <style>
 .zhaoshang {
   padding: 10px 16px;
+}
+.avater {
+  height: 50px;
 }
 </style>

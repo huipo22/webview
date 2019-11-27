@@ -9,12 +9,19 @@
       </div>
     </van-overlay>
     <div class="love pageSetting">
-      <div class="shop" @click="shop">
-        <img src="../assets/shop.jpg" alt />
+      <div class="gridBox">
+        <van-grid :border="false" :column-num="2">
+          <van-grid-item v-for="item in tagList" :key="item.id" @click="shop(item.id)">
+            <van-image :src="resourse+item.img" />
+            <div>{{item.name}}</div>
+          </van-grid-item>
+        </van-grid>
+
+        <!-- <img src="../assets/shop.jpg" alt /> -->
       </div>
-      <div class="shop" @click="zhaoshang">
+      <!-- <div class="shop" @click="zhaoshang">
         <img src="../assets/zhaosehng.jpg" alt />
-      </div>
+      </div>-->
       <div class="shop">
         <baidu-map
           class="map"
@@ -38,12 +45,15 @@
 </template>
 <script>
 import tabbar from "../components/common/tabbar";
+import global from "../global";
 export default {
   components: {
     tabbar
   },
   data() {
     return {
+      tagList: [],
+      resourse: global.imgAddress,
       flag: false,
       center: {
         lng: 0,
@@ -55,14 +65,32 @@ export default {
   },
   mounted() {
     this.getLocation();
+    this.getType();
     if (this.flag == false) {
     }
   },
   methods: {
+    getType() {
+      let that = this;
+      this.axios
+        .get("/goods/goods/get_type", {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+            that.tagList = res.data.data;
+          }
+        });
+    },
     handler({ BMap, map }) {
       let _this = this;
       var geolocation = new BMap.Geolocation();
-      window.console.log(geolocation)
+      window.console.log(geolocation);
+      geolocation.enableSDKLocation();
       geolocation.getCurrentPosition(
         function(r) {
           window.console.log(r);
@@ -87,12 +115,12 @@ export default {
         }
       });
     },
-    shop() {
-      this.$router.push("/love/shop");
-    },
-    zhaoshang() {
-      this.$router.push("/love/zhaoshang");
+    shop(id) {
+      this.$router.push("/love/shop?shopId="+id);
     }
+    // zhaoshang() {
+    //   this.$router.push("/love/zhaoshang");
+    // }
   }
 };
 </script>
@@ -127,6 +155,14 @@ export default {
 }
 .anchorBL {
   display: none !important;
+}
+.gridBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.van-image {
+  height: 100px !important;
 }
 /* <bm-geolocation
             anchor="BMAP_ANCHOR_BOTTOM_RIGHT"

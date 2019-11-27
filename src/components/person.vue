@@ -29,6 +29,7 @@
       <van-cell icon="points" value="我的学习" to="/my" is-link />
       <van-cell icon="gold-coin-o" value="我的问答" to="/myQuestion" is-link />
       <van-cell icon="gift-o" value="我的订单" to="/order" is-link />
+      <van-cell icon="thumb-circle-o" value="招商加盟" to="/love/zhaoshang" is-link />
     </van-cell-group>
     <tabbar name="person" />
   </div>

@@ -50,25 +50,26 @@
           style="width:60%"
           color="#1989fa"
           type="primary"
-          @click="phoneCall()"
+          @click="phoneCall(goodDetail.shop_info.user_phone)"
         >拨打电话</van-button>
       </van-col>
     </van-row>
     <van-row class="plusBox">
       <van-col span="24">
         <van-button
-          size="small"
+          size="normal"
           style="width:100%"
           color="#1989fa"
           type="primary"
           @click="submit(goodDetail.id)"
-        >立即预定:{{goodDetail.goods_num}}</van-button>
+        >立即预定:{{goodDetail.goods_num}}元</van-button>
       </van-col>
     </van-row>
   </div>
 </template>
 <script>
 import global from "../../global";
+import { Notify } from "vant";
 export default {
   data() {
     return {
@@ -104,9 +105,7 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    submit(id) {
-      
-    },
+    submit(id) {},
     nav(address) {
       window.location.href =
         "http://api.map.baidu.com/geocoder?address=" +
@@ -114,7 +113,8 @@ export default {
         "&output=html&src=webapp.baidu.openAPIdemo";
     },
     phoneCall(mobile) {
-      window.location.href = "tel://13279200101";
+      Notify({ type: "success", message: "手机号:" + mobile });
+      // window.location.href = "tel://13279200101";
     }
   }
 };

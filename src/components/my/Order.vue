@@ -88,6 +88,7 @@
 </template>
 <script>
 import global from "../../global";
+import { Notify } from 'vant';
 export default {
   data() {
     return {
@@ -150,8 +151,9 @@ export default {
         "&output=html&src=webapp.baidu.openAPIdemo";
     },
     phoneCall(mobile) {
-      window.console.log(mobile)
-      window.location.href = "tel://" + mobile;
+      Notify({ type: "success", message: "手机号:" + mobile });
+      // window.console.log(mobile)
+      // window.location.href = "tel://" + mobile;
     }
   }
 };
