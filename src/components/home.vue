@@ -119,7 +119,7 @@ export default {
             window.console.log(user);
             if (!user.user_nickname || !user.signature || !user.address) {
               this.$router.replace({ path: "/baseInfo?new=0" });
-            } else if (user.user_status == 1) {
+            } else if (user.user_status == 2) {
               that.show = true;
               that.showText = "审核中";
             } else if (user.user_status == 0) {
