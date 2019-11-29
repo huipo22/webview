@@ -11,6 +11,32 @@ Vue.use(BaiduMap, {
   ak: 'CeqxiSuNZHrD8hVUGlggfgLto5LOm49I'
 })
 
+import VueAMap from 'vue-amap';
+
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+  key: 'ec7c2ac028a40e993e9a4d8c812124f5',
+  plugin: ['AMap.Autocomplete',
+
+    'AMap.PlaceSearch',
+
+    'AMap.Scale',
+
+    'AMap.OverView',
+
+    'AMap.ToolBar',
+
+    'AMap.MapType',
+
+    'AMap.PolyEditor',
+
+    'AMap.CircleEditor',
+
+    'AMap.Geolocation'
+
+  ],
+  v: '1.4.4'
+});
 import { Toast } from "vant";
 
 Vue.use(Toast);
@@ -28,7 +54,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 Vue.config.productionTip = false
 
 import filter from '../src/filter'
- 
+
 // 全局导入过滤器
 Object.keys(filter).forEach(key => Vue.filter(key, filter[key]))
 

@@ -51,7 +51,7 @@
           color="#1989fa"
           type="primary"
           @click="phoneCall(goodDetail.shop_info.user_phone)"
-        >查看电话</van-button>
+        >拨打电话</van-button>
       </van-col>
     </van-row>
     <van-row class="plusBox">
@@ -114,12 +114,12 @@ export default {
     },
     phoneCall(mobile) {
       // Notify({ type: "success", message: "手机号:" + mobile });
-       Dialog.alert({
-        message: "手机号:"+mobile
-      }).then(() => {
-        // on close
-      });
-      // window.location.href = "tel://13279200101";
+      //  Dialog.alert({
+      //   message: "手机号:"+mobile
+      // }).then(() => {
+      //   // on close
+      // });
+      window.location.href = "tel://"+mobile;
     }
   }
 };
