@@ -55,13 +55,7 @@ export default {
       type1Value: 0,
       type2Value: null,
       type3Value: 1,
-      type1: [
-        { text: "商家类型", value: 0 },
-        { text: "酒店", value: 62 },
-        { text: "etc", value: 63 },
-        { text: "加油", value: 64 },
-        { text: "维修", value: 65 }
-      ],
+      type1: [{ text: "商家类型", value: 0 }],
       option2: [
         { text: "预定价格", value: null },
         { text: "价格从高到低", value: 3 },
@@ -71,15 +65,16 @@ export default {
     };
   },
   mounted() {
-    let shopId= this.$route.query.shopId;
+    let shopId = this.$route.query.shopId;
     this.getType();
     this.getGoods(Number(shopId), 1);
     // this.getGoods(0, 1);
-    this.type1Value=Number(shopId);
+    this.type1Value = Number(shopId);
   },
   methods: {
     // 类型
     getType() {
+      let that = this;
       this.axios
         .get("/goods/goods/get_type", {
           headers: {
@@ -90,6 +85,13 @@ export default {
         .then(res => {
           window.console.log(res);
           if (res.data.code == 1) {
+            let result = res.data.data;
+            for (let i in result) {
+              let obj = {};
+              obj.text = result[i].name;
+              obj.value = result[i].id;
+              that.type1.push(obj);
+            }
           }
         });
     },
@@ -98,7 +100,7 @@ export default {
       let that = this;
       let params = this.qs.stringify({
         category_id: val,
-        city: sessionStorage.getItem('city'),
+        city: sessionStorage.getItem("city"),
         order_type: orderType
       });
 
