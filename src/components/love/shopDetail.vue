@@ -62,7 +62,7 @@
           color="#1989fa"
           type="primary"
           @click="submit(goodDetail.id)"
-        >立即预定:{{goodDetail.goods_num}}元</van-button>
+        >立即支付:{{goodDetail.member_price}}元</van-button>
       </van-col>
     </van-row>
   </div>

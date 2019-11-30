@@ -28,7 +28,7 @@
       </van-grid>
     </van-row>
     <!-- 通知 -->
-    <van-row>
+    <van-row class="m_bottom">
       <!-- <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true" /> -->
       <router-link to="/love" class="link">
         <MarqueeTips class="marquee" :content="notify" />
@@ -37,7 +37,7 @@
     <!-- category_detail -->
     <van-row>
       <van-list>
-        <van-panel v-for="item in newList.list" :key="item.id" class="m_bottom">
+        <van-panel v-for="item in newList.list" :key="item.id" >
           <div slot="header" class="pannel-head">
             <van-col span="5" offset="1" class="font_h1 h_titles">{{item.name}}</van-col>
             <van-col
@@ -53,27 +53,84 @@
             @click="itemDetail(item.new.id)"
             v-if="item.new"
           >
-            <van-row>
+            <!-- <van-row>
               <van-col span="24">
                 <img :src="resourse+item.new.thumbnail" alt width="100%" />
               </van-col>
-            </van-row>
-            <van-row>
-              <van-col offset="1" span="23" class="left h_content">{{item.new.post_title}}</van-col>
-              <!-- <van-col span="7">
-                <img :src="resourse+item.new.thumbnail" alt height="50px" />
-              </van-col>-->
-            </van-row>
-            <!-- <van-row>
-              <van-col
-                offset="1"
-                span="13"
-                class="left h_titles"
-              >{{item.new.create_time |dCreateTime}}</van-col>
             </van-row>-->
+            <van-row>
+              <van-col offset="1" span="16" class="left h_content">{{item.new.post_title}}</van-col>
+              <van-col span="6">
+                <img :src="resourse+item.new.thumbnail" alt height="50px" />
+              </van-col>
+            </van-row>
+            <van-row class="pageSetting">
+              <van-col span="13" class="left h_titles">{{item.new.create_time |dCreateTime}}</van-col>
+              <van-col span="10" class="right h_titles">{{"来源:"+item.new.post_source}}</van-col>
+            </van-row>
           </div>
         </van-panel>
       </van-list>
+    </van-row>
+    <!-- 栏目1 -->
+    <van-row class="dividers m-top">
+      <van-col span="24">为你推荐</van-col>
+      <van-col style="position: absolute;
+    right: 6%;">
+        <router-link to="/love" style="color:#1989fa">更多</router-link>
+      </van-col>
+    </van-row>
+    <div class="love">
+      <div class="gridBox">
+        <van-grid :border="false" :column-num="5" class="firstBox">
+          <van-grid-item
+            v-for="item in tagList.slice(0,5)"
+            :key="item.id"
+            @click="shop(item.id)"
+            :icon="resourse+item.img"
+            :text="item.name"
+          >
+            <!-- <van-image :src="resourse+item.img" />
+            <div class="itemName">{{item.name}}</div>-->
+          </van-grid-item>
+        </van-grid>
+      </div>
+    </div>
+    <!-- 栏目1 -->
+    <van-row class="dividers m-top">
+      <van-col span="24">问答广场</van-col>
+      <van-col style="position: absolute;
+    right: 6%;">
+        <router-link to="/questionAll" style="color:#1989fa">更多</router-link>
+      </van-col>
+    </van-row>
+    <van-row>
+      <!-- 问题内容 -->
+      <van-row class="marginBox">
+        <van-list v-for="item in questionAll.slice(0,3)" :key="item.id">
+          <van-panel class="questionList" @click="questionDetail(item.id)">
+            <div slot="header" class="pannel-header">
+              <van-row>
+                <van-col v-html="item.content" style="font-weight:bold"></van-col>
+              </van-row>
+            </div>
+            <div slot="default" class="pannel-default">
+              <van-row>
+                <van-col class="userInfo">
+                  <div>
+                    <img class="avatar" width="30px" height="30px" :src="item.user_info.avatar" />
+                  </div>
+                  <div
+                    class="name h_titles"
+                  >{{!item.user_info.user_nickname?'游客':item.user_info.user_nickname}}</div>
+                  <div class="name h_titles" style="padding: 0;">{{item.count}}条回答</div>
+                  <div class="time h_titles">{{item.user_info.create_time |dCreateTime}}</div>
+                </van-col>
+              </van-row>
+            </div>
+          </van-panel>
+        </van-list>
+      </van-row>
     </van-row>
     <tabbar name="home" v-if="!show" />
   </div>
@@ -99,7 +156,9 @@ export default {
       notify: "", //通知
       images: [],
       show: false,
-      showText: ""
+      showText: "",
+      questionAll: [],
+      tagList: []
     };
   },
   mounted() {
@@ -124,7 +183,7 @@ export default {
             window.console.log(user);
             if (!user.user_nickname || !user.signature || !user.address) {
               this.$router.replace({ path: "/baseInfo?new=0" });
-            } else if (user.user_status == 1) {
+            } else if (user.user_status == 2) {
               that.show = true;
               that.showText = "审核中";
             } else if (user.user_status == 0) {
@@ -133,6 +192,35 @@ export default {
             }
           } else {
             Toast.fail("Token值错误");
+          }
+        });
+      this.axios
+        .get("/home/forum/index", {
+          headers: {
+            "Device-Type": global.deviceType,
+            "Content-Type": "application/x-www-form-urlencoded",
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+            that.questionAll = res.data.data;
+          } else {
+            Toast.fail(res.data.msg);
+          }
+        });
+      this.axios
+        .get("/goods/goods/get_type", {
+          headers: {
+            "Device-Type": global.deviceType,
+            token: JSON.parse(sessionStorage.getItem("userInfo")).token
+          }
+        })
+        .then(res => {
+          window.console.log(res);
+          if (res.data.code == 1) {
+            that.tagList = res.data.data;
           }
         });
     }
@@ -159,13 +247,21 @@ export default {
     });
     this.axios.get("/portal/categories/get_notice").then(res => {
       if (res.data.code == 1) {
-        that.notify = res.data.data;
+        this.$nextTick(() => {
+          //dom元素更新后执行，此时能拿到p元素的属性
+          that.notify = res.data.data;
+        });
+
+        // that.notify = res.data.data;
       }
     });
   },
   methods: {
     love() {
       this.$router.push("/love");
+    },
+    shop(id) {
+      this.$router.push("/love/shop?shopId=" + id);
     },
     getHome() {},
     // 详情
@@ -174,9 +270,6 @@ export default {
       this.$router.push({ path: "/itemDetail?newId=" + id });
     },
     // 全部问答
-    questionAll() {
-      this.$router.push({ path: "/questionAll" });
-    },
     // 更多分类
     moreCategory(cateId, name) {
       this.$router.push({
@@ -188,6 +281,9 @@ export default {
       this.$router.push({
         path: "/itemList?categoryId=" + id + "&title=" + title
       });
+    },
+    questionDetail(id) {
+      this.$router.push({ path: "/questionDetail?questionId=" + id });
     }
   }
 };
@@ -205,7 +301,6 @@ export default {
 .h_titles {
   font-size: 12px;
   color: #7d7e80;
-  text-align: left;
 }
 .h_titlescolor {
   color: #1989fa;
@@ -225,9 +320,9 @@ export default {
 .m_bottom {
   margin-bottom: 0.5rem;
 }
-.van-list {
+/* .van-list {
   margin-bottom: 50px;
-}
+} */
 .pannel-head {
   height: 2rem;
   display: flex;
@@ -253,11 +348,25 @@ export default {
   color: #fff;
 }
 .marquee {
-  background: #75a6d8;
+  background: #f90;
   padding: 5px 15px;
   font-size: 14px;
 }
 .link {
   color: #fff;
+}
+.marginBox {
+  margin-bottom: 50px;
+}
+.dividers {
+  background: #fff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  position: relative;
+}
+.m-top{
+  margin-top: .5rem
 }
 </style>

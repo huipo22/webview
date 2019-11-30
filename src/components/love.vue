@@ -1,27 +1,49 @@
 <template>
   <div id="love" v-cloak>
     <!-- navbar -->
-    <van-nav-bar title="服务站"></van-nav-bar>
-
+    <van-nav-bar title="爱心服务站" style="background: #1989fa;"></van-nav-bar>
+    <!-- 遮罩 -->
     <van-overlay :show="!flag">
       <div class="wrapper">
         <van-loading color="#1989fa" vertical>加载中...</van-loading>
       </div>
     </van-overlay>
+    <!-- 栏目1 -->
+    <van-divider>为你推荐</van-divider>
     <div class="love">
       <div class="gridBox">
-        <van-grid :border="false" :column-num="2" :gutter="8">
-          <van-grid-item v-for="item in tagList" :key="item.id" @click="shop(item.id)">
-            <van-image :src="resourse+item.img" />
-            <div class="itemName">{{item.name}}</div>
+        <van-grid :border="false" :column-num="5" class="firstBox">
+          <van-grid-item
+            v-for="item in tagList.slice(0,5)"
+            :key="item.id"
+            @click="shop(item.id)"
+            :icon="resourse+item.img"
+            :text="item.name"
+          >
+            <!-- <van-image :src="resourse+item.img" />
+            <div class="itemName">{{item.name}}</div>-->
           </van-grid-item>
         </van-grid>
-
-        <!-- <img src="../assets/shop.jpg" alt /> -->
       </div>
-      <!-- <div class="shop" @click="zhaoshang">
-        <img src="../assets/zhaosehng.jpg" alt />
-      </div>-->
+      <!-- 栏目2 -->
+      <van-divider>全部服务</van-divider>
+      <div class="love">
+        <div class="gridBox2">
+          <van-grid :border="false" :column-num="2" :center="false">
+            <van-grid-item v-for="item in tagList" :key="item.id" @click="shop(item.id)">
+              <div class="secondBox" slot="default">
+                <div class="imgicon">
+                  <van-image :src="resourse+item.img" />
+                </div>
+                <div class="desc">
+                  <div class="itemName">{{item.name}}</div>
+                  <div class="itemName2">{{item.description}}</div>
+                </div>
+              </div>
+            </van-grid-item>
+          </van-grid>
+        </div>
+      </div>
       <van-divider>工会地图</van-divider>
       <div class="shop pageSetting">
         <baidu-map
@@ -161,31 +183,47 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  background: #f0f3f6;;
-  padding: 10px 0;
+  /* background: #f0f3f6; */
+  /* padding: 10px 0; */
   box-sizing: border-box;
+  justify-content: center;
 }
 .van-image {
-  height: 80px !important;
+  /* height: 50px !important; */
+  width: 50px;
+}
+.desc {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
 }
 .itemName {
-  font-weight: bold;
-  padding-top: 8px;
+  /* font-weight: bold;
+  padding-top: 8px; */
   font-size: 14px;
+  text-align: left;
+}
+.itemName2 {
+  font-size: 12px;
+  color: #bbb9b9;
+  text-align: left;
 }
 .pageSetting {
   padding: 10px;
 }
-/* <bm-geolocation
-            anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
-            :showAddressBar="true"
-            :locationIcon="{url: require('../../svg/location.svg'), size: {width: 18, height: 18}}"
-            :autoLocation="true"
-          ></bm-geolocation>
-          <!-- 自定义定位图标覆盖物 -->
-          <bm-marker
-            :position="autoLocationPoint"
-            :locationIcon="{url: require('../../svg/location.svg'), size: {width: 18, height: 18}}"
-            v-if="initLocation"
-          ></bm-marker> */
+.firstBox {
+  width: 85% !important;
+}
+.gridBox2 {
+  padding: 0 6px;
+}
+.secondBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.van-nav-bar__title {
+  color: #fff;
+}
 </style>
