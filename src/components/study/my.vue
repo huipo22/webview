@@ -5,7 +5,7 @@
     <van-tabs v-model="active" color="#1989fa">
       <van-tab title="学习中">
         <van-card
-          thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
+          :thumb="resourse+item.study.img"
           class="tabBox"
           v-for="item in studying"
           :key="item.id"
@@ -37,7 +37,7 @@
       </van-tab>
       <van-tab title="已完成" v-if="studyOver">
         <van-card
-          thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
+          :thumb="resourse+item.study.img"
           class="tabBox"
           v-for="item in studyOver"
           :key="item.id"
@@ -84,6 +84,7 @@ export default {
   },
   data() {
     return {
+      resourse:global.imgAddress,
       active: 0,
       studying: [],
       studyOver: []

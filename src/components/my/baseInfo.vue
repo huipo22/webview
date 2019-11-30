@@ -28,7 +28,7 @@
         </van-row>
       </van-cell>
       <!-- </van-field> -->
-      <van-field v-model="baseInfo.signature" label="签名" placeholder="请输入个性签名" required />
+      <van-field v-model="baseInfo.signature" label="姓名" placeholder="请输入姓名" required />
       <van-field
         v-model="address"
         placeholder="请选择省市区"

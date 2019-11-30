@@ -29,7 +29,10 @@
     </van-row>
     <!-- 通知 -->
     <van-row>
-      <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true" />
+      <!-- <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true" /> -->
+      <router-link to="/love" class="link">
+        <MarqueeTips class="marquee" :content="notify" />
+      </router-link>
     </van-row>
     <!-- category_detail -->
     <van-row>
@@ -81,9 +84,11 @@ import { NoticeBar, Toast } from "vant";
 Vue.use(NoticeBar);
 import global from "../global";
 import tabbar from "../components/common/tabbar";
+import MarqueeTips from "vue-marquee-tips";
 export default {
   components: {
-    tabbar
+    tabbar,
+    MarqueeTips
   },
   data() {
     return {
@@ -119,7 +124,7 @@ export default {
             window.console.log(user);
             if (!user.user_nickname || !user.signature || !user.address) {
               this.$router.replace({ path: "/baseInfo?new=0" });
-            } else if (user.user_status == 2) {
+            } else if (user.user_status == 1) {
               that.show = true;
               that.showText = "审核中";
             } else if (user.user_status == 0) {
@@ -173,8 +178,10 @@ export default {
       this.$router.push({ path: "/questionAll" });
     },
     // 更多分类
-    moreCategory(cateId,name) {
-      this.$router.push({ path: "/moreCategory?cateId="+cateId +"&cateName="+name});
+    moreCategory(cateId, name) {
+      this.$router.push({
+        path: "/moreCategory?cateId=" + cateId + "&cateName=" + name
+      });
     },
     // 分类更多
     moreList(id, title) {
@@ -243,6 +250,14 @@ export default {
   justify-content: center;
   align-items: center;
   display: flex;
+  color: #fff;
+}
+.marquee {
+  background: #75a6d8;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+.link {
   color: #fff;
 }
 </style>

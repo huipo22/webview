@@ -31,6 +31,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "vant-weapp": "^0.5.23",
     "vue-html5-editor": "^1.1.1",
+    "vue-marquee-tips": "^1.0.7",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {

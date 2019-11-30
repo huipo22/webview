@@ -1,7 +1,7 @@
 <template>
   <div id="study">
     <!-- navbar -->
-    <van-nav-bar title="学习中心" right-text="我的" @click-right="onClickRight"></van-nav-bar>
+    <van-nav-bar title="学习中心" right-text="历史" @click-right="onClickRight"></van-nav-bar>
     <!-- swipter -->
     <van-swipe :autoplay="3000" class="swiperImg">
       <van-swipe-item v-for="(image, index) in images" :key="index">

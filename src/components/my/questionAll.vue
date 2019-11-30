@@ -9,7 +9,7 @@
       @click-right="onClickRight"
     ></van-nav-bar>
     <!-- 问题内容 -->
-    <van-row>
+    <van-row class="marginBox">
       <van-list v-for="item in questionAll" :key="item.id">
         <van-panel class="questionList" @click="questionDetail(item.id)">
           <div slot="header" class="pannel-header">
@@ -21,12 +21,7 @@
             <van-row>
               <van-col class="userInfo">
                 <div>
-                  <img
-                    class="avatar"
-                    width="30px"
-                    height="30px"
-                    :src="item.user_info.avatar"
-                  />
+                  <img class="avatar" width="30px" height="30px" :src="item.user_info.avatar" />
                 </div>
                 <div
                   class="name h_titles"
@@ -46,14 +41,19 @@
         <!-- <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" /> -->
       </van-col>
     </van-row>
+    <tabbar name="questionAll" />
   </div>
 </template>
 <script>
 import global from "../../global";
 import Vue from "vue";
 import { Toast } from "vant";
+import tabbar from "../common/tabbar";
 Vue.use(Toast);
 export default {
+  components: {
+    tabbar
+  },
   data() {
     return {
       resource: global.imgAddress,
@@ -105,6 +105,9 @@ export default {
 };
 </script>
 <style scoped>
+.marginBox {
+  margin-bottom: 50px;
+}
 .questionList {
   font-size: 17px;
   text-align: left;
@@ -126,7 +129,7 @@ export default {
 }
 .plusBox {
   position: fixed;
-  bottom: 18px;
+  bottom: 54px;
 }
 .plus {
   border-radius: 50%;
