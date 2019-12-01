@@ -62,12 +62,17 @@
         <!-- <van-icon name="plus" size="2rem" class="plus" @click="askQuestion" /> -->
       </van-col>
     </van-row>
+     <tabbar name="questionAll" />
   </div>
 </template>
 <script>
 import { Toast } from "vant";
 import global from "../../global";
+import tabbar from "../common/tabbar";
 export default {
+   components: {
+    tabbar
+  },
   data() {
     return {
       question: {},
