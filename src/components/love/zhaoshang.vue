@@ -13,22 +13,26 @@
         @click="showAddressChuang"
         required
       />
-      <van-field label="身份证正面(国徽)" label-width="150px" required>
+
+
+      <van-field label="身份证正面(国徽)" label-width="150px" style="display:none" required >
         <van-uploader :after-read="afterReadcartTrue" result-type="file" slot="input">
           <img :src="cartTrue" ref="cartTrue" class="avater" />
         </van-uploader>
       </van-field>
-      <van-field label="身份证反面(人像)" label-width="150px" required>
+
+
+      <van-field label="身份证反面(人像)" label-width="150px" style="display:none"  required>
         <van-uploader :after-read="afterReadcartFalse" result-type="file" slot="input">
           <img :src="cartFalse" ref="cartFalse" class="avater" />
         </van-uploader>
       </van-field>
-      <van-field label="营业执照" required>
+      <van-field label="营业执照"  style="display:none"  required>
         <van-uploader :after-read="afterReadLicence" result-type="file" slot="input">
           <img :src="licence" ref="licence" class="avater" />
         </van-uploader>
       </van-field>
-      <van-field label="门头照" required>
+      <van-field label="门头照"  style="display:none"  required>
         <van-uploader :after-read="afterReadPhoto" result-type="file" slot="input">
           <img :src="head_photo" ref="head_photo" class="avater" />
         </van-uploader>

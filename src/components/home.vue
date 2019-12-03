@@ -7,7 +7,7 @@
       </div>
     </van-overlay>
     <!-- navbar -->
-    <van-nav-bar title="首页"></van-nav-bar>
+    <van-nav-bar title="云工会"></van-nav-bar>
     <!-- swipter -->
     <van-swipe :autoplay="3000" class="swiperImg">
       <van-swipe-item v-for="(image, index) in images" :key="index">
@@ -32,13 +32,15 @@
       <!-- <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true" /> -->
       <router-link to="/love" class="link">
         <MarqueeTips class="marquee" :content="notify" />
+        <!-- <div class="marquee">{{msg}}</div> -->
       </router-link>
     </van-row>
     <!-- category_detail -->
     <van-row>
       <van-list>
-        <van-panel v-for="item in newList.list" :key="item.id" >
+        <van-panel v-for="item in newList.list" :key="item.id">
           <div slot="header" class="pannel-head">
+            <!-- <van-col>{{url}}</van-col> -->
             <van-col span="5" offset="1" class="font_h1 h_titles">{{item.name}}</van-col>
             <van-col
               offset="15"
@@ -150,10 +152,12 @@ export default {
   data() {
     return {
       active: "home",
+
       resourse: global.imgAddress,
       categoryList: [], //分类组合
       newList: [], //新闻list
       notify: "", //通知
+      msg:'',
       images: [],
       show: false,
       showText: "",
@@ -162,6 +166,7 @@ export default {
     };
   },
   mounted() {
+    this.lang()
     let token = this.$route.query.token;
     if (!token) {
       Toast.fail("Token值没有");
@@ -250,6 +255,7 @@ export default {
         this.$nextTick(() => {
           //dom元素更新后执行，此时能拿到p元素的属性
           that.notify = res.data.data;
+          that.msg = res.data.data;
         });
 
         // that.notify = res.data.data;
@@ -257,6 +263,22 @@ export default {
     });
   },
   methods: {
+    lang: function() {
+      console.log(this.msg);
+      var _this = this;
+      _this.interval = setInterval(function() {
+        //获取第一个字符
+        var start = _this.msg.substring(0, 1);
+        //得到后面的字符
+        var end = _this.msg.substring(1);
+        //重新赋值
+        _this.msg = end + start;
+      }, 400);
+    },
+    stop: function() {
+      //停止定时器
+      clearInterval(this.interval);
+    },
     love() {
       this.$router.push("/love");
     },
@@ -272,9 +294,13 @@ export default {
     // 全部问答
     // 更多分类
     moreCategory(cateId, name) {
-      this.$router.push({
-        path: "/moreCategory?cateId=" + cateId + "&cateName=" + name
-      });
+      if (cateId == "8") {
+        this.$router.push({ path: "/itemDetail?newId=1030" });
+      } else {
+        this.$router.push({
+          path: "/moreCategory?cateId=" + cateId + "&cateName=" + name
+        });
+      }
     },
     // 分类更多
     moreList(id, title) {
@@ -351,6 +377,7 @@ export default {
   background: #f90;
   padding: 5px 15px;
   font-size: 14px;
+  text-align: left;
 }
 .link {
   color: #fff;
@@ -366,7 +393,7 @@ export default {
   font-size: 13px;
   position: relative;
 }
-.m-top{
-  margin-top: .5rem
+.m-top {
+  margin-top: 0.5rem;
 }
 </style>
