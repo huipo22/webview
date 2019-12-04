@@ -122,7 +122,7 @@
                 //    "&output=html&src=webapp.baidu.openAPIdemo";
             },
             showInfoFromJava(mes){
-                // alert("来自客户端的信息：" + msg);
+                alert("来自客户端的信息：" + msg);
             },
             phoneCall(mobile) {
                 // Notify({ type: "success", message: "手机号:" + mobile });
