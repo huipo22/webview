@@ -30,10 +30,17 @@
     <!-- 通知 -->
     <van-row class="m_bottom">
       <!-- <van-notice-bar :text="notify" left-icon="volume-o" class="m_bottom" :scrollable="true" /> -->
-      <router-link to="/love" class="link">
-        <MarqueeTips class="marquee" :content="notify" />
-        <!-- <div class="marquee">{{msg}}</div> -->
-      </router-link>
+
+      <div class="marquee_box">
+        <ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
+          <!-- 当显示最后一条的时候（num=0转换布尔类型为false）去掉过渡效果-->
+          <li v-for="(item, index) in marqueeList" :key="index">
+            <router-link to="/love" class="link">
+              <div>{{item.name}}</div>
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </van-row>
     <!-- category_detail -->
     <van-row>
@@ -152,12 +159,26 @@ export default {
   data() {
     return {
       active: "home",
-
+      num: 0,
+      marqueeList: [
+        {
+          name: "1军"
+        },
+        {
+          name: "2军"
+        },
+        {
+          name: "3军"
+        },
+        {
+          name: "4军"
+        }
+      ],
+      activeIndex: 0,
       resourse: global.imgAddress,
       categoryList: [], //分类组合
       newList: [], //新闻list
       notify: "", //通知
-      msg:'',
       images: [],
       show: false,
       showText: "",
@@ -165,8 +186,10 @@ export default {
       tagList: []
     };
   },
+  created: function() {
+    this.showMarquee(this.num);
+  },
   mounted() {
-    this.lang()
     let token = this.$route.query.token;
     if (!token) {
       Toast.fail("Token值没有");
@@ -255,29 +278,23 @@ export default {
         this.$nextTick(() => {
           //dom元素更新后执行，此时能拿到p元素的属性
           that.notify = res.data.data;
-          that.msg = res.data.data;
+          that.marqueeList = res.data.data;
         });
-
-        // that.notify = res.data.data;
       }
     });
   },
   methods: {
-    lang: function() {
-      console.log(this.msg);
-      var _this = this;
-      _this.interval = setInterval(function() {
-        //获取第一个字符
-        var start = _this.msg.substring(0, 1);
-        //得到后面的字符
-        var end = _this.msg.substring(1);
-        //重新赋值
-        _this.msg = end + start;
-      }, 400);
-    },
-    stop: function() {
-      //停止定时器
-      clearInterval(this.interval);
+    showMarquee: function(num) {
+      this.marqueeList.push(this.marqueeList[0]);
+      var max = this.marqueeList.length;
+      var that = this;
+      var marqueetimer = setInterval(function() {
+        num++;
+        if (num >= max) {
+          num = 0;
+        }
+        that.num = num * 30;
+      }, 2000);
     },
     love() {
       this.$router.push("/love");
@@ -395,5 +412,47 @@ export default {
 }
 .m-top {
   margin-top: 0.5rem;
+}
+.marquee {
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  color: #3a3a3a;
+  background-color: aqua;
+  display: flex;
+  box-sizing: border-box;
+}
+.marquee_title {
+  padding: 0 20px;
+  height: 30px; /*关键样式*/
+  font-size: 14px;
+  border-right: 1px solid #d8d8d8;
+  align-items: center;
+}
+
+.marquee_box {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 30px; /*关键样式*/
+  overflow: hidden;
+}
+.marquee_list {
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.marquee_top {
+  transition: top 0.5s;
+} /*关键样式*/
+.marquee_list li {
+  height: 30px; /*关键样式*/
+  line-height: 30px; /*关键样式*/
+  font-size: 14px;
+  padding-left: 20px;
+  background-color: #f90;
+  text-align: left;
 }
 </style>
