@@ -160,20 +160,7 @@ export default {
     return {
       active: "home",
       num: 0,
-      marqueeList: [
-        {
-          name: "1军"
-        },
-        {
-          name: "2军"
-        },
-        {
-          name: "3军"
-        },
-        {
-          name: "4军"
-        }
-      ],
+      marqueeList: [],
       activeIndex: 0,
       resourse: global.imgAddress,
       categoryList: [], //分类组合
