@@ -36,7 +36,7 @@
           <!-- 当显示最后一条的时候（num=0转换布尔类型为false）去掉过渡效果-->
           <li v-for="(item, index) in marqueeList" :key="index">
             <router-link to="/love" class="link">
-              <div>{{item.name}}</div>
+              <div>{{item.post_excerpt}}</div>
             </router-link>
           </li>
         </ul>
@@ -173,9 +173,6 @@ export default {
       tagList: []
     };
   },
-  created: function() {
-    this.showMarquee(this.num);
-  },
   mounted() {
     let token = this.$route.query.token;
     if (!token) {
@@ -260,13 +257,13 @@ export default {
         that.newList = res.data.data;
       }
     });
+  },
+  created() {
+    let that = this;
     this.axios.get("/portal/categories/get_notice").then(res => {
       if (res.data.code == 1) {
-        this.$nextTick(() => {
-          //dom元素更新后执行，此时能拿到p元素的属性
-          that.notify = res.data.data;
-          that.marqueeList = res.data.data;
-        });
+        that.marqueeList = res.data.data;
+        that.showMarquee(this.num);
       }
     });
   },
