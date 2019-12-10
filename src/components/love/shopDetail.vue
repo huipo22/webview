@@ -1,131 +1,164 @@
 <template>
-    <div id="shopDetail">
-        <!-- navbar -->
-        <van-nav-bar title="商家详情" left-arrow @click-left="onClickLeft"></van-nav-bar>
-        <!-- swipter -->
-        <van-swipe :autoplay="3000" class="swiperImg">
-            <van-swipe-item v-for="(image, index) in goodDetail.banners" :key="index">
-                <img :src="resourse+image.url" />
-            </van-swipe-item>
-        </van-swipe>
-        <!-- detail -->
-        <van-row class="pageSetting">
-            <van-col span="24" class="left" style="font-weight:bold">商品名称:{{goodDetail.goods_name}}</van-col>
-        </van-row>
-        <van-row class="pageSetting">
-            <van-col span="12" class="left title">
-                总价:
-                <span class="color">{{goodDetail.original_price}}元</span>
-            </van-col>
-            <van-col span="8" offset="4" class="left title">
-                会员价:
-                <span class="color">{{goodDetail.member_price}}元</span>
-            </van-col>
-            <van-col span="12" class="left title">库存:{{goodDetail.goods_num}}</van-col>
-            <van-col span="8" offset="4" class="left title">销量:{{goodDetail.goods_volume}}</van-col>
+  <div id="shopDetail">
+    <!-- navbar -->
+    <van-nav-bar title="商家详情" left-arrow @click-left="onClickLeft"></van-nav-bar>
+    <!-- swipter -->
+    <van-swipe :autoplay="3000" class="swiperImg">
+      <van-swipe-item v-for="(image, index) in goodDetail.banners" :key="index">
+        <img :src="resourse+image.url" />
+      </van-swipe-item>
+    </van-swipe>
+    <van-row v-for="good in goodDetail.goods_list" :key="good.shop_id">
+      <van-card :thumb="resourse+good.goods_img" @click="shopDetail(good.shop_id)">
+        <div slot="tags" class="tags">
+          <van-row>
+            <van-col span="24" class="comon" style="font-weight: bold;">{{good.goods_name}}</van-col>
+          </van-row>
+          <van-row></van-row>
+          <van-row>
+            <van-col span="12" class="left priceBox">类型:{{good.name}}</van-col>
+            <van-col span="12" class="right van-ellipsis">地址:{{good.user_address}}</van-col>
+          </van-row>
+        </div>
+      </van-card>
+    </van-row>
+    <!-- detail -->
+    <!-- <van-row class="pageSetting">
+      <van-col span="24" class="left" style="font-weight:bold">商品名称:{{goodDetail.goods_name}}</van-col>
+    </van-row>-->
+    <van-row class="pageSetting">
+      <!-- <van-col span="12" class="left title">
+        总价:
+        <span class="color">{{goodDetail.original_price}}元</span>
+      </van-col>
+      <van-col span="8" offset="4" class="left title">
+        会员价:
+        <span class="color">{{goodDetail.member_price}}元</span>
+      </van-col>
+      <van-col span="12" class="left title">库存:{{goodDetail.goods_num}}</van-col>
+      <van-col span="8" offset="4" class="left title">销量:{{goodDetail.goods_volume}}</van-col>
 
-            <van-col v-if="goodDetail.shop_info"
-                     span="24"
-                     class="left title">地址:{{goodDetail.shop_info.province}}{{goodDetail.shop_info.city}}{{goodDetail.shop_info.county}}{{goodDetail.shop_info.user_address}}</van-col>
+      <van-col
+        v-if="goodDetail.shop_info"
+        span="24"
+        class="left title"
+      >地址:{{goodDetail.shop_info.province}}{{goodDetail.shop_info.city}}{{goodDetail.shop_info.county}}{{goodDetail.shop_info.user_address}}</van-col>
 
-            <van-col v-if="goodDetail.shop_info"
-                     span="24"
-                     class="left title"
-                     @click="sendInfoToJavatel(goodDetail.shop_info.user_phone)">拨打电话:{{goodDetail.shop_info.user_phone}}</van-col>
+      <van-col
+        v-if="goodDetail.shop_info"
+        span="24"
+        class="left title"
+        @click="sendInfoToJavatel(goodDetail.shop_info.user_phone)"
+      >拨打电话:{{goodDetail.shop_info.user_phone}}</van-col>-->
 
-            <van-col span="24">
-                <van-divider>商品详情</van-divider>
-            </van-col>
-        </van-row>
-        <van-row class="detail" v-html="goodDetail.goods_detail"></van-row>
-        <van-row class="flo">
-            <van-col span="8" class="left">
-                <!-- <van-icon name="location-o" color="blue" size="20px"/> -->
-            </van-col>
-          
-        </van-row>
-        <van-row class="plusBox">
-            <van-col span="24">
-                <van-button size="normal"
-                            style="width:45%; margin-right:10px;"
-                            color="#1989fa"
-                            type="primary"
-                            @click="sendInfoToJava(goodDetail.shop_info.user_address+goodDetail.goods_name)">路线导航</van-button>
+      <van-col span="24">
+        <van-divider>商品详情</van-divider>
+      </van-col>
+    </van-row>
+    <!-- <van-row class="detail" v-html="goodDetail.goods_detail"></van-row> -->
+    <!-- new -->
 
-                <van-button size="normal"
-                            style="width:45%"
-                            color="#1989fa"
-                            type="primary"
-                            @click="sendInfoToJavas(goodDetail)">立即支付:{{goodDetail.member_price}}元</van-button>
-            </van-col>
-        </van-row>
-    </div>
+    <van-row class="detail" v-html="goodDetail.content"></van-row>
+    <van-row class="flo">
+      <van-col span="8" class="left">
+        <!-- <van-icon name="location-o" color="blue" size="20px"/> -->
+      </van-col>
+    </van-row>
+    <van-row class="plusBox">
+      <van-col span="24">
+        <van-button
+          size="normal"
+          style="width:45%; margin-right:10px;"
+          color="#1989fa"
+          type="primary"
+          @click="sendInfoToJava(goodDetail.shop_info.user_address+goodDetail.goods_name)"
+        >路线导航</van-button>
+
+        <van-button
+          size="normal"
+          style="width:45%"
+          color="#1989fa"
+          type="primary"
+          @click="sendInfoToJavas(goodDetail)"
+        >立即支付:{{goodDetail.member_price}}元</van-button>
+      </van-col>
+    </van-row>
+  </div>
 </template>
 <script>
-    import global from "../../global";
-    import { Dialog, Toast } from "vant";
-    export default {
-        data() {
-            return {
-                goodDetail: {},
-                resourse: global.imgAddress,
-                images: [
-                    "https://img.yzcdn.cn/vant/apple-1.jpg",
-                    "https://img.yzcdn.cn/vant/apple-2.jpg"
-                ]
-            };
-        },
-        mounted() {
-            let goodId = this.$route.query.goodId;
-            let params = this.qs.stringify({
-                goods_id: goodId
-            });
-            let that = this;
-            this.axios
-                .post("/goods/goods/goods_detail", params, {
-                    headers: {
-                        "Device-Type": global.deviceType,
-                        token: JSON.parse(sessionStorage.getItem("userInfo")).token
-                    }
-                })
-                .then(res => {
-                    window.console.log(res);
-                    if (res.data.code == 1) {
-                        that.goodDetail = res.data.data;
-                    }
-                });
-        },
-        methods: {
-            onClickLeft() {
-                this.$router.go(-1);
-            },
-             sendInfoToJava(address) {
-                // alert(address);
-                var name = address;
-                window.AndroidWebView.showInfoFromJs(name);
-              },
-            showInfoFromJava(mes) {
-                alert("来自客户端的信息：" + msg);
-            },
-            sendInfoToJavas(item) {
-                var name = "0" + "," + item.id + "," + item.present_price + "," + item.goods_num + "," + item.member_price + ",0";
-
-                window.AndroidWebViews.showInfoFromJss(name);
-            },
-            showInfoFromJavas(msg) {
-                // alert("来自客户端的信息："+msg);
-            },
-           sendInfoToJavatel(mobile) {
-                var name = mobile;
-                 window.AndroidWebViewtel.showInfoFromJstel(name);
-            },
-            showInfoFromJavatel(msg) {
-                //alert("来自客户端的信息："+msg);
-            }
-
-
-        }
+import global from "../../global";
+import { Dialog, Toast } from "vant";
+export default {
+  data() {
+    return {
+      goodDetail: {},
+      resourse: global.imgAddress,
+      images: [
+        "https://img.yzcdn.cn/vant/apple-1.jpg",
+        "https://img.yzcdn.cn/vant/apple-2.jpg"
+      ]
     };
+  },
+  mounted() {
+    let goodId = this.$route.query.goodId;
+    let params = this.qs.stringify({
+      //   goods_id: goodId
+      shop_id: goodId
+    });
+    let that = this;
+    this.axios
+      .post("/goods/goods/goods_detail", params, {
+        headers: {
+          "Device-Type": global.deviceType,
+          token: JSON.parse(sessionStorage.getItem("userInfo")).token
+        }
+      })
+      .then(res => {
+        window.console.log(res);
+        if (res.data.code == 1) {
+          that.goodDetail = res.data.data;
+        }
+      });
+  },
+  methods: {
+    onClickLeft() {
+      this.$router.go(-1);
+    },
+    sendInfoToJava(address) {
+      // alert(address);
+      var name = address;
+      window.AndroidWebView.showInfoFromJs(name);
+    },
+    showInfoFromJava(mes) {
+      alert("来自客户端的信息：" + msg);
+    },
+    sendInfoToJavas(item) {
+      var name =
+        "0" +
+        "," +
+        item.id +
+        "," +
+        item.present_price +
+        "," +
+        item.goods_num +
+        "," +
+        item.member_price +
+        ",0";
+
+      window.AndroidWebViews.showInfoFromJss(name);
+    },
+    showInfoFromJavas(msg) {
+      // alert("来自客户端的信息："+msg);
+    },
+    sendInfoToJavatel(mobile) {
+      var name = mobile;
+      window.AndroidWebViewtel.showInfoFromJstel(name);
+    },
+    showInfoFromJavatel(msg) {
+      //alert("来自客户端的信息："+msg);
+    }
+  }
+};
 </script>
 
 
@@ -135,36 +168,36 @@
 
 
 <style scoped>
-    .detail {
-        width: 100%;
-        overflow: hidden;
-    }
+.detail {
+  width: 100%;
+  overflow: hidden;
+}
 
-        .detail > > > img {
-            width: 100%;
-        }
+.detail >>> img {
+  width: 100%;
+}
 
-    .van-divider {
-        margin: 16px 0 0 16px;
-    }
+.van-divider {
+  margin: 16px 0 0 16px;
+}
 
-    .plusBox {
-        width: 100%;
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        z-index: 999;
-    }
+.plusBox {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
 
-    .flo {
-        width: 100%;
-        position: fixed;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -60%);
-    }
+.flo {
+  width: 100%;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
 
-    .color {
-        color: red;
-    }
+.color {
+  color: red;
+}
 </style>
