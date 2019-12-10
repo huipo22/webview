@@ -47,7 +47,7 @@
       <van-card :thumb="resourse+good.head_photo" @click="shopDetail(good.shop_id)">
         <div slot="tags" class="tags">
           <van-row>
-            <van-col span="24" class="comon" style="font-weight: bold;">{{good.user_login}}</van-col>
+            <van-col span="24" class="comon" style="font-weight: bold;font-size:16px">{{good.user_login}}</van-col>
           </van-row>
           <van-row>
             <van-col span="24" class="comon" style="height:auto;padding: 0.5rem 0 0.5rem 1.2rem;">
@@ -220,4 +220,5 @@ export default {
 .tagView {
   margin: 0 5px;
 }
+
 </style>

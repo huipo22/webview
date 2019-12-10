@@ -69,13 +69,17 @@ body,
   text-align: left;
 }
 .h_content {
-  font-size: 16px;
+  font-size: 18px;
   /* color: #1989fa; */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.h_contentexp{
+    font-size: 12px;
+    color: #b0b5b9;
 }
 .m_bottom {
   margin-bottom: 0.5rem;

@@ -21,6 +21,7 @@
           <van-row style="padding: 10px 0;">
             <van-col offset="1" span="23">
               <van-row class="left h_content">{{item.post_title}}</van-row>
+              <van-row class="left h_contentexp van-multi-ellipsis--l2">摘要：{{item.post_excerpt}}</van-row>
               <!-- <van-row class="left h_titles">{{item.published_time|dCreateTime}}</van-row> -->
             </van-col>
             <!-- <van-col offset="2" span="8">

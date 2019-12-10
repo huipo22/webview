@@ -5,7 +5,7 @@
     <van-tabs v-model="active" color="#1989fa">
       <van-tab title="已支付">
         <van-card
-          :thumb="resource+item.goods_info[0].goods_img"
+          
           class="tabBox"
           v-for="item in OrderList"
           :key="item.id"
@@ -19,7 +19,13 @@
                 <span class="color">{{item.pay_price}}</span>
               </van-col>
             </van-row>
-            <van-row class="hei">
+             <van-row class="hei">
+              <van-col span="16" class="left">订单号:{{item.order_number}}</van-col>
+              <van-col span="8" class="right">
+                <van-tag type="danger">未确认</van-tag>
+              </van-col>
+            </van-row>
+            <!-- <van-row class="hei">
               <van-col span="12" class="left">
                 <van-button
                   size="small"
@@ -38,16 +44,15 @@
                   @click="phoneCall(item.shop_info.mobile)"
                 >拨打电话</van-button>
               </van-col>
-            </van-row>
+            </van-row> -->
           </div>
           <div slot="footer"></div>
         </van-card>
       </van-tab>
       <van-tab title="已完成">
         <van-card
-          :thumb="resource+item.goods_info[0].goods_img"
           class="tabBox"
-          v-for="item in OrderList"
+          v-for="item in OrderListOver"
           :key="item.id"
         >
           <div slot="title" class="left hei fon" v-html="item.goods_info[0].goods_name"></div>
@@ -60,6 +65,12 @@
               </van-col>
             </van-row>
             <van-row class="hei">
+              <van-col span="16" class="left">订单号:{{item.order_number}}</van-col>
+              <van-col span="8" class="right">
+                <van-tag type="danger">已确认</van-tag>
+              </van-col>
+            </van-row>
+            <!-- <van-row class="hei">
               <van-col span="12" class="left">
                 <van-button
                   size="small"
@@ -78,7 +89,7 @@
                   @click="phoneCall(item.shop_info.mobile)"
                 >查看电话</van-button>
               </van-col>
-            </van-row>
+            </van-row> -->
           </div>
           <div slot="footer"></div>
         </van-card>
@@ -100,7 +111,7 @@ export default {
   },
   mounted() {
     this.getData(2);
-    this.getData(5);
+    this.getData2(3);
   },
   methods: {
     getData(type) {
@@ -167,6 +178,7 @@ export default {
 <style scoped>
 .tabBox {
   background: #fff;
+  border-bottom: 1px solid #f8f8f8;
 }
 .hei {
   height: 30px;

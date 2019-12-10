@@ -8,24 +8,11 @@
         <img :src="resourse+image.url" />
       </van-swipe-item>
     </van-swipe>
-    <van-row v-for="good in goodDetail.goods_list" :key="good.shop_id">
-      <van-card :thumb="resourse+good.goods_img" @click="shopDetail(good.shop_id)">
-        <div slot="tags" class="tags">
-          <van-row>
-            <van-col span="24" class="comon" style="font-weight: bold;">{{good.goods_name}}</van-col>
-          </van-row>
-          <van-row></van-row>
-          <van-row>
-            <van-col span="12" class="left priceBox">类型:{{good.name}}</van-col>
-            <van-col span="12" class="right van-ellipsis">地址:{{good.user_address}}</van-col>
-          </van-row>
-        </div>
-      </van-card>
-    </van-row>
+
     <!-- detail -->
-    <!-- <van-row class="pageSetting">
-      <van-col span="24" class="left" style="font-weight:bold">商品名称:{{goodDetail.goods_name}}</van-col>
-    </van-row>-->
+    <van-row class="pageSetting">
+      <van-col span="24" class="center" style="font-weight:bold">{{goodDetail.user_login}}</van-col>
+    </van-row>
     <van-row class="pageSetting">
       <!-- <van-col span="12" class="left title">
         总价:
@@ -36,28 +23,68 @@
         <span class="color">{{goodDetail.member_price}}元</span>
       </van-col>
       <van-col span="12" class="left title">库存:{{goodDetail.goods_num}}</van-col>
-      <van-col span="8" offset="4" class="left title">销量:{{goodDetail.goods_volume}}</van-col>
+      <van-col span="8" offset="4" class="left title">销量:{{goodDetail.goods_volume}}</van-col>-->
+      <van-col span="24" class="left title">
+        亮点：
+        <van-tag
+          v-for="(tagItem,index) in goodDetail.label.split(',')"
+          :key="index"
+          class="tagView"
+          round
+          type="success"
+          :color="index%2==0?'':''"
+        >{{tagItem}}</van-tag>
+      </van-col>
+      <van-col span="24" class="left title van-ellipsis">地址：{{goodDetail.address}}</van-col>
 
       <van-col
-        v-if="goodDetail.shop_info"
         span="24"
         class="left title"
-      >地址:{{goodDetail.shop_info.province}}{{goodDetail.shop_info.city}}{{goodDetail.shop_info.county}}{{goodDetail.shop_info.user_address}}</van-col>
-
-      <van-col
-        v-if="goodDetail.shop_info"
-        span="24"
-        class="left title"
-        @click="sendInfoToJavatel(goodDetail.shop_info.user_phone)"
-      >拨打电话:{{goodDetail.shop_info.user_phone}}</van-col>-->
+        @click="sendInfoToJavatel(goodDetail.user_phone)"
+      >电话：{{goodDetail.user_phone}}</van-col>
 
       <van-col span="24">
-        <van-divider>商品详情</van-divider>
+        <van-divider>商品列表</van-divider>
       </van-col>
+    </van-row>
+    <van-row v-for="good in goodDetail.goods_list" :key="good.shop_id">
+      <van-card
+        :thumb="resourse+good.goods_img"
+        @click="shopDetail(good.shop_id)"
+        style="background:#fff"
+      >
+        <div slot="tags" class="tags">
+          <van-row class="hh">
+            <van-col span="24" class="comon" style="font-weight: bold;">{{good.goods_name}}</van-col>
+          </van-row>
+          <van-row></van-row>
+          <van-row class="hh">
+            <van-col span="12" class="left priceBox">剩余:{{good.goods_num}}{{good.goods_spec}}</van-col>
+            <van-col span="12" class="right">原价: <span style="text-decoration:line-through;color:red">{{good.original_price}}</span> 元</van-col>
+          </van-row>
+          <van-row class="hh">
+            <van-col span="12" class="left priceBox">销量:{{good.goods_volume}}</van-col>
+            <van-col span="12" class="right">
+              <van-button
+                size="small"
+                color="#1989fa"
+                round
+                type="primary"
+                @click="sendInfoToJavas(good)"
+                :disabled="good.goods_num==0?true:false"
+              >预定:{{good.member_price}}元</van-button>
+            </van-col>
+          </van-row>
+        </div>
+      </van-card>
     </van-row>
     <!-- <van-row class="detail" v-html="goodDetail.goods_detail"></van-row> -->
     <!-- new -->
-
+    <van-row class="pageSetting">
+      <van-col span="24">
+        <van-divider>商家介绍</van-divider>
+      </van-col>
+    </van-row>
     <van-row class="detail" v-html="goodDetail.content"></van-row>
     <van-row class="flo">
       <van-col span="8" class="left">
@@ -68,19 +95,19 @@
       <van-col span="24">
         <van-button
           size="normal"
-          style="width:45%; margin-right:10px;"
+          style="width:100%; margin-right:10px;"
           color="#1989fa"
           type="primary"
-          @click="sendInfoToJava(goodDetail.shop_info.user_address+goodDetail.goods_name)"
+          @click="sendInfoToJava(goodDetail.address)"
         >路线导航</van-button>
 
-        <van-button
+        <!-- <van-button
           size="normal"
           style="width:45%"
           color="#1989fa"
           type="primary"
           @click="sendInfoToJavas(goodDetail)"
-        >立即支付:{{goodDetail.member_price}}元</van-button>
+        >立即支付:{{goodDetail.member_price}}元</van-button>-->
       </van-col>
     </van-row>
   </div>
@@ -125,8 +152,8 @@ export default {
       this.$router.go(-1);
     },
     sendInfoToJava(address) {
-      // alert(address);
       var name = address;
+      // alert(address);
       window.AndroidWebView.showInfoFromJs(name);
     },
     showInfoFromJava(mes) {
@@ -145,6 +172,7 @@ export default {
         item.member_price +
         ",0";
 
+      // alert(name)
       window.AndroidWebViews.showInfoFromJss(name);
     },
     showInfoFromJavas(msg) {
@@ -199,5 +227,17 @@ export default {
 
 .color {
   color: red;
+}
+.tagView {
+  margin: 0 5px;
+}
+.tags {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hh {
+  height: 1.5rem;
 }
 </style>
